@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, MeshLambertMaterial} from 'three';
-import { FemalePedestrianDress, MalePedestrianShorts } from 'objects';
+import { FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -41,8 +41,8 @@ class SeedScene extends Scene {
                 flatShading: true
             })
         };
-        const femalePedestrian = new FemalePedestrianDress(this, femaleDressMaterials);
-        femalePedestrian.position.set(0, 0, 0);
+        const femalePedestrianDress = new FemalePedestrianDress(this, femaleDressMaterials);
+        femalePedestrianDress.position.set(0, 0, 0);
 
         var maleShortsMaterials = {
             eye: new MeshLambertMaterial({
@@ -70,10 +70,40 @@ class SeedScene extends Scene {
                 flatShading: true
             })
         };
-        const malePedestrian = new MalePedestrianShorts(this, maleShortsMaterials);
-        malePedestrian.position.set(5, 0, 0)
+        const malePedestrianShorts = new MalePedestrianShorts(this, maleShortsMaterials);
+        malePedestrianShorts.position.set(5, 0, 0);
+
+        var maleJeansMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x291b06,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0x573502,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x0d1459,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0x245734,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x470722,
+                flatShading: true
+            })
+        };
+        const malePedestrianJeans = new MalePedestrianJeans(this, maleJeansMaterials);
+        malePedestrianJeans.position.set(-5, 0, 0);
+
         const lights = new BasicLights();
-        this.add(femalePedestrian, malePedestrian, lights);
+        this.add(femalePedestrianDress, malePedestrianShorts, malePedestrianJeans, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
