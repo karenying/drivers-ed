@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, MalePedestrian } from 'objects';
+import { FemalePedestrian, MalePedestrian } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -19,9 +19,12 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
+        const femalePedestrian = new FemalePedestrian(this);
+        femalePedestrian.position.set(0, 0, 0)
         const malePedestrian = new MalePedestrian(this);
+        malePedestrian.position.set(5, 0, 0)
         const lights = new BasicLights();
-        this.add(malePedestrian, lights);
+        this.add(femalePedestrian, malePedestrian, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
