@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
-import { FemalePedestrian, MalePedestrian } from 'objects';
+import { Scene, Color, MeshLambertMaterial} from 'three';
+import { FemalePedestrianDress, MalePedestrianShorts } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -19,9 +19,58 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const femalePedestrian = new FemalePedestrian(this);
-        femalePedestrian.position.set(0, 0, 0)
-        const malePedestrian = new MalePedestrian(this);
+        var femaleDressMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x3b2606,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            dress: new MeshLambertMaterial({
+                color: 0x7015d1,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0xd8d1e0,
+                flatShading: true
+            })
+        };
+        const femalePedestrian = new FemalePedestrianDress(this, femaleDressMaterials);
+        femalePedestrian.position.set(0, 0, 0);
+
+        var maleShortsMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x36699c,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0xd1c569,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            shorts: new MeshLambertMaterial({
+                color: 0xed7490,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0x72afed,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x3b2403,
+                flatShading: true
+            })
+        };
+        const malePedestrian = new MalePedestrianShorts(this, maleShortsMaterials);
         malePedestrian.position.set(5, 0, 0)
         const lights = new BasicLights();
         this.add(femalePedestrian, malePedestrian, lights);

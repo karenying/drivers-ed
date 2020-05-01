@@ -1,41 +1,14 @@
-import { Group, BoxGeometry,  Mesh, MeshLambertMaterial, Matrix4} from "three";
+import { Group, BoxGeometry,  Mesh, MeshLambertMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
-class MalePedestrian extends Group {
-    constructor(parent) {
+class MalePedestrianShorts extends Group {
+    constructor(parent, materials) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
-        };
-
-        var materials = {
-            eye: new MeshLambertMaterial({
-                color: 0x36699c,
-                flatShading: true
-            }),
-            hair: new MeshLambertMaterial({
-                color: 0xd1c569,
-                flatShading: true
-            }),
-            skin: new MeshLambertMaterial({
-                color: 0xb48A78,
-                flatShading: true
-            }),
-            shorts: new MeshLambertMaterial({
-                color: 0xed7490,
-                flatShading: true
-            }),
-            shirt: new MeshLambertMaterial({
-                color: 0x72afed,
-                flatShading: true
-            }),
-            shoes: new MeshLambertMaterial({
-                color: 0x3b2403,
-                flatShading: true
-            })
         };
 
         // head
@@ -194,4 +167,4 @@ class MalePedestrian extends Group {
     }
 }
 
-export default MalePedestrian;
+export default MalePedestrianShorts;
