@@ -185,9 +185,9 @@ class SeedScene extends Scene {
         const brittney = new FemalePedestrianDress(this, brittneyMaterials);
         brittney.position.set(0, 0, 5);
 
-        var coin = new Coin();
+        var coin = new Coin(this);
         coin.position.set(0, 0, 10);
-        
+
         const lights = new BasicLights();
         this.add(masha, 
                 chad, 
