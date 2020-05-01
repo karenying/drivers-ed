@@ -1,7 +1,7 @@
 import { Group, BoxGeometry,  Mesh} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
-class FemalePedestrianDress extends Group {
+class FemalePedestrianJeans extends Group {
     constructor(parent, materials) {
         super();
 
@@ -21,7 +21,7 @@ class FemalePedestrianDress extends Group {
         var leftEye = new Mesh(leftEyeGeometry, materials.eye);
         leftEye.name = "left eye";
         head.add(leftEye);
-        leftEye.position.set(-.4, 0.25, 0.4);
+        leftEye.position.set(-0.4, 0.25, 0.4);
 
         var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
         var rightEye = new Mesh(rightEyeGeometry, materials.eye);
@@ -47,11 +47,11 @@ class FemalePedestrianDress extends Group {
         head.add(bangs);
         bangs.position.set(0, 0.9, 0);
 
-        var hairGeometry = new BoxGeometry(2, 3, 1);
+        var hairGeometry = new BoxGeometry(2.25, 2, 1);
         var hair = new Mesh(hairGeometry, materials.hair);
         hair.name = "hair";
         head.add(hair);
-        hair.position.set(0, -0.25, -0.5);
+        hair.position.set(0, 0.25, -0.5);
 
         var noseGeometry = new BoxGeometry(0.25, 0.5, 0.25);
         var nose = new Mesh(noseGeometry, materials.skin);
@@ -60,25 +60,11 @@ class FemalePedestrianDress extends Group {
         nose.position.set(0, 0, 0.4);
         nose.rotation.x = -20 * (Math.PI/180);
 
-        var dressGeometry = new BoxGeometry(1.75, 3, 1);
-        var dress = new Mesh(dressGeometry, materials.dress);
-        head.add(dress)
-        dress.name = "dress";
-        dress.position.set(0, -2.25, 0);
-
-        var dressFrontSkirtGeometry = new BoxGeometry(1.74, 1, 0.7);
-        var dressFrontSkirt = new Mesh(dressFrontSkirtGeometry, materials.dress);
-        dress.add(dressFrontSkirt)
-        dressFrontSkirt.name = "dressSkirt";
-        dressFrontSkirt.position.set(0, -0.9, 0.5);
-        dressFrontSkirt.rotation.x = -35 * (Math.PI/180);
-
-        var dressBackSkirtGeometry = new BoxGeometry(1.74, 1, 0.7);
-        var dressBackSkirt = new Mesh(dressBackSkirtGeometry, materials.dress);
-        dress.add(dressBackSkirt)
-        dressBackSkirt.name = "dressSkirt";
-        dressBackSkirt.position.set(0, -0.9, -0.5);
-        dressBackSkirt.rotation.x = 35 * (Math.PI/180);
+        var shirtGeometry = new BoxGeometry(1.75, 2, 1);
+        var shirt = new Mesh(shirtGeometry, materials.shirt);
+        head.add(shirt)
+        shirt.name = "shirt";
+        shirt.position.set(0, -1.75, 0);
 
         // left arm
         var leftArmGeometry = new BoxGeometry(0.45, 2, 0.5);
@@ -87,6 +73,13 @@ class FemalePedestrianDress extends Group {
         leftArm.name = "left arm";
         leftArm.position.set(-1.15, 3, 0);
 
+        var leftShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
+        leftShirtGeometry.translate(0, -1, 0);
+        var leftShirt = new Mesh(leftShirtGeometry, materials.shirt);
+        leftShirt.name = "left shirt";
+        leftArm.add(leftShirt);
+        leftShirt.position.set(0, 0.75, 0);
+
         // right arm
         var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
         rightArmGeometry.translate(0, -1, 0);
@@ -94,33 +87,40 @@ class FemalePedestrianDress extends Group {
         rightArm.name = "right arm";
         rightArm.position.set(1.15, 3, 0);
 
+        var rightShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
+        rightShirtGeometry.translate(0, -1, 0);
+        var rightShirt = new Mesh(rightShirtGeometry, materials.shirt);
+        rightShirt.name = "right shirt";
+        rightArm.add(rightShirt);
+        rightShirt.position.set(0, 0.75, 0);
+
         // left leg
-        var leftLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        leftLegGeometry.translate(0, -1, 0);
-        var leftLeg = new Mesh(leftLegGeometry, materials.skin);
-        leftLeg.name = "left leg";
-        leftLeg.position.set(-0.5, 1.25, 0);
+        var leftJeansGeometry = new BoxGeometry(0.7, 2.75, 0.55);
+        leftJeansGeometry.translate(0, -1, 0);
+        var leftJeans = new Mesh(leftJeansGeometry, materials.jeans);
+        leftJeans.name = "left jeans";
+        leftJeans.position.set(-0.5, 1.25, 0);
 
         var leftShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
         var leftShoe = new Mesh(leftShoeGeometry, materials.shoes);
         leftShoe.name = "left shoe";
-        leftLeg.add(leftShoe);
+        leftJeans.add(leftShoe);
         leftShoe.position.set(0, -2.5, 0.15);
 
         // right leg
-        var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        rightLegGeometry.translate(0, -1, 0);
-        var rightLeg = new Mesh(rightLegGeometry, materials.skin);
-        rightLeg.name = "right leg";
-        rightLeg.position.set(0.5, 1.25, 0);
+        var rightJeansGeometry = new BoxGeometry(0.7, 2.75, 0.55);
+        rightJeansGeometry.translate(0, -1, 0);
+        var rightJeans = new Mesh(rightJeansGeometry, materials.jeans);
+        rightJeans.name = "right jeans";
+        rightJeans.position.set(0.5, 1.25, 0);
 
         var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
         var rightShoe = new Mesh(rightShoeGeometry, materials.shoes);
         rightShoe.name = "right shoe";
-        rightLeg.add(rightShoe);
+        rightJeans.add(rightShoe);
         rightShoe.position.set(0, -2.5, 0.15)
 
-        this.add(head, leftArm, rightArm, leftLeg, rightLeg);
+        this.add(head, leftArm, rightArm, leftJeans, rightJeans);
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
@@ -159,4 +159,4 @@ class FemalePedestrianDress extends Group {
     }
 }
 
-export default FemalePedestrianDress;
+export default FemalePedestrianJeans;

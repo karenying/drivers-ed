@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, MeshLambertMaterial} from 'three';
-import { FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans } from 'objects';
+import { FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -19,7 +19,7 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        var femaleDressMaterials = {
+        var mashaMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x3b2606,
                 flatShading: true
@@ -41,10 +41,10 @@ class SeedScene extends Scene {
                 flatShading: true
             })
         };
-        const femalePedestrianDress = new FemalePedestrianDress(this, femaleDressMaterials);
-        femalePedestrianDress.position.set(0, 0, 0);
+        const masha = new FemalePedestrianDress(this, mashaMaterials);
+        masha.position.set(0, 0, 0);
 
-        var maleShortsMaterials = {
+        var chadMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x36699c,
                 flatShading: true
@@ -70,10 +70,10 @@ class SeedScene extends Scene {
                 flatShading: true
             })
         };
-        const malePedestrianShorts = new MalePedestrianShorts(this, maleShortsMaterials);
-        malePedestrianShorts.position.set(5, 0, 0);
+        const chad = new MalePedestrianShorts(this, chadMaterials);
+        chad.position.set(5, 0, 0);
 
-        var maleJeansMaterials = {
+        var labibMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x291b06,
                 flatShading: true
@@ -99,11 +99,100 @@ class SeedScene extends Scene {
                 flatShading: true
             })
         };
-        const malePedestrianJeans = new MalePedestrianJeans(this, maleJeansMaterials);
-        malePedestrianJeans.position.set(-5, 0, 0);
+        const labib= new MalePedestrianJeans(this, labibMaterials);
+        labib.position.set(-5, 0, 0);
+
+        var mariaMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x2d5432,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x4d3803,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0x997446,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd61a39,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x237066,
+                flatShading: true
+            })
+        };
+        const maria = new FemalePedestrianJeans(this, mariaMaterials);
+        maria.position.set(5, 0, 5);
+
+        var maxMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x291b06,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x2e150f,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb56e50,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x635f61,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd65e9a,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            })
+        };
+        const max = new MalePedestrianJeans(this, maxMaterials);
+        max.position.set(-5, 0, 5);
+
+        var brittneyMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x3b2606,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0xd1b130,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            dress: new MeshLambertMaterial({
+                color: 0x41aba6,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0xd96541,
+                flatShading: true
+            })
+        };
+        const brittney = new FemalePedestrianDress(this, brittneyMaterials);
+        brittney.position.set(0, 0, 5);
 
         const lights = new BasicLights();
-        this.add(femalePedestrianDress, malePedestrianShorts, malePedestrianJeans, lights);
+        this.add(masha, 
+                chad, 
+                labib, 
+                maria, 
+                max,
+                brittney,
+                lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
