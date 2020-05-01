@@ -5,3 +5,4 @@ export * from './MalePedestrianJeans';
 export * from './FemalePedestrianDress';
 export * from './FemalePedestrianJeans';
 export * from './Coin';
+export * from './Gem';

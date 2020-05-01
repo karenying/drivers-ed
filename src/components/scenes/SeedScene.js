@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, MeshLambertMaterial} from 'three';
-import { Flower, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
+import { Gem, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -188,6 +188,9 @@ class SeedScene extends Scene {
         var coin = new Coin(this);
         coin.position.set(0, 0, 10);
 
+        var gem = new Gem(this);
+        gem.position.set(5, 0, 10);
+
         const lights = new BasicLights();
         this.add(masha, 
                 chad, 
@@ -196,6 +199,7 @@ class SeedScene extends Scene {
                 max,
                 brittney,
                 coin,
+                gem,
                 lights);
 
         // Populate GUI
