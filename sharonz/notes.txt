@@ -3,5 +3,8 @@ Driver
 - added physics and drag using tweens
 - added boundaries
 
+Pedestrian
+- need to figure out scene removal once pedestrian has finished crossing street
+
 app.js
 - set camera position [0, 5, -10]
