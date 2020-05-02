@@ -16,7 +16,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(6, 3, -10);
+camera.position.set(0, 5, -10);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -37,30 +37,30 @@ controls.update();
 
 // Add key controls for cube
 function setupKeyControls() {
-  var tester = scene.getObjectByName('tester');
+  var driver = scene.getObjectByName('driver');
   document.onkeydown = function(e) {
-    tester.inMotion = true;
+    driver.inMotion = true;
     switch (e.keyCode) {
       case 37:
-        tester.velocity.x += 0.1
-        tester.acceleration.x += 0.05;
+        driver.velocity.x += 0.1
+        driver.acceleration.x += 0.05;
         break;
       case 38:
-        tester.velocity.z += 0.1
-        tester.acceleration.z += 0.05;
+        driver.velocity.z += 0.1
+        driver.acceleration.z += 0.05;
         break;
       case 39:
-        tester.velocity.x -= 0.1
-        tester.acceleration.x -= 0.05;
+        driver.velocity.x -= 0.1
+        driver.acceleration.x -= 0.05;
         break;
       case 40:
-        tester.velocity.z -= 0.1
-        tester.acceleration.z -= 0.05;
+        driver.velocity.z -= 0.1
+        driver.acceleration.z -= 0.05;
         break;
     }
   };
   document.onkeyup = function(e) {
-    tester.inMotion = false;
+    driver.inMotion = false;
   };
 }
 

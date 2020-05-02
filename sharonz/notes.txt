@@ -1,1 +1,7 @@
-sharon's notes
+Driver
+- dummy mesh
+- added physics and drag using tweens
+- added boundaries
+
+app.js
+- set camera position [0, 5, -10]
