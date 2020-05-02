@@ -16,7 +16,7 @@ class SeedScene extends Scene {
 
         // Set background to a nice color
         this.background = new Color(0xa7ccd1);
-        this.fog = new Fog(0xa7ccd1, 80, 300);
+        this.fog = new Fog(0xa7ccd1, 80, 500);
 
         // // Add meshes to scene
         // var mashaMaterials = {
@@ -195,7 +195,7 @@ class SeedScene extends Scene {
 
         var road = new Road();
         road.position.set(0, -1, 0);
-        var car = new Car();
+        var car = new Car(this);
         car.position.set(-60, 0, 0);
         this.add(road, car, lights);
         // this.add(masha, 

@@ -10,7 +10,7 @@ class Road extends Group {
             flatShading: true,
         });
 
-        var boxGeometry = new BoxGeometry(500, 2, 15);
+        var boxGeometry = new BoxGeometry(800, 2, 15);
         var road = new Mesh(boxGeometry, material);
         this.add(road);
     }

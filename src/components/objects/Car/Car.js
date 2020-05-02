@@ -7,7 +7,8 @@ import { Group,
     DoubleSide,
     CircleGeometry,
     CylinderGeometry } from 'three';
-  
+import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+
   var Colors = {
     red: 0xcf4f48,
     black: 0x211f1f,
@@ -60,14 +61,21 @@ import { Group,
     return mesh
   }
   
-  class Car extends Group {
-  
+class Car extends Group {
     constructor(parent) {
-      super();
+    super();
+
+    this.init();
+
+    // Init state
+    this.state = {
+        bob: true,
+    };
   
-      this.init();
-  
-      this.name = 'car';
+    this.name = 'car';
+
+    // Add self to parent's update list
+    parent.addToUpdateList(this);
     }
   
     init() {
@@ -151,9 +159,17 @@ import { Group,
       exhaust.position.set(-2.5, 1, -0.75);
       this.add(exhaust);
     }
+    update(timeStamp) {
+        if (this.state.bob) {
+            // Bob back and forth
+            this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+        }
+
+        // Advance tween animations, if any exist
+        TWEEN.update();
+    }
   
+}
   
-  }
-  
-  export default Car;
+export default Car;
   
