@@ -4,3 +4,4 @@ export * from './Car';
 export * from './Coin';
 export * from './Fox';
 export * from './Tree';
+export * from './Building';
