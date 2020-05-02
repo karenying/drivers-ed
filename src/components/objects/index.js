@@ -8,3 +8,4 @@ export * from './FemalePedestrianJeans';
 export * from './Coin';
 export * from './Gem';
 export * from './Car';
+export * from './Frist';

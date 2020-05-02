@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, MeshLambertMaterial} from 'three';
-import { Land, Road, Gem, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
+import { Frist, Road, Gem, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
 import { Car } from '../objects';
 
@@ -195,9 +195,14 @@ class SeedScene extends Scene {
 
         var road = new Road();
         road.position.set(0, -1, 0);
+
         var car = new Car(this);
         car.position.set(-60, 0, 0);
-        this.add(road, car, lights);
+
+        var frist = new Frist();
+        frist.position.set(0, 19, 0);
+
+        this.add(frist, road, car, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
