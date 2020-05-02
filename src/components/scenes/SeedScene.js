@@ -1,6 +1,14 @@
-import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, MeshLambertMaterial} from 'three';
-import { Frist, WoodyWoo, Road, Gem, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
+import {Friend, 
+        Frist, 
+        WoodyWoo, 
+        Road, 
+        Gem, 
+        Coin, 
+        FemalePedestrianDress, 
+        MalePedestrianShorts, 
+        MalePedestrianJeans, 
+        FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
 import { Car } from '../objects';
 
@@ -205,7 +213,10 @@ class SeedScene extends Scene {
         var woodyWoo = new WoodyWoo();
         woodyWoo.position.set(0, 19, 0);
 
-        this.add(woodyWoo, road, car, lights);
+        var friend = new Friend();
+        friend.position.set(0, 19, 0);
+
+        this.add(friend, road, car, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
