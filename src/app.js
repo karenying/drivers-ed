@@ -35,6 +35,37 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
+// Add key controls for cube
+function setupKeyControls() {
+  var tester = scene.getObjectByName('tester');
+  document.onkeydown = function(e) {
+    tester.inMotion = true;
+    switch (e.keyCode) {
+      case 37:
+        tester.velocity.x += 0.1
+        tester.acceleration.x += 0.05;
+        break;
+      case 38:
+        tester.velocity.z += 0.1
+        tester.acceleration.z += 0.05;
+        break;
+      case 39:
+        tester.velocity.x -= 0.1
+        tester.acceleration.x -= 0.05;
+        break;
+      case 40:
+        tester.velocity.z -= 0.1
+        tester.acceleration.z -= 0.05;
+        break;
+    }
+  };
+  document.onkeyup = function(e) {
+    tester.inMotion = false;
+  };
+}
+
+setupKeyControls();
+
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     controls.update();
