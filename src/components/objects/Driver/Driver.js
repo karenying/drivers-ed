@@ -1,5 +1,6 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import MODEL from './model.gltf';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import * as THREE from 'three';
 
@@ -10,10 +11,15 @@ class Driver extends Group {
     
     this.name = 'driver';
 
-    var geometry = new THREE.CubeGeometry(1, 1, 1);
-    var material = new THREE.MeshNormalMaterial(); // { color: 0xffff00 }
-    const driver = new THREE.Mesh(geometry, material);
-    this.add(driver);
+    // var geometry = new THREE.CubeGeometry(1, 1, 1);
+    // var material = new THREE.MeshNormalMaterial(); // { color: 0xffff00 }
+    // const driver = new THREE.Mesh(geometry, material);
+    // this.add(driver);
+    
+    const loader = new GLTFLoader();
+    loader.load(MODEL, (gltf) => {
+        this.add(gltf.scene);
+    });
         
     this.inMotion = false; // whether the car is being actively controlled
     this.velocity = new THREE.Vector3(); // current velocity of car
