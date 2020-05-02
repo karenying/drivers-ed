@@ -6,13 +6,12 @@ class Road extends Group {
         super();
 
         var material = new MeshLambertMaterial({
-            color: 0x3b3b3b,
+            color: 0x1f1e1e,
             flatShading: true,
         });
 
-        var coneGeometry = new ConeGeometry(2, 100, 40);
-        var road = new Mesh(coneGeometry, material);
-
+        var boxGeometry = new BoxGeometry(500, 2, 15);
+        var road = new Mesh(boxGeometry, material);
         this.add(road);
     }
 }

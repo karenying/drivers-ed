@@ -7,3 +7,4 @@ export * from './FemalePedestrianDress';
 export * from './FemalePedestrianJeans';
 export * from './Coin';
 export * from './Gem';
+export * from './Car';

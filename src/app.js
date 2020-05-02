@@ -16,7 +16,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(-1, -22, -2);
+camera.position.set(-80, 11, 0);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -41,6 +41,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
+    //console.log(camera.position)
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

@@ -2,6 +2,7 @@ import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, MeshLambertMaterial} from 'three';
 import { Land, Road, Gem, Coin, FemalePedestrianDress, MalePedestrianShorts, MalePedestrianJeans, FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
+import { Car } from '../objects';
 
 class SeedScene extends Scene {
     constructor() {
@@ -15,7 +16,7 @@ class SeedScene extends Scene {
 
         // Set background to a nice color
         this.background = new Color(0xa7ccd1);
-        this.fog = new Fog(0xa7ccd1, 5, 25);
+        this.fog = new Fog(0xa7ccd1, 80, 300);
 
         // // Add meshes to scene
         // var mashaMaterials = {
@@ -193,8 +194,10 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
 
         var road = new Road();
-        road.position.set(0, 0, 0);
-        this.add(road, lights);
+        road.position.set(0, -1, 0);
+        var car = new Car();
+        car.position.set(-60, 0, 0);
+        this.add(road, car, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
