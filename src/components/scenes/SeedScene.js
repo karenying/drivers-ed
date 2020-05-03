@@ -1,5 +1,6 @@
 import { Fog, Scene, Color, MeshLambertMaterial} from 'three';
-import {Firestone,
+import {Fine,
+        Firestone,
         Friend, 
         Frist, 
         WoodyWoo, 
@@ -220,7 +221,10 @@ class SeedScene extends Scene {
         var firestone = new Firestone();
         firestone.position.set(0, 19, 0);
 
-        this.add(firestone, road, car, lights);
+        var fine = new Fine();
+        fine.position.set(0, 40, 0);
+
+        this.add(fine, road, car, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
