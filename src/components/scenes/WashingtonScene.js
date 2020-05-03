@@ -42,7 +42,6 @@ class RoadScene extends Scene {
 
     update(timeStamp) {
         const { updateList } = this.state;
-        // this.position.z++;
 
         for (const obj of updateList) {
             obj.update(timeStamp);
