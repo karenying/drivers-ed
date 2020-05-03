@@ -25,7 +25,7 @@ class SeedScene extends Scene {
         const fox = new Fox(this);
         const tree = new Tree(this);
         const building = new Building(this);
-        building.state.type = 2;
+        building.state.type = 3;
         building.init();
         tree.state.type = 2;
         tree.create();

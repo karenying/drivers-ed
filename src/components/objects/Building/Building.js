@@ -20,6 +20,8 @@ var Colors = {
   sandstone: 0x8f7d5b,
   green: 0x739c8d,
   blue: 0x27255c,
+  darkgray: 0x8f8f8f,
+  lightgray: 0x969696,
 };
 
 // materials
@@ -66,6 +68,14 @@ let blueMat = new MeshToonMaterial({
   flatShading: true,
   side: DoubleSide,
 })
+let stoneMat = new MeshToonMaterial({
+    color: Colors.darkgray,
+    flatShading: true,
+});
+let stone2Mat = new MeshToonMaterial({
+    color: Colors.lightgray,
+    flatShading: true,
+});
 
 function createCylinder(x, y, z, s, color, dx, dy, dz) {
   let geo = new CylinderGeometry(x, y, z, s);
@@ -393,6 +403,60 @@ class Building extends Group {
       let bigPlaneGeo = new PlaneGeometry(0.2, 0.3, 0.01);
       makeWindow(0.125, 0.175, bigPlaneGeo, windowMat, bigWindow);
       building.add(bigWindow);
+      this.add(building);
+    }
+    else if (this.state.type == 3) {
+      let buildingGeo = new BoxGeometry(10, 3, 3);
+      let building = makeMesh(buildingGeo, stone2Mat, 0, 0, 0);
+      let topGeo = new BoxGeometry(10, 0.5, 3);
+      let top = makeMesh(topGeo, stoneMat, 0, 1.75, 0);
+
+      let turretGeo = new BoxGeometry(0.5, 0.5, 0.5);
+      let turret = makeMesh(turretGeo, stoneMat, 4.75, 0.5, -1.25);
+      let turret2 = makeMesh(turretGeo, stoneMat, 0, 0, 2.5);
+      turret.add(turret2);
+      let x = -0.8625;
+      for (let i = 0; i < 11; i++) {
+        let newTurret = makeMesh(turretGeo, stoneMat, x, 0, 0);
+        turret.add(newTurret);
+        newTurret = makeMesh(turretGeo, stoneMat, x, 0, 2.5);
+        turret.add(newTurret);
+        x -= 0.8625;
+      }
+
+      top.add(turret);
+      building.add(top);
+
+      // window
+      let windowFrameGeo = new PlaneGeometry(0.5, 1, 0.01);
+      let smallWindowGeo = new PlaneGeometry(0.5, 0.5, 0.01);
+      let windows = makeMesh(windowFrameGeo, windowMat, 4, 0.75, -1.51);
+      let smallWindow = makeMesh(smallWindowGeo, windowMat, 0, -1.25, 0);
+      let windowPaneGeo = new PlaneGeometry(0.15, 0.4, 0.01);
+      let smallPaneGeo = new PlaneGeometry(0.15, 0.15, 0.01);
+      makeWindow(0.1, 0.225, windowPaneGeo, cementMat, windows);
+      makeWindow(0.1, 0.1, smallPaneGeo, cementMat, smallWindow);
+      windows.add(smallWindow);
+      x = 1;
+      for (let i = 0; i < 8; i++) {
+        let newWindow = makeMesh(windowFrameGeo, windowMat, -x, 0, 0);
+        makeWindow(0.1, 0.225, windowPaneGeo, cementMat, newWindow);
+        windows.add(newWindow);
+        let newSmall = makeMesh(smallWindowGeo, windowMat, -x, 0, 0);
+        makeWindow(0.1, 0.1, smallPaneGeo, cementMat, newSmall);
+        smallWindow.add(newSmall);
+        x += 1;
+      }
+
+      let bigWindowGeo = new PlaneGeometry(1, 2, 0.01);
+      let bigWindow1 = makeMesh(bigWindowGeo, windowMat, 5.01, 0, 0);
+      let bigWindow2 = makeMesh(bigWindowGeo, windowMat, -5.01, 0, 0);
+      let bigPaneGeo = new PlaneGeometry(0.4, 0.9, 0.01);
+      makeWindow(0.25, 0.5, bigPaneGeo, cementMat, bigWindow1);
+      makeWindow(0.25, 0.5, bigPaneGeo, cementMat, bigWindow2);
+      bigWindow1.rotateY(3 * Math.PI / 2);
+      bigWindow2.rotateY(Math.PI / 2);
+      building.add(windows, bigWindow1, bigWindow2);
       this.add(building);
     }
   }
