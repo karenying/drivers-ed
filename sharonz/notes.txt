@@ -11,6 +11,7 @@ Ground
 - perlin noise integration?
 - shading issues
 - need textures
+- seems to be computationally inefficent
 
 app.js
 - set camera position [0, 5, -10]
