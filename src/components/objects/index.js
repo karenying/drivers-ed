@@ -11,3 +11,4 @@ export * from './Car';
 export * from './Frist';
 export * from './WoodyWoo';
 export * from './Friend';
+export * from './Firestone';
