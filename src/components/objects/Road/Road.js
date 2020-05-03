@@ -8,29 +8,33 @@ import {
 } from 'three';
 
 class Road extends Group {
-    constructor(parent) {
+    constructor(parent, color) {
         super();
 
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
         const planeGeometry = new PlaneGeometry(3, 20, 30);
         const planeMaterial = new MeshBasicMaterial({
-            color: 0x808080,
+            color,
             side: DoubleSide,
         });
 
         let plane = new Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = Math.PI / 2;
-        plane.rotation.z = Math.PI / 6;
 
-        const cubeGeometry = new BoxGeometry(0.5, 0.5, 0.5);
-        const cubeMaterial = new MeshBasicMaterial({ color: 0xffffff });
-        let cube = new Mesh(cubeGeometry, cubeMaterial);
-        cube.position.set(1, 0.25, 0);
-        cube.rotation.x = Math.PI / 2;
-        cube.rotation.z = Math.PI / 6;
-
-        this.add(plane, cube);
+        this.add(plane);
 
         parent.addToUpdateList(this);
+        // console.log(typeof this);
+    }
+
+    update(timeStamp) {
+        const { cameraPosition } = this.state;
+
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 80;
+        }
     }
 }
 

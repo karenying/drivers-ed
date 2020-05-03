@@ -4,7 +4,7 @@ import { Road } from 'objects';
 import { BasicLights } from 'lights';
 
 class RoadScene extends Scene {
-    constructor() {
+    constructor(camera) {
         super();
 
         this.state = {
@@ -13,11 +13,27 @@ class RoadScene extends Scene {
             updateList: [],
         };
 
+        this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
-        const road = new Road();
+        const colors = [
+            new Color(0x5171ff),
+            new Color(0x8c52ff),
+            new Color(0xcb6be7),
+            new Color(0xff66c5),
+            new Color(0xff5757),
+        ];
+
+        const zPositions = [0, -20, -40, -60, -80];
+
+        for (let i = 0; i < 5; i++) {
+            const road = new Road(this, colors[i]);
+            road.position.set(0, 0, zPositions[i]);
+            this.add(road);
+        }
+
         const lights = new BasicLights();
-        this.add(road, lights);
+        this.add(lights);
     }
 
     addToUpdateList(object) {
@@ -25,7 +41,8 @@ class RoadScene extends Scene {
     }
 
     update(timeStamp) {
-        this.position.z++;
+        const { updateList } = this.state;
+        // this.position.z++;
 
         for (const obj of updateList) {
             obj.update(timeStamp);
