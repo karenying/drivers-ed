@@ -17,7 +17,55 @@ var Colors = {
   wood: 0x4d2800,
   darkGreen:0x00472e,
   brown:0x4a2a0a,
+  sandstone: 0x8f7d5b,
+  green: 0x739c8d,
+  blue: 0x27255c,
 };
+
+// materials
+let buildingMat = new MeshToonMaterial({
+  color: Colors.brick,
+  flatShading: true,
+});
+let roofMat = new MeshToonMaterial({
+  color: Colors.gray,
+  flatShading: true,
+});
+let sandstoneMat = new MeshToonMaterial({
+  color: Colors.sandstone,
+  flatShading: true,
+});
+let woodMat = new MeshToonMaterial({
+  color: Colors.wood,
+  flatShading: true,
+  side: DoubleSide,
+});
+let cementMat = new MeshToonMaterial ({
+  color: Colors.cement,
+  flatShading: true,
+  side: DoubleSide,
+});
+let windowMat = new MeshToonMaterial({
+  color: Colors.gray,
+  transparent: true,
+  opacity: 0.6,
+  side: DoubleSide,
+});
+let doorMat = new MeshToonMaterial({
+  color: Colors.white,
+  side: DoubleSide,
+  opacity: 0.7,
+  transparent: true,
+});
+let greenMat = new MeshToonMaterial({
+  color: Colors.green,
+  flatShading: true,
+});
+let blueMat = new MeshToonMaterial({
+  color: Colors.blue,
+  flatShading: true,
+  side: DoubleSide,
+})
 
 function createCylinder(x, y, z, s, color, dx, dy, dz) {
   let geo = new CylinderGeometry(x, y, z, s);
@@ -56,6 +104,24 @@ function makeWindow(x, y, geo, mat, object) {
     object.add(pane);
   }
 }
+
+function makeRoof(object, x, z) {
+  object.vertices[0].z -= z;
+  object.vertices[0].x -= x;
+  object.vertices[1].z += z;
+  object.vertices[1].x -= x;
+  object.vertices[5].z -= z;
+  object.vertices[5].x += x;
+  object.vertices[4].z += z;
+  object.vertices[4].x += x;
+}
+
+function makeTriangleRoof(object, x) {
+  object.vertices[5].x += x;
+  object.vertices[4].x += x;
+  object.vertices[0].x -= x;
+  object.vertices[1].x -= x;
+}
 class Building extends Group {
 
   constructor(parent) {
@@ -70,20 +136,10 @@ class Building extends Group {
       // Colonial Club
       // base of building
       let buildingGeo = new BoxGeometry(6, 1.7, 3);
-      let buildingMat = new MeshToonMaterial({
-        color: Colors.brick,
-        flatShading: true,
-      });
       let building = makeMesh(buildingGeo, buildingMat, 0, 0, 0);
 
       // doors
       let doorGeo = new PlaneGeometry(0.4, 0.7, 0.2);
-      let doorMat = new MeshToonMaterial({
-        color: Colors.white,
-        side: DoubleSide,
-        opacity: 0.7,
-        transparent: true,
-      });
       let windowGeo = new PlaneGeometry(0.2, 0.3, 0.2);
 
       let doors = makeMesh(doorGeo, doorMat, 0, -0.45, -1.6);
@@ -110,18 +166,7 @@ class Building extends Group {
 
       // roof
       let roofGeo = new BoxGeometry(6, 1, 3);
-      roofGeo.vertices[0].z -= 1;
-      roofGeo.vertices[0].x -= 1;
-      roofGeo.vertices[1].z += 1;
-      roofGeo.vertices[1].x -= 1;
-      roofGeo.vertices[5].z -= 1;
-      roofGeo.vertices[5].x += 1;
-      roofGeo.vertices[4].z += 1;
-      roofGeo.vertices[4].x += 1;
-      let roofMat = new MeshToonMaterial({
-        color: Colors.gray,
-        flatShading: true,
-      });
+      makeRoof(roofGeo, 1, 1);
       let roof = makeMesh(roofGeo, roofMat, 0, 1.5, 0);
       roof.name = 'roof';
 
@@ -133,11 +178,7 @@ class Building extends Group {
       let awning = makeMesh(awningGeo, awningMat, 0, -0.55, 0);
 
       let chimneyGeo = new CylinderGeometry(0.2, 0.2, 1.8);
-      let chimneyMat = new MeshToonMaterial({
-        color: Colors.brick,
-        flatShading: true,
-      });
-      let chimney = makeMesh(chimneyGeo, chimneyMat, -2, 0, 1);
+      let chimney = makeMesh(chimneyGeo, buildingMat, -2, 0, 1);
 
       roof.add(awning, chimney);
       // small white roof
@@ -165,32 +206,6 @@ class Building extends Group {
       this.add(roof, roof2, pillar);
     } else if (this.state.type == 1) {
       // Cap and Gown Club
-
-      // materials
-      let buildingMat = new MeshToonMaterial({
-        color: Colors.brick,
-        flatShading: true,
-      });
-      let roofMat = new MeshToonMaterial({
-        color: Colors.gray,
-        flatShading: true,
-      });
-      let woodMat = new MeshToonMaterial({
-        color: Colors.wood,
-        flatShading: true,
-        side: DoubleSide,
-      });
-      let cementMat = new MeshToonMaterial ({
-        color: Colors.cement,
-        flatShading: true,
-        side: DoubleSide,
-      });
-      let windowMat = new MeshToonMaterial({
-        color: Colors.gray,
-        transparent: true,
-        opacity: 0.6,
-        side: DoubleSide,
-      });
       // shapes
       let buildingGeo = new BoxGeometry(7, 3, 3);
       let building = makeMesh(buildingGeo, buildingMat, 0, 0, 0);
@@ -237,14 +252,7 @@ class Building extends Group {
       // roof
       let roof1Geo = new BoxGeometry(7, 1, 3);
       //adjust roof verts
-      roof1Geo.vertices[0].z -= 1;
-      roof1Geo.vertices[0].x -= 1;
-      roof1Geo.vertices[1].z += 1;
-      roof1Geo.vertices[1].x -= 1;
-      roof1Geo.vertices[5].z -= 1;
-      roof1Geo.vertices[5].x += 1;
-      roof1Geo.vertices[4].z += 1;
-      roof1Geo.vertices[4].x += 1;
+      makeRoof(roof1Geo, 1, 1);
       let chimney1Geo = new CylinderGeometry(0.3, 0.3, 2, 4);
       chimney1Geo.rotateY(Math.PI / 4);
       let chimney1 = makeMesh(chimney1Geo, buildingMat, 1.5, -0.5, -1.3);
@@ -257,11 +265,8 @@ class Building extends Group {
       let annex = makeMesh(annexGeo, buildingMat, 2.5, 0, -2);
       let annexRoofGeo = new BoxGeometry(2, 1, 2);
       // fix annex roof geo
-      annexRoofGeo.vertices[5].x += 1;
-      annexRoofGeo.vertices[4].x += 1;
+      makeTriangleRoof(annexRoofGeo, 1);
       annexRoofGeo.vertices[0].z += 0.5;
-      annexRoofGeo.vertices[0].x -= 1;
-      annexRoofGeo.vertices[1].x -= 1;
       annexRoofGeo.vertices[2].z -= 0.5;
       let annexRoof = makeMesh(annexRoofGeo, roofMat, 0, 2, 0);
       let annexRoof2Geo = new BoxGeometry(2, 1, 0.001);
@@ -283,6 +288,112 @@ class Building extends Group {
       tree.rotateY(Math.PI / 4);
       tree.scale.set(0.5, 0.6, 0.5);
       this.add(building, tree);
+    }
+    else if (this.state.type == 2) {
+      // Nassau Hall
+
+      // main building
+      let buildingGeo = new BoxGeometry(8, 2, 3);
+      let building = makeMesh(buildingGeo, sandstoneMat, 0, 0, 0);
+      let building2Geo = new BoxGeometry(2, 2, 0.5);
+      let building2 = makeMesh(building2Geo, sandstoneMat, 0, 0, -1.75);
+
+
+      // roof
+      let roofGeo = new BoxGeometry(8, 0.5, 3);
+      makeRoof(roofGeo, 1, 1);
+      let roof = makeMesh(roofGeo, roofMat, 0, 1.25, 0);
+      let roof2Geo = new BoxGeometry(2, 0.5, 0.5);
+      makeTriangleRoof(roof2Geo, 1);
+      let roof2 = makeMesh(roof2Geo, roofMat, 0, 1.25, 0);
+      let roof2ColorGeo = new BoxGeometry(2, 0.5, 0.001);
+      roof2ColorGeo.vertices[0].x -= 1;
+      roof2ColorGeo.vertices[1].x -= 1;
+      roof2ColorGeo.vertices[5].x += 1;
+      roof2ColorGeo.vertices[4].x += 1;
+      let roof2Color = makeMesh(roof2ColorGeo, sandstoneMat, 0, 0, -0.25);
+      roof2.add(roof2Color);
+      building2.add(roof2);
+      building.add(roof, building2);
+
+      // tower
+      let towerGeo = new BoxGeometry(1.5, 1.5, 2);
+      makeTriangleRoof(towerGeo, 0.3);
+      let tower = makeMesh(towerGeo, cementMat, 0, 1.25, 0);
+      let shaftGeo = new CylinderGeometry(0.1, 0.1, 1.5, 5);
+      let shaft = makeMesh(shaftGeo, cementMat, 0.25, 1.25, 0);
+      let shaft2 = makeMesh(shaftGeo, cementMat, -0.25, 1.25, 0);
+      let shaft3 = makeMesh(shaftGeo, cementMat, 0, 1.25, -0.3);
+      let shaft4 = makeMesh(shaftGeo, cementMat, 0, 1.25, 0.3);
+      let topBoxGeo = new BoxGeometry(0.75, 0.2, 1);
+      let topBox = makeMesh(topBoxGeo, cementMat, 0, 2, 0);
+      let topGeo = new BoxGeometry(0.75, 0.75, 1);
+      makeTriangleRoof(topGeo, 0.2);
+      let top = makeMesh(topGeo, greenMat, 0, 2.45, 0);
+      tower.add(shaft, shaft2, shaft3, shaft4, topBox, top);
+      building.add(tower);
+
+      // door
+      let doorGeo = new PlaneGeometry(0.5, 1, 0.01);
+      let door = makeMesh(doorGeo, blueMat, 0, -0.5, -2.01);
+      building.add(door);
+
+      // window
+      let windowGeo = new PlaneGeometry(0.2, 0.3, 0.01);
+      let windowPaneGeo = new PlaneGeometry(0.08, 0.1, 0.01);
+      let x = 3.75;
+      for (let i = 0; i < 8; i++) {
+        let topWindow = makeMesh(windowGeo, cementMat, x, 0.6, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, topWindow);
+        let middleWindow = makeMesh(windowGeo, cementMat, x, 0, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, middleWindow);
+        let bottomWindow = makeMesh(windowGeo, cementMat, x, -0.6, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, bottomWindow);
+        building.add(topWindow, middleWindow, bottomWindow);
+        x -= 0.35;
+      }
+      x = 0.8;
+      for (let i = 0; i < 2; i++) {
+        let topWindow = makeMesh(windowGeo, cementMat, x, 0.6, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, topWindow);
+        let middleWindow = makeMesh(windowGeo, cementMat, x, 0, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, middleWindow);
+        let bottomWindow = makeMesh(windowGeo, cementMat, x, -0.6, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, bottomWindow);
+        building.add(topWindow, middleWindow, bottomWindow);
+        x -= 0.35;
+      }
+
+      x = -3.75
+      for (let i = 0; i < 8; i++) {
+        let topWindow = makeMesh(windowGeo, cementMat, x, 0.6, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, topWindow);
+        let middleWindow = makeMesh(windowGeo, cementMat, x, 0, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, middleWindow);
+        let bottomWindow = makeMesh(windowGeo, cementMat, x, -0.6, -1.51);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, bottomWindow);
+        building.add(topWindow, middleWindow, bottomWindow);
+        x += 0.35;
+      }
+
+      x = -0.8;
+      for (let i = 0; i < 2; i++) {
+        let topWindow = makeMesh(windowGeo, cementMat, x, 0.6, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, topWindow);
+        let middleWindow = makeMesh(windowGeo, cementMat, x, 0, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, middleWindow);
+        let bottomWindow = makeMesh(windowGeo, cementMat, x, -0.6, -2.01);
+        makeWindow(0.05, 0.06, windowPaneGeo, windowMat, bottomWindow);
+        building.add(topWindow, middleWindow, bottomWindow);
+        x += 0.35;
+      }
+
+      let bigWindowGeo = new PlaneGeometry(0.5, 0.7, 0.01);
+      let bigWindow = makeMesh(bigWindowGeo, cementMat, 0, 0.5, -2.01);
+      let bigPlaneGeo = new PlaneGeometry(0.2, 0.3, 0.01);
+      makeWindow(0.125, 0.175, bigPlaneGeo, windowMat, bigWindow);
+      building.add(bigWindow);
+      this.add(building);
     }
   }
 }
