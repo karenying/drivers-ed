@@ -33,7 +33,7 @@ class Road extends Group {
 
         this.position.z++;
 
-        if (this.position.z > cameraPosition.z) {
+        if (this.position.z > cameraPosition.z + 10) {
             this.position.z -= 80;
         }
     }

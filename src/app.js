@@ -6,14 +6,17 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { WashingtonScene } from 'scenes';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
 const scene = new WashingtonScene(camera);
-const renderer = new WebGLRenderer({ antialias: true });
+const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
+
+// Add fog
+scene.fog = new Fog(new Color(0xd3d3d3), 0);
 
 // Set up camera
 camera.position.set(0, 5, 20);
