@@ -1,5 +1,4 @@
-import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
+import { Scene, Color, MeshLambertMaterial } from 'three';
 import {
     Road,
     Car,
@@ -16,6 +15,7 @@ import {
     Grass,
     Lamppost,
     Coin,
+    MalePedestrianShorts,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -25,7 +25,6 @@ class Washington extends Scene {
         super();
 
         this.state = {
-            gui: new Dat.GUI(),
             updateList: [],
         };
         this.gameSpeed = 0.5;
@@ -85,6 +84,36 @@ class Washington extends Scene {
         fox.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
         this.add(fox);
         this.collidableMeshList.push(fox);
+
+        var chadMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x36699c,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0xd1c569,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            shorts: new MeshLambertMaterial({
+                color: 0xed7490,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0x72afed,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x3b2403,
+                flatShading: true
+            })
+        };
+        let chad = new MalePedestrianShorts(this, chadMaterials);
+        chad.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
+        this.add(chad);
 
         const lights = new BasicLights();
         this.add(lights, car);
