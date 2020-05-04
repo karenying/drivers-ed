@@ -28,7 +28,7 @@ class Washington extends Scene {
             gui: new Dat.GUI(),
             updateList: [],
         };
-        this.gameSpeed = 0.25;
+        this.gameSpeed = 0.5;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -82,6 +82,7 @@ class Washington extends Scene {
 
         // Add obstacle
         let fox = new Fox(this);
+        fox.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
         this.add(fox);
         this.collidableMeshList.push(fox);
 
