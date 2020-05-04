@@ -40,27 +40,27 @@ document.body.appendChild(canvas);
 // controls.update();
 
 // Add key controls for car
+
 function setupKeyControls() {
-    var car = scene.getObjectByName('car');
-    document.onkeydown = function (e) {
-        car.inMotion = true;
-        switch (e.keyCode) {
+    window.addEventListener('keydown', handleKeyDown, true);
+    const car = scene.getObjectByName('car');
+
+    function handleKeyDown(event) {
+        switch (event.keyCode) {
             case 37:
-                if (car.position.x - 0.25 > -car.maxPos) car.position.x -= 0.25;
+                if (car.position.x - 0.25 > -car.maxPos) {
+                    car.position.x -= 0.25;
+                }
                 break;
             case 39:
-                if (car.position.x + 0.25 < car.maxPos) car.position.x += 0.25;
+                if (car.position.x + 0.25 < car.maxPos) {
+                    car.position.x += 0.25;
+                }
                 break;
-            /*
-            case 38:
-                car.position.z--;
-                break;
-            case 40:
-                car.position.z++;
-                break;
-            */
+            default:
+            // code block
         }
-    };
+    }
 }
 
 setupKeyControls();
@@ -99,20 +99,22 @@ const onAnimationFrameHandler = (timeStamp) => {
     // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
-    var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
+    var collisionObj = scene.findCollisions(
+        scene.driver,
+        scene.collidableMeshList
+    );
     if (collisionObj !== undefined) {
-      // console.log(collisionObj.name);
-      if (collisionObj.name === 'coin') {
-        if (!collisionObj.collected) score += 1; // only collect object if not already collected
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        collisionObj.onCollision();
-      }
-      else if (collisionObj.name === 'fox') {
-        if (!collisionObj.collected) score -= 5;
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        document.getElementById('item').innerHTML = 'You hit a fox!';
-        collisionObj.onCollision();
-      }
+        // console.log(collisionObj.name);
+        if (collisionObj.name === 'coin') {
+            if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            collisionObj.onCollision();
+        } else if (collisionObj.name === 'fox') {
+            if (!collisionObj.collected) score -= 5;
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            document.getElementById('item').innerHTML = 'You hit a fox!';
+            collisionObj.onCollision();
+        }
     }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
