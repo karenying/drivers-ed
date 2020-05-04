@@ -1,0 +1,17 @@
+Driver
+- dummy mesh
+- added physics and drag using tweens
+- added boundaries
+
+Pedestrian
+- need to figure out scene removal once pedestrian has finished crossing street
+- need to figure out GLTF issue
+
+Ground
+- perlin noise integration?
+- shading issues
+- need textures
+- seems to be computationally inefficient
+
+app.js
+- set camera position [0, 5, -10]
