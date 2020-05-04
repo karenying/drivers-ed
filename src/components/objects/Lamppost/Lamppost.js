@@ -44,13 +44,15 @@ function makeMesh(geo, mat, dx, dy, dz) {
 class Lamppost extends Group {
   constructor(parent) {
     super();
-
+    debugger;
     this.state = {
-      night: true,
+      night: parent.state.night,
+      cameraPosition: parent.camera.position,
     }
 
     this.init();
     this.name = 'lamppost';
+    parent.addToUpdateList(this);
   }
 
   init() {
@@ -58,20 +60,27 @@ class Lamppost extends Group {
     let post = makeMesh(postGeo, postMat, 0, 0, 0);
 
     let lampGeo = new SphereGeometry(0.25, 8, 6);
-    if (this.state.night) {
-      let lamp = makeMesh(lampGeo, lampNightMat, 0, 0.6, 0);
-      post.add(lamp);
+    let lamp = makeMesh(lampGeo, lampMat, 0, 0.6, 0);
+    post.add(lamp);
 
-      let light = new PointLight(0xf5cc00, 2, 5 );
+    if (this.state.night) {
+      let light = new PointLight(0xf5cc00, 7, 2.5 );
       light.position.set(0, 0.6, 0);
       this.add(light);
-    } else {
-      let lamp = makeMesh(lampGeo, lampMat, 0, 0.6, 0);
-      post.add(lamp);
     }
 
     this.add(post);
     this.position.set(-2.6, 0.8, 0);
+  }
+
+  update(timestamp) {
+      const { cameraPosition } = this.state;
+
+      this.position.z += 0.5;
+
+      if (this.position.z > cameraPosition.z + 10) {
+          this.position.z -= 90;
+      }
   }
 
 }

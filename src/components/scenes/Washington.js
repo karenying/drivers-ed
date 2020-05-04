@@ -26,6 +26,7 @@ class Washington extends Scene {
             gui: new Dat.GUI(),
             gameSpeed: 1,
             updateList: [],
+            night: false, 
         };
 
         this.camera = camera;
@@ -49,10 +50,15 @@ class Washington extends Scene {
         for (let i = 0; i < 11; i++) {
             const road = new Road(this);
             const grass = new Grass(this);
+            const lamppostLeft = new Lamppost(this);
+            const lamppostRight = new Lamppost(this);
             road.position.set(0, 0, positions[i]);
             grass.position.set(0, 0, positions[i]);
-            this.add(road, grass);
+            lamppostLeft.position.set(-2.6, 1, (positions[i] + 10) / 2);
+            lamppostRight.position.set(2.6, 1, (positions[i] + 10) / 2);
+            this.add(road, grass, lamppostLeft, lamppostRight);
         }
+
 
         // Add right buildings
         let fine = new Fine(this);
@@ -73,10 +79,10 @@ class Washington extends Scene {
         let fox = new Fox(this);
         this.add(fox);
 
+
         const car = new Car(this);
-        const lamppost = new Lamppost(this);
         const lights = new BasicLights();
-        this.add(lights, car, lamppost);
+        this.add(lights, car);
     }
 
     addToUpdateList(object) {
