@@ -27,11 +27,7 @@ class Washington extends Scene {
             updateList: [],
         };
 
-<<<<<<< HEAD
         this.gameSpeed = 0.5;
-=======
-        this.gameSpeed = 0;
->>>>>>> 846c309fc9e4adc6e5185021a2f8f9f515cdfd3b
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -89,10 +85,8 @@ class Washington extends Scene {
           this.add(coin);
           this.collidableMeshList.push(coin);
         }
-        // const coin = new Coin(this);
-        // coin.position.set(5 * Math.random() - 2, 0, -(50 + 10 * Math.random()));
-        // this.add(coin);
-        // this.collidableMeshList.push(coin);
+
+        // Add a fox?
     }
 
     addToUpdateList(object) {

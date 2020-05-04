@@ -88,7 +88,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
     if (collisionObj !== undefined && collisionObj.name === 'coin') {
-      score += 1;
+      if (!collisionObj.collected) score += 1; // only collect object if not already collected
       document.getElementById('score').innerHTML = 'Score: ' + score;
       collisionObj.onCollision();
     }
