@@ -227,7 +227,6 @@ class Nassau extends Group {
 
     update(timestamp) {
         const { cameraPosition, gameSpeed } = this.state;
-
         this.position.z += gameSpeed;
 
         if (this.position.z > cameraPosition.z + 10) {

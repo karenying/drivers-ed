@@ -15,8 +15,6 @@ class Road extends Group {
             gameSpeed: parent.gameSpeed,
         };
 
-        console.log(this.state.gameSpeed);
-
         const planeGeometry = new PlaneGeometry(5, 20);
         const planeMaterial = new MeshBasicMaterial({
             color: 0x808080,

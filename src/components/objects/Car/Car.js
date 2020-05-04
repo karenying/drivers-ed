@@ -96,7 +96,7 @@ class Car extends Group {
         carBody.position.set(0, 1, 0);
         this.add(carBody);
 
-        // creates the top of the car
+        // // creates the top of the car
         let top = new CylinderGeometry(
             0.8 / Math.sqrt(2),
             1 / Math.sqrt(2),
