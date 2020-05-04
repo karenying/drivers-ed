@@ -13,8 +13,21 @@ import {
     McCosh,
     Nassau,
     Grass,
+    Coin
 } from 'objects';
 import { BasicLights } from 'lights';
+import * as THREE from 'three';
+
+function findCollisions(obj, collidableMeshList) {
+  var thisBB = new THREE.Box3().copy(obj.bb).applyMatrix4(obj.matrixWorld);
+  for (const mesh of collidableMeshList) {
+    var thatBB = new THREE.Box3().copy(mesh.bb).applyMatrix4(mesh.matrixWorld);
+    if (thisBB.intersectsBox(thatBB)) {
+      return mesh;
+    }
+  }
+  return undefined;
+}
 
 class Washington extends Scene {
     constructor(camera) {
@@ -28,6 +41,10 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
+        
+        // List of collidable meshes
+        var collidableMeshList = [];
+        this.collidableMeshList = collidableMeshList;
 
         // Add road
         const positions = [
@@ -68,9 +85,15 @@ class Washington extends Scene {
         this.add(firestone, frist, mccosh, nassau);
 
         const car = new Car(this);
+        this.driver =  car;
 
         const lights = new BasicLights();
         this.add(lights, car);
+        
+        const coin = new Coin(this);
+        coin.position.set(0, 1, 5);
+        this.add(coin);
+        this.collidableMeshList.push(coin);
     }
 
     addToUpdateList(object) {
@@ -83,6 +106,10 @@ class Washington extends Scene {
         for (const obj of updateList) {
             obj.update(timeStamp);
         }
+        
+        // Check for collisions
+        var collisionObj = findCollisions(this.driver, this.collidableMeshList);
+        if (collisionObj !== undefined) collisionObj.onCollision();
     }
 }
 
