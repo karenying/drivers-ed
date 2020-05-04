@@ -32,13 +32,12 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-// controls.enablePan = false;
-// controls.enableZoom = false;
-// controls.minDistance = 4;
-// controls.maxDistance = 16;
-// controls.update();
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.enablePan = false;
+controls.minDistance = 4;
+controls.maxDistance = 16;
+controls.update();
 
 // Add key controls for car
 function setupKeyControls() {
@@ -82,17 +81,38 @@ scoreDiv.style.fontSize = 28 + 'px';
 scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
+// Set special items reporter
+var itemDiv = document.createElement('div');
+itemDiv.id = 'item';
+itemDiv.style.position = 'absolute';
+itemDiv.style.width = 100;
+itemDiv.style.height = 100;
+itemDiv.style.top = 20 + 'px';
+itemDiv.style.right = 20 + 'px';
+itemDiv.style.fontFamily = 'Helvetica';
+itemDiv.style.fontSize = 28 + 'px';
+itemDiv.style.color = 'white';
+document.body.appendChild(itemDiv);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    // controls.update();
+    controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
-    if (collisionObj !== undefined && collisionObj.name === 'coin') {
-      score += 1;
-      document.getElementById('score').innerHTML = 'Score: ' + score;
-      collisionObj.onCollision();
+    if (collisionObj !== undefined) {
+      // console.log(collisionObj.name);
+      if (collisionObj.name === 'coin') {
+        if (!collisionObj.collected) score += 1; // only collect object if not already collected
+        document.getElementById('score').innerHTML = 'Score: ' + score;
+        collisionObj.onCollision();
+      }
+      else if (collisionObj.name === 'fox') {
+        if (!collisionObj.collected) score -= 5;
+        document.getElementById('score').innerHTML = 'Score: ' + score;
+        document.getElementById('item').innerHTML = 'You hit a fox!';
+        collisionObj.onCollision();
+      }
     }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
