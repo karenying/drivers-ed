@@ -12,6 +12,7 @@ import {
     Frist,
     McCosh,
     Nassau,
+    Grass,
 } from 'objects';
 import { BasicLights } from 'lights';
 
@@ -29,12 +30,26 @@ class Washington extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add road
-        const roadPositions = [0, -20, -40, -60, -80];
+        const positions = [
+            0,
+            -20,
+            -40,
+            -60,
+            -80,
+            -100,
+            -120,
+            -140,
+            -160,
+            -180,
+            -200,
+        ];
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 11; i++) {
             const road = new Road(this);
-            road.position.set(0, 0, roadPositions[i]);
-            this.add(road);
+            const grass = new Grass(this);
+            road.position.set(0, 0, positions[i]);
+            grass.position.set(0, 0, positions[i]);
+            this.add(road, grass);
         }
 
         // Add right buildings
