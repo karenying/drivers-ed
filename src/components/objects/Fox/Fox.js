@@ -55,13 +55,10 @@ class Fox extends Group {
     this.state = {
       walking: true,
       bob: true,
-<<<<<<< HEAD
       speed: {
         x: 0.02,
         z: 0.2,
       },
-=======
->>>>>>> origin/master
     }
     parent.addToUpdateList(this);
     this.name = 'fox';
@@ -166,13 +163,9 @@ class Fox extends Group {
 
     this.add(face);
 
-<<<<<<< HEAD
     // set position and size
     this.position.set(-1, 0.5, -5);
     this.scale.set(0.5, 0.5, 0.5);
-
-=======
->>>>>>> origin/master
   }
 
   update(timeStamp) {
@@ -201,11 +194,9 @@ class Fox extends Group {
       // back right leg
       this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
     }
-<<<<<<< HEAD
+
     this.position.z += this.state.speed.z;
     this.position.x += this.state.speed.x;
-=======
->>>>>>> origin/master
   }
 }
 

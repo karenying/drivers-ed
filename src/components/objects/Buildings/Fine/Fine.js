@@ -55,10 +55,7 @@ class Fine extends Group {
 
         this.state = {
             cameraPosition: parent.camera.position,
-<<<<<<< HEAD
-=======
             gameSpeed: parent.gameSpeed,
->>>>>>> origin/master
         };
 
         var materials = {
@@ -107,15 +104,9 @@ class Fine extends Group {
     }
 
     update(timestamp) {
-<<<<<<< HEAD
-        const { cameraPosition } = this.state;
-
-        this.position.z += 0.5;
-=======
         const { cameraPosition, gameSpeed } = this.state;
-
         this.position.z += gameSpeed;
->>>>>>> origin/master
+
 
         if (this.position.z > cameraPosition.z + 10) {
             this.position.z -= 90;

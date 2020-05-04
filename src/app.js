@@ -9,10 +9,7 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
-<<<<<<< HEAD
-=======
 import * as THREE from 'three';
->>>>>>> origin/master
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -35,12 +32,13 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 16;
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.enablePan = false;
+// controls.enableZoom = false;
+// controls.minDistance = 4;
+// controls.maxDistance = 16;
+// controls.update();
 
 // Add key controls for car
 function setupKeyControls() {
@@ -49,21 +47,10 @@ function setupKeyControls() {
         car.inMotion = true;
         switch (e.keyCode) {
             case 37:
-<<<<<<< HEAD
-              if (car.position.x > -2) {
-                car.position.x -= 0.25;
-              }
-                break;
-            case 39:
-              if (car.position.x < 2) {
-                car.position.x += 0.25;
-              }
-=======
                 if (car.position.x - 0.25 > -car.maxPos) car.position.x -= 0.25;
                 break;
             case 39:
                 if (car.position.x + 0.25 < car.maxPos) car.position.x += 0.25;
->>>>>>> origin/master
                 break;
             /*
             case 38:
@@ -79,8 +66,6 @@ function setupKeyControls() {
 
 setupKeyControls();
 
-<<<<<<< HEAD
-=======
 // Set up score
 var score = 0;
 
@@ -97,10 +82,10 @@ scoreDiv.style.fontSize = 28 + 'px';
 scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
->>>>>>> origin/master
+
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    controls.update();
+    // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);

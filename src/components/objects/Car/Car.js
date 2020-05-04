@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import * as THREE from 'three';
->>>>>>> origin/master
 import {
     Group,
     Mesh,
