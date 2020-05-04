@@ -9,6 +9,9 @@ class BasicLights extends Group {
         const ambi = new AmbientLight(0x404040, 1.32);
         const hemi = new HemisphereLight(0xffffbb, 0x080820, 2.3);
 
+        // night mode values
+        // const ambi = new AmbientLight(0x404040, 0.2);
+        // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
         dir.position.set(5, 1, 2);
         dir.target.position.set(0, 0, 0);
 

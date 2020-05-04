@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Group,
   Mesh,
   MeshPhysicalMaterial,
@@ -155,6 +156,8 @@ class Car extends Group {
 
 
 =======
+=======
+>>>>>>> dora-2
 import * as THREE from 'three';
 import {
     Group,
@@ -257,7 +260,7 @@ class Car extends Group {
         carBody.position.set(0, 1, 0);
         this.add(carBody);
 
-        // creates the top of the car
+        // // creates the top of the car
         let top = new CylinderGeometry(
             0.8 / Math.sqrt(2),
             1 / Math.sqrt(2),
@@ -404,7 +407,10 @@ class Car extends Group {
         this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
         this.children[11].rotation.z = Math.sin(timeStamp / 200);
     }
+<<<<<<< HEAD
 >>>>>>> 97b501444079817a1365b0a672efeec9ee99f0e1
+=======
+>>>>>>> dora-2
 }
 
 export default Car;

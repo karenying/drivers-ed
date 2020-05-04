@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Group,
   Mesh,
   MeshToonMaterial,
@@ -57,6 +58,8 @@ class Coin extends Group {
   }
 
 =======
+=======
+>>>>>>> dora-2
 import * as THREE from 'three';
 
 import {
@@ -137,7 +140,10 @@ class Coin extends Group {
         this.position.z = -(this.parent.fog.far + 50 * Math.random());
         this.speed = 0.1 + Math.random() * 0.5;
     }
+<<<<<<< HEAD
 >>>>>>> 97b501444079817a1365b0a672efeec9ee99f0e1
+=======
+>>>>>>> dora-2
 }
 
 export default Coin;
