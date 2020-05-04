@@ -24,9 +24,10 @@ class Washington extends Scene {
 
         this.state = {
             gui: new Dat.GUI(),
-            gameSpeed: 1,
             updateList: [],
         };
+
+        this.gameSpeed = 0;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
