@@ -75,11 +75,6 @@ class Car extends Group {
     constructor(parent) {
         super();
 
-<<<<<<< HEAD
-        this.init();
-
-        this.name = 'car';
-=======
         this.name = 'car';
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -92,7 +87,6 @@ class Car extends Group {
         this.maxPos = 2.5;
 
         this.init();
->>>>>>> origin/master
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
@@ -109,11 +103,7 @@ class Car extends Group {
         carBody.position.set(0, 1, 0);
         this.add(carBody);
 
-<<<<<<< HEAD
         // // creates the top of the car
-=======
-        // creates the top of the car
->>>>>>> origin/master
         let top = new CylinderGeometry(
             0.8 / Math.sqrt(2),
             1 / Math.sqrt(2),
@@ -242,8 +232,6 @@ class Car extends Group {
         this.scale.set(0.3, 0.3, 0.3);
         this.position.set(0, 0, 10);
         this.rotation.y = Math.PI / 2;
-<<<<<<< HEAD
-=======
 
         // compute bounding box
         for (const mesh of this.children) {
@@ -255,7 +243,6 @@ class Car extends Group {
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
         this.add(bbHelper);
->>>>>>> origin/master
     }
 
     update(timeStamp) {
