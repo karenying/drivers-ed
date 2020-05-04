@@ -30,7 +30,7 @@ class Road extends Group {
     update(timestamp) {
         const { cameraPosition } = this.state;
 
-        this.position.z++;
+        // this.position.z++;
 
         if (this.position.z > cameraPosition.z + 10) {
             this.position.z -= 80;
