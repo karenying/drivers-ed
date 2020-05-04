@@ -40,30 +40,30 @@ controls.update();
 
 // Add key controls for car
 function setupKeyControls() {
-    var driver = scene.getObjectByName('driver');
+    var car = scene.getObjectByName('car');
     document.onkeydown = function (e) {
-        driver.inMotion = true;
+        car.inMotion = true;
         switch (e.keyCode) {
             case 37:
-                driver.velocity.x += 0.1;
-                driver.acceleration.x += 0.05;
+                car.velocity.x += 0.1;
+                car.acceleration.x += 0.05;
                 break;
             case 38:
-                driver.velocity.z += 0.1;
-                driver.acceleration.z += 0.05;
+                car.velocity.z += 0.1;
+                car.acceleration.z += 0.05;
                 break;
             case 39:
-                driver.velocity.x -= 0.1;
-                driver.acceleration.x -= 0.05;
+                car.velocity.x -= 0.1;
+                car.acceleration.x -= 0.05;
                 break;
             case 40:
-                driver.velocity.z -= 0.1;
-                driver.acceleration.z -= 0.05;
+                car.velocity.z -= 0.1;
+                car.acceleration.z -= 0.05;
                 break;
         }
     };
     document.onkeyup = function (e) {
-        driver.inMotion = false;
+        car.inMotion = false;
     };
 }
 
