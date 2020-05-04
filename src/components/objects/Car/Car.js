@@ -226,12 +226,13 @@ class Car extends Group {
         exhaust.position.set(-2.5, 1, -0.75);
         this.add(exhaust);
 
-        this.scale.set(0.4, 0.4, 0.4);
+        this.scale.set(0.3, 0.3, 0.3);
         this.position.set(0, 0, 10);
         this.rotation.y = Math.PI / 2;
     }
 
     update(timeStamp) {
+        /*
         const accDelayFactor = 200; // tween delay for acceleration
         const velDelayFactor = 100; // tween delay for velocity
 
@@ -269,7 +270,7 @@ class Car extends Group {
         xShift.start();
         zShift.start();
 
-        TWEEN.update();
+        TWEEN.update(); */
     }
 }
 

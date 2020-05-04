@@ -45,25 +45,20 @@ function setupKeyControls() {
         car.inMotion = true;
         switch (e.keyCode) {
             case 37:
-                car.velocity.x += 0.1;
-                car.acceleration.x += 0.05;
-                break;
-            case 38:
-                car.velocity.z += 0.1;
-                car.acceleration.z += 0.05;
+                car.position.x -= 0.25;
                 break;
             case 39:
-                car.velocity.x -= 0.1;
-                car.acceleration.x -= 0.05;
+                car.position.x += 0.25;
+                break;
+            /*
+            case 38:
+                car.position.z--;
                 break;
             case 40:
-                car.velocity.z -= 0.1;
-                car.acceleration.z -= 0.05;
+                car.position.z++;
                 break;
+            */
         }
-    };
-    document.onkeyup = function (e) {
-        car.inMotion = false;
     };
 }
 
