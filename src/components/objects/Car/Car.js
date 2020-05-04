@@ -77,14 +77,6 @@ class Car extends Group {
 
         this.name = 'car';
 
-        this.inMotion = false; // whether the car is being actively controlled
-        this.velocity = new Vector3(); // current velocity of car
-        this.acceleration = new Vector3(); // current acceleration of car
-        this.deltaT = 0.1;
-
-        this.maxSpeed = 10; // maximum speed in any direction
-        this.maxPos = 5; // furthest displacement in any direction
-
         // Add self to parent's update list
         parent.addToUpdateList(this);
     }
@@ -231,47 +223,7 @@ class Car extends Group {
         this.rotation.y = Math.PI / 2;
     }
 
-    update(timeStamp) {
-        /*
-        const accDelayFactor = 200; // tween delay for acceleration
-        const velDelayFactor = 100; // tween delay for velocity
-
-        if (!this.inMotion) {
-            const xDecelerate = new TWEEN.Tween(this.velocity).to(
-                { x: 0 },
-                accDelayFactor * (1 - this.velocity.x / this.maxSpeed)
-            );
-            const zDecelerate = new TWEEN.Tween(this.velocity).to(
-                { z: 0 },
-                accDelayFactor * (1 - this.velocity.x / this.maxSpeed)
-            );
-
-            if (Math.abs(this.velocity.x) > 10e-3) xDecelerate.start();
-            if (Math.abs(this.velocity.z) > 10e-3) zDecelerate.start();
-        }
-
-        var newX = this.position.x + this.velocity.x;
-        if (newX > this.maxPos) newX = this.maxPos;
-        if (newX < -this.maxPos) newX = -this.maxPos;
-
-        var newZ = this.position.z + this.velocity.z;
-        if (newZ > this.maxPos) newZ = this.maxPos;
-        if (newZ < -this.maxPos) newZ = -this.maxPos;
-
-        const xShift = new TWEEN.Tween(this.position).to(
-            { x: newX },
-            velDelayFactor * (1 - this.velocity.x / this.maxSpeed)
-        );
-        const zShift = new TWEEN.Tween(this.position).to(
-            { z: newZ },
-            velDelayFactor * (1 - this.velocity.z / this.maxSpeed)
-        );
-
-        xShift.start();
-        zShift.start();
-
-        TWEEN.update(); */
-    }
+    update(timeStamp) {}
 }
 
 export default Car;
