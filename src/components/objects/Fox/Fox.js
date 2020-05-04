@@ -50,7 +50,6 @@ function makeLeg(x, y, z, color, dx, dy, dz) {
 class Fox extends Group {
   constructor(parent) {
     super();
-    this.init();
 
     this.state = {
       walking: true,
@@ -58,6 +57,14 @@ class Fox extends Group {
     }
     parent.addToUpdateList(this);
     this.name = 'fox';
+    
+    // Create bounding box
+    var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+    this.bb = bb;
+    this.speed = 0.1 + Math.random() * 0.5;
+    this.collected = false;
+    
+    this.init();
   }
 
   init() {

@@ -14,6 +14,7 @@ import {
     Nassau,
     Grass,
     Coin,
+    Fox
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -81,12 +82,15 @@ class Washington extends Scene {
         // Add some coins
         for (let i = 0; i < 5; i++) {
           var coin = new Coin(this);
-          coin.position.set(car.maxPos * Math.random() - 2, 0, -(50 + 5 * i * Math.random()));
+          coin.position.set(2 * car.maxPos * Math.random() - car.maxPos, 0, -(50 + 5 * i * Math.random()));
           this.add(coin);
           this.collidableMeshList.push(coin);
         }
 
-        // Add a fox?
+        // Add fox
+        const fox = new Fox(this);
+        this.add(fox);
+        fox.position.set(car.maxPos, 0, -(50 + 10 * Math.random()));
     }
 
     addToUpdateList(object) {

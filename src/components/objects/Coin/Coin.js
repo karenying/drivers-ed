@@ -22,6 +22,7 @@ class Coin extends Group {
     parent.addToUpdateList(this);
     this.name = 'coin';
 
+    // Create bounding box
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
     this.speed = 0.1 + Math.random() * 0.5;
