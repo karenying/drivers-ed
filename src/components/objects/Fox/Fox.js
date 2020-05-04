@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+
 import {
     Group,
     Mesh,
@@ -59,9 +62,10 @@ class Fox extends Group {
     this.name = 'fox';
     
     // Create bounding box
-    var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+    var bb = new THREE.Box3(new THREE.Vector3(-1, -1, -1), new THREE.Vector3(1, 1, 1));
     this.bb = bb;
-    this.speed = 0.1 + Math.random() * 0.5;
+    this.position.y = 1;
+    this.speed = 0.01 + Math.random() * 0.05;
     this.collected = false;
     
     this.init();
@@ -166,6 +170,9 @@ class Fox extends Group {
 
     this.add(face);
 
+    // visualize bounding box
+    var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
+    this.add(bbHelper);
   }
 
   update(timeStamp) {
@@ -178,22 +185,68 @@ class Fox extends Group {
       };
     }
 
-    const pulseSingle = new Pulse(0.5);
-    if (this.state.bob) {
-      // Bob back and forth
-      this.rotation.x = 0.05 * Math.sin(timeStamp / 200);
-      this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
+    const pulseSingle = new Pulse(0.5);    
+    if (!this.collected) {
+      if (this.state.bob) {
+        // Bob back and forth
+        this.rotation.x = 0.05 * Math.sin(timeStamp / 200);
+        this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
+      }
+      if (this.state.walking) {
+        // front left leg
+        this.children[2].rotation.z = pulseSingle(-5, 20) * (Math.PI/180);
+        // back left leg
+        this.children[3].rotation.z = pulseSingle(-10, 20) * (Math.PI/180);
+        // front right leg
+        this.children[4].rotation.z = pulseSingle(30, -5) * (Math.PI/180);
+        // back right leg
+        this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
+      }
+      
+      // Cross the road
+      var newX = this.position.x + this.speed;
+      if (newX > this.parent.width) {
+        newX = -this.parent.width;
+        this.speed = 0.01 + Math.random() * 0.05;
+      }
+      this.position.x = newX;
+    
+      // Move towards car
+      var newZ = this.position.z + this.parent.gameSpeed;
+      if (newZ > this.parent.camera.position.z) {
+        newZ = -(this.parent.fog.far + 10 * Math.random());
+      }
+      this.position.z = newZ;
     }
-    if (this.state.walking) {
-      // front left leg
-      this.children[2].rotation.z = pulseSingle(-5, 20) * (Math.PI/180);
-      // back left leg
-      this.children[3].rotation.z = pulseSingle(-10, 20) * (Math.PI/180);
-      // front right leg
-      this.children[4].rotation.z = pulseSingle(30, -5) * (Math.PI/180);
-      // back right leg
-      this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
-    }
+
+    // Advance tween animations, if any exist
+    TWEEN.update();
+  }
+  
+  resetParams() {
+    this.position.y = 1;
+    this.speed = 0.01 + Math.random() * 0.05;
+    this.collected = false;
+  }
+
+  onCollision() {
+    this.collected = true;
+    const jumpUp = new TWEEN.Tween(this.position)
+        .to({ y: this.position.y + 1 }, 100)
+        .easing(TWEEN.Easing.Quadratic.Out);
+    const fallDown = new TWEEN.Tween(this.position)
+        .to({ y: 0 }, 300)
+        .easing(TWEEN.Easing.Quadratic.In);
+    const resetPos = new TWEEN.Tween(this.position)
+        .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+
+    // Reset position after jumping up and down
+    jumpUp.onComplete(() => fallDown.start());
+    fallDown.onComplete(() => resetPos.start());
+    resetPos.onComplete(() => this.resetParams());
+
+    // Start animation
+    jumpUp.start();
   }
 }
 

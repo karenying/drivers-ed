@@ -25,7 +25,7 @@ class Coin extends Group {
     // Create bounding box
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
-    this.speed = 0.1 + Math.random() * 0.5;
+    this.speed = parent.gameSpeed;
     this.collected = false;
 
     this.init();
@@ -72,7 +72,6 @@ class Coin extends Group {
       var newZ = this.position.z + this.speed;
       if (newZ > this.parent.camera.position.z) {
         newZ = -(this.parent.fog.far + 50 * Math.random());
-        this.speed = 0.1 + Math.random() * 0.5;
       }
       this.position.z = newZ;
     }
@@ -82,7 +81,6 @@ class Coin extends Group {
   }
 
   resetParams() {
-    this.speed = 0.1 + Math.random() * 0.5;
     this.collected = false;
   }
 

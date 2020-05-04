@@ -28,12 +28,13 @@ class Washington extends Scene {
             updateList: [],
         };
 
-        this.gameSpeed = 0.5;
+        this.gameSpeed = 0.25;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
         this.collidableMeshList = []; // List of collidable meshes
+        this.width = 10;
 
         // Add road
         const positions = [
@@ -89,8 +90,11 @@ class Washington extends Scene {
 
         // Add fox
         const fox = new Fox(this);
+        fox.scale.set(0.5, 0.5, 0.5);
         this.add(fox);
-        fox.position.set(car.maxPos, 0, -(50 + 10 * Math.random()));
+        fox.position.set(-this.width, 1, -(50 + 10 * Math.random()));
+        // console.log(fox.bb);
+        this.collidableMeshList.push(fox);
     }
 
     addToUpdateList(object) {
