@@ -6,17 +6,20 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { SeedScene } from 'scenes';
+import { Washington } from 'scenes';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene();
 const camera = new PerspectiveCamera();
-const renderer = new WebGLRenderer({ antialias: true });
+const scene = new Washington(camera);
+const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
+
+// Add fog
+scene.fog = new Fog(new Color(0x7ec0ee), 1, 50);
 
 // Set up camera
-camera.position.set(0, 7, -10);
+camera.position.set(0, 5, 20);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -35,33 +38,28 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
-// Add key controls for cube
+// Add key controls for car
 function setupKeyControls() {
-  var driver = scene.getObjectByName('car');
-  document.onkeydown = function(e) {
-    driver.inMotion = true;
-    switch (e.keyCode) {
-      case 37:
-        driver.velocity.x += 0.1
-        driver.acceleration.x += 0.05;
-        break;
-      case 38:
-        driver.velocity.z += 0.1
-        driver.acceleration.z += 0.05;
-        break;
-      case 39:
-        driver.velocity.x -= 0.1
-        driver.acceleration.x -= 0.05;
-        break;
-      case 40:
-        driver.velocity.z -= 0.1
-        driver.acceleration.z -= 0.05;
-        break;
-    }
-  };
-  document.onkeyup = function(e) {
-    driver.inMotion = false;
-  };
+    var car = scene.getObjectByName('car');
+    document.onkeydown = function (e) {
+        car.inMotion = true;
+        switch (e.keyCode) {
+            case 37:
+                car.position.x -= 0.25;
+                break;
+            case 39:
+                car.position.x += 0.25;
+                break;
+            /*
+            case 38:
+                car.position.z--;
+                break;
+            case 40:
+                car.position.z++;
+                break;
+            */
+        }
+    };
 }
 
 setupKeyControls();
