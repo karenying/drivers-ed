@@ -32,12 +32,12 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 16;
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.enablePan = false;
+// controls.minDistance = 4;
+// controls.maxDistance = 16;
+// controls.update();
 
 // Add key controls for car
 function setupKeyControls() {
@@ -96,7 +96,7 @@ document.body.appendChild(itemDiv);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    controls.update();
+    // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);

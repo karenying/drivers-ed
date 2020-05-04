@@ -44,7 +44,7 @@ function makeMesh(geo, mat, dx, dy, dz) {
 class Lamppost extends Group {
   constructor(parent) {
     super();
-    debugger;
+    // debugger;
     this.state = {
       night: parent.state.night,
       cameraPosition: parent.camera.position,

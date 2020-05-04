@@ -28,7 +28,7 @@ class Washington extends Scene {
       gui: new Dat.GUI(),
       updateList: [],
     };
-    this.gameSpeed = 1;
+    this.gameSpeed = 0.25;
 
     this.camera = camera;
     this.background = new Color(0x7ec0ee);
@@ -84,6 +84,7 @@ class Washington extends Scene {
     // Add obstacle
     let fox = new Fox(this);
     this.add(fox);
+    this.collidableMeshList.push(fox);
 
     const lights = new BasicLights();
     this.add(lights, car);
@@ -99,10 +100,6 @@ class Washington extends Scene {
       this.add(coin);
       this.collidableMeshList.push(coin);
     }
-    // const coin = new Coin(this);
-    // coin.position.set(5 * Math.random() - 2, 0, -(50 + 10 * Math.random()));
-    // this.add(coin);
-    // this.collidableMeshList.push(coin);
   }
 
   addToUpdateList(object) {
