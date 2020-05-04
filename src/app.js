@@ -9,6 +9,10 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
+<<<<<<< HEAD
+=======
+import * as THREE from 'three';
+>>>>>>> origin/master
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -45,6 +49,7 @@ function setupKeyControls() {
         car.inMotion = true;
         switch (e.keyCode) {
             case 37:
+<<<<<<< HEAD
               if (car.position.x > -2) {
                 car.position.x -= 0.25;
               }
@@ -53,6 +58,12 @@ function setupKeyControls() {
               if (car.position.x < 2) {
                 car.position.x += 0.25;
               }
+=======
+                if (car.position.x - 0.25 > -car.maxPos) car.position.x -= 0.25;
+                break;
+            case 39:
+                if (car.position.x + 0.25 < car.maxPos) car.position.x += 0.25;
+>>>>>>> origin/master
                 break;
             /*
             case 38:
@@ -68,11 +79,36 @@ function setupKeyControls() {
 
 setupKeyControls();
 
+<<<<<<< HEAD
+=======
+// Set up score
+var score = 0;
+
+var scoreDiv = document.createElement('div');
+scoreDiv.id = 'score';
+scoreDiv.style.position = 'absolute';
+scoreDiv.innerHTML = 'Score: ' + score;
+scoreDiv.style.width = 100;
+scoreDiv.style.height = 100;
+scoreDiv.style.top = 20 + 'px';
+scoreDiv.style.left = 20 + 'px';
+scoreDiv.style.fontFamily = 'Helvetica';
+scoreDiv.style.fontSize = 28 + 'px';
+scoreDiv.style.color = 'white';
+document.body.appendChild(scoreDiv);
+
+>>>>>>> origin/master
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
+    var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
+    if (collisionObj !== undefined && collisionObj.name === 'coin') {
+      score += 1;
+      document.getElementById('score').innerHTML = 'Score: ' + score;
+      collisionObj.onCollision();
+    }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -86,3 +122,13 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+
+// Collision handler
+// const collisionHandler = (scene) => {
+//   console.log('BAM!');
+//   scene.score += 1;
+//   document.getElementById('score').innerHTML = scene.score;
+// };
+// collisionHandler();
+
+// scene.addEventListener('collision', collisionHandler(scene));
