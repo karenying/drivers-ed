@@ -31,14 +31,6 @@ document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
-// Set up controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-// controls.enablePan = false;
-// controls.minDistance = 4;
-// controls.maxDistance = 16;
-// controls.update();
-
 // Add key controls for car
 function setupKeyControls() {
     var car = scene.getObjectByName('car');
@@ -127,13 +119,3 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
-
-// Collision handler
-// const collisionHandler = (scene) => {
-//   console.log('BAM!');
-//   scene.score += 1;
-//   document.getElementById('score').innerHTML = scene.score;
-// };
-// collisionHandler();
-
-// scene.addEventListener('collision', collisionHandler(scene));
