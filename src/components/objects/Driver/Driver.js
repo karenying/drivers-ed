@@ -1,6 +1,5 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './model.gltf';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import * as THREE from 'three';
 

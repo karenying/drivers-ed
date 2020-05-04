@@ -1,5 +1,11 @@
 export * from './Flower';
 export * from './Land';
+export * from './Car';
+export * from './Coin';
+export * from './Fox';
+export * from './Tree';
+export * from './Building';
 export * from './Driver';
-export * from './Pedestrian';
 export * from './Ground';
+export * from './Pedestrian';
+
