@@ -67,10 +67,8 @@ class Car extends Group {
   constructor(parent) {
     super();
 
-    this.init();
-
     this.name = 'car';
-    
+
     this.inMotion = false; // whether the car is being actively controlled
     this.velocity = new THREE.Vector3(); // current velocity of car
     this.acceleration = new THREE.Vector3(); // current acceleration of car
@@ -78,6 +76,11 @@ class Car extends Group {
 
     this.maxSpeed = 7; // maximum speed in any direction
     this.maxPos = 5; // furthest displacement in any direction
+
+    var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+    this.bb = bb;
+
+    this.init();
 
     // Add self to parent's update list
     parent.addToUpdateList(this);
@@ -94,8 +97,8 @@ class Car extends Group {
     carBody.position.set(0, 1, 0);
     this.add(carBody);
 
-    // // creates the top of the car
-    let top = new CylinderGeometry( 0.8 / Math.sqrt( 2 ), 1 / Math.sqrt( 2 ), 1, 4, 1 );
+    // creates the top of the car
+    let top = new CylinderGeometry(0.8 / Math.sqrt(2), 1 / Math.sqrt(2), 1, 4, 1);
     top.rotateY( Math.PI / 4 );
     top.computeFlatVertexNormals();
     let topMat = new MeshToonMaterial({
@@ -163,6 +166,18 @@ class Car extends Group {
     exhaust.receiveShadow = true;
     exhaust.position.set(-2.5, 1, -0.75);
     this.add(exhaust);
+
+    // compute bounding box
+    for (const mesh of this.children) {
+      var box = new THREE.Box3();
+      box.setFromObject(mesh);
+      this.bb.union(box);
+    }
+
+    // visualize bounding box
+    var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
+    this.add(bbHelper);
+
   }
 
   update(timeStamp) {
