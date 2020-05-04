@@ -31,36 +31,25 @@ document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
-// Set up controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-// controls.enablePan = false;
-// controls.minDistance = 4;
-// controls.maxDistance = 16;
-// controls.update();
-
 // Add key controls for car
 function setupKeyControls() {
-    var car = scene.getObjectByName('car');
-    document.onkeydown = function (e) {
-        car.inMotion = true;
-        switch (e.keyCode) {
+    window.addEventListener('keydown', handleKeyDown, true);
+    const car = scene.getObjectByName('car');
+
+    function handleKeyDown(event) {
+        switch (event.keyCode) {
             case 37:
-                if (car.position.x - 0.25 > -car.maxPos) car.position.x -= 0.25;
+                if (car.position.x - 0.25 > -car.maxPos) {
+                    car.position.x -= 0.25;
+                }
                 break;
             case 39:
-                if (car.position.x + 0.25 < car.maxPos) car.position.x += 0.25;
+                if (car.position.x + 0.25 < car.maxPos) {
+                    car.position.x += 0.25;
+                }
                 break;
-            /*
-            case 38:
-                car.position.z--;
-                break;
-            case 40:
-                car.position.z++;
-                break;
-            */
         }
-    };
+    }
 }
 
 setupKeyControls();
@@ -115,7 +104,10 @@ const onAnimationFrameHandler = (timeStamp) => {
     // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
-    var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
+    var collisionObj = scene.findCollisions(
+        scene.driver,
+        scene.collidableMeshList
+    );
     if (collisionObj !== undefined) {
       // console.log(collisionObj.name);
       if (collisionObj.name === 'coin') {

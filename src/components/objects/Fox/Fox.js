@@ -65,7 +65,8 @@ class Fox extends Group {
     var bb = new THREE.Box3(new THREE.Vector3(-1, -1, -1), new THREE.Vector3(1, 1, 1));
     this.bb = bb;
     this.position.y = 1;
-    this.speed = 0.01 + Math.random() * 0.05;
+    // this.speed = 0.01 + Math.random() * 0.05;
+    this.speed = 0.03;
     this.collected = false;
 
     this.init();
@@ -173,6 +174,7 @@ class Fox extends Group {
     // visualize bounding box
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
     this.add(bbHelper);
+    this.scale.set(0.5, 0.5, 0.5);
   }
 
   update(timeStamp) {
@@ -189,33 +191,32 @@ class Fox extends Group {
     if (!this.collected) {
       if (this.state.bob) {
         // Bob back and forth
-        this.rotation.x = 0.05 * Math.sin(timeStamp / 200);
+        this.rotation.x = 0.1 * Math.sin(timeStamp / 200);
         this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
       }
       if (this.state.walking) {
         // front left leg
-        this.children[2].rotation.z = pulseSingle(-5, 20) * (Math.PI/180);
+        this.children[2].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // back left leg
-        this.children[3].rotation.z = pulseSingle(-10, 20) * (Math.PI/180);
+        this.children[3].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // front right leg
-        this.children[4].rotation.z = pulseSingle(30, -5) * (Math.PI/180);
+        this.children[4].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
         // back right leg
-        this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
+        this.children[5].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
       }
 
-      // Cross the road
+      // update positions (cross road and move towards car)
       var newX = this.position.x + this.speed;
-      if (newX > this.parent.width) {
-        newX = -this.parent.width;
-        this.speed = 0.01 + Math.random() * 0.05;
+      var newZ = this.position.z + this.parent.gameSpeed;
+
+      // if fox is done crossing road or no longer visible in scene
+      if (newX > 3 || newZ > this.parent.camera.position.z) {
+        if (Math.random() <= 0.1) {
+          newZ = -(this.parent.fog.far + 10 * Math.random());
+          newX = -1 * (Math.floor(Math.random() * 4) + 2);
+        }
       }
       this.position.x = newX;
-
-      // Move towards car
-      var newZ = this.position.z + this.parent.gameSpeed;
-      if (newZ > this.parent.camera.position.z) {
-        newZ = -(this.parent.fog.far + 10 * Math.random());
-      }
       this.position.z = newZ;
     }
 
@@ -225,7 +226,8 @@ class Fox extends Group {
 
   resetParams() {
     this.position.y = 1;
-    this.speed = 0.01 + Math.random() * 0.05;
+    // this.speed = 0.01 + Math.random() * 0.05;
+    this.speed = 0.03;
     this.collected = false;
   }
 
