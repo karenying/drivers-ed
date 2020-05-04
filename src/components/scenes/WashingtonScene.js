@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Road } from 'objects';
+import { Road, Car } from 'objects';
 import { BasicLights } from 'lights';
 
 class RoadScene extends Scene {
@@ -32,8 +32,10 @@ class RoadScene extends Scene {
             this.add(road);
         }
 
+        const car = new Car(this);
+
         const lights = new BasicLights();
-        this.add(lights);
+        this.add(lights, car);
     }
 
     addToUpdateList(object) {

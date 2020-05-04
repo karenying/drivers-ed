@@ -4,7 +4,6 @@ import {
     MeshBasicMaterial,
     Mesh,
     DoubleSide,
-    BoxGeometry,
 } from 'three';
 
 class Road extends Group {
@@ -28,7 +27,7 @@ class Road extends Group {
         parent.addToUpdateList(this);
     }
 
-    update(timeStamp) {
+    update(timestamp) {
         const { cameraPosition } = this.state;
 
         this.position.z++;

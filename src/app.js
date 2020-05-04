@@ -38,6 +38,37 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
+// Add key controls for car
+function setupKeyControls() {
+    var driver = scene.getObjectByName('driver');
+    document.onkeydown = function (e) {
+        driver.inMotion = true;
+        switch (e.keyCode) {
+            case 37:
+                driver.velocity.x += 0.1;
+                driver.acceleration.x += 0.05;
+                break;
+            case 38:
+                driver.velocity.z += 0.1;
+                driver.acceleration.z += 0.05;
+                break;
+            case 39:
+                driver.velocity.x -= 0.1;
+                driver.acceleration.x -= 0.05;
+                break;
+            case 40:
+                driver.velocity.z -= 0.1;
+                driver.acceleration.z -= 0.05;
+                break;
+        }
+    };
+    document.onkeyup = function (e) {
+        driver.inMotion = false;
+    };
+}
+
+setupKeyControls();
+
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     controls.update();
