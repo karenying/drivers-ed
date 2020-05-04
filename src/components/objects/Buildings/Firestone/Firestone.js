@@ -26,8 +26,12 @@ function createWindow(x, y, z, materials) {
 }
 
 class Firestone extends Group {
-    constructor() {
+    constructor(parent) {
         super();
+
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
 
         var materials = {
             stone: new MeshLambertMaterial({
@@ -147,7 +151,21 @@ class Firestone extends Group {
         towerWindow4.rotation.y = Math.PI / 2;
 
         this.add(mainBuilding);
+
         this.scale.set(0.07, 0.07, 0.07);
+        this.position.set(-5, 0.5, 10);
+        this.rotation.y = Math.PI;
+        parent.addToUpdateList(this);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 60;
+        }
     }
 }
 

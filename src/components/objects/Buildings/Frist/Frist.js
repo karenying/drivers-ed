@@ -26,8 +26,12 @@ function createPillar(x, y, z, materials) {
 }
 
 class Frist extends Group {
-    constructor() {
+    constructor(parent) {
         super();
+
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
 
         var materials = {
             brick: new MeshLambertMaterial({
@@ -269,7 +273,21 @@ class Frist extends Group {
         pillar8.position.set(0, -8, 10);
 
         this.add(mainBuilding);
+
         this.scale.set(0.07, 0.07, 0.07);
+        this.position.set(-6.5, 1, -10);
+        this.rotation.y = Math.PI;
+        parent.addToUpdateList(this);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 60;
+        }
     }
 }
 

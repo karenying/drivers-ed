@@ -76,9 +76,17 @@ class McCosh extends Group {
     constructor(parent) {
         super();
 
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
+
         this.name = 'mccosh';
 
         this.init();
+
+        this.position.set(-6.5, 1, -30);
+        this.rotation.y = -Math.PI / 2;
+        parent.addToUpdateList(this);
     }
 
     init() {
@@ -134,6 +142,16 @@ class McCosh extends Group {
         bigWindow2.rotateY(Math.PI / 2);
         building.add(windows, bigWindow1, bigWindow2);
         this.add(building);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 60;
+        }
     }
 }
 

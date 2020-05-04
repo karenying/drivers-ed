@@ -1,6 +1,18 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Road, Car, Fine, WoodyWoo, Friend, Cap, Colonial } from 'objects';
+import {
+    Road,
+    Car,
+    Fine,
+    WoodyWoo,
+    Friend,
+    Cap,
+    Colonial,
+    Firestone,
+    Frist,
+    McCosh,
+    Nassau,
+} from 'objects';
 import { BasicLights } from 'lights';
 
 class Washington extends Scene {
@@ -26,13 +38,19 @@ class Washington extends Scene {
         }
 
         // Add right buildings
-        /*
         let fine = new Fine(this);
         let woodywoo = new WoodyWoo(this);
         let friend = new Friend(this);
         let cap = new Cap(this);
         let colonial = new Colonial(this);
-        this.add(fine, woodywoo, friend, cap, colonial); */
+        this.add(fine, woodywoo, friend, cap, colonial);
+
+        // Add left buildings
+        let firestone = new Firestone(this);
+        let frist = new Frist(this);
+        let mccosh = new McCosh(this);
+        let nassau = new Nassau(this);
+        this.add(firestone, frist, mccosh, nassau);
 
         const car = new Car(this);
 

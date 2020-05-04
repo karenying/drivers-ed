@@ -105,9 +105,17 @@ class Nassau extends Group {
     constructor(parent) {
         super();
 
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
+
         this.name = 'nassau';
 
         this.init();
+
+        this.position.set(-6.5, 1, -50);
+        this.rotation.y = -Math.PI / 2;
+        parent.addToUpdateList(this);
     }
 
     init() {
@@ -214,6 +222,16 @@ class Nassau extends Group {
         makeWindow(0.125, 0.175, bigPlaneGeo, windowMat, bigWindow);
         building.add(bigWindow);
         this.add(building);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 60;
+        }
     }
 }
 
