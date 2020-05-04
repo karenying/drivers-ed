@@ -7,23 +7,33 @@ import {
 } from 'three';
 
 class Road extends Group {
-    constructor(parent, color) {
+    constructor(parent) {
         super();
 
         this.state = {
             cameraPosition: parent.camera.position,
         };
 
-        const planeGeometry = new PlaneGeometry(3, 20, 30);
+        const planeGeometry = new PlaneGeometry(5, 20);
         const planeMaterial = new MeshBasicMaterial({
-            color,
+            color: 0x808080,
             side: DoubleSide,
         });
 
         let plane = new Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = Math.PI / 2;
 
-        this.add(plane);
+        const stripeGeometry = new PlaneGeometry(0.2, 3);
+        const stripeMaterial = new MeshBasicMaterial({
+            color: 0xfad201,
+            side: DoubleSide,
+        });
+
+        let stripe = new Mesh(stripeGeometry, stripeMaterial);
+        stripe.rotation.x = Math.PI / 2;
+        stripe.position.y = 0.1;
+
+        this.add(plane, stripe);
         parent.addToUpdateList(this);
     }
 

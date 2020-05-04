@@ -1,3 +1,4 @@
-export * from './Road';
-export * from './Car';
 export * from './Buildings';
+export * from './Car';
+export * from './Right';
+export * from './Road';

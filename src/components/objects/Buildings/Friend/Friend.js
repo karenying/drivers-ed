@@ -90,7 +90,7 @@ class Friend extends Group {
         }
 
         this.add(mainBuilding);
-        this.scale.set(0.07, 0.07, 0.07);
+        this.scale.set(0.1, 0.1, 0.1);
     }
 }
 

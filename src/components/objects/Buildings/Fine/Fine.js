@@ -92,7 +92,7 @@ class Fine extends Group {
         face4.position.set(16, 8, 0);
 
         this.add(mainBuilding);
-        this.scale.set(0.07, 0.07, 0.07);
+        this.scale.set(0.09, 0.09, 0.09);
     }
 }
 
