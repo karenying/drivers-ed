@@ -23,7 +23,7 @@ class Coin extends Group {
 
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
-    this.speed = 0.3 + Math.random() * 0.2;
+    this.speed = 0.1 + Math.random() * 0.5;
 
     this.init();
   }
@@ -62,16 +62,20 @@ class Coin extends Group {
   }
 
   update(timeStamp) {
-    this.position.y =  0.1 + Math.abs(Math.sin(timeStamp / 110) / 18);
+    this.position.y =  0.5 + Math.abs(Math.sin(timeStamp / 110) / 18);
     this.rotation.y += 0.1;
-    
+
     var newZ = this.position.z + this.speed;
-    if (newZ > this.parent.camera.position.z) newZ = -(this.parent.fog.far + 50 * Math.random());
+    if (newZ > this.parent.camera.position.z) {
+      newZ = -(this.parent.fog.far + 50 * Math.random());
+      this.speed = 0.1 + Math.random() * 0.5;
+    }
     this.position.z = newZ;
   }
 
   onCollision() {
     this.position.z = -(this.parent.fog.far + 50 * Math.random());
+    this.speed = 0.1 + Math.random() * 0.5;
   }
 
 }

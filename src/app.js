@@ -9,6 +9,7 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
+import * as THREE from 'three';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -64,11 +65,30 @@ function setupKeyControls() {
 
 setupKeyControls();
 
+// Set up score
+var score = 0;
+
+var scoreDiv = document.createElement('div');
+scoreDiv.id = 'score';
+scoreDiv.style.position = 'absolute';
+scoreDiv.innerHTML = 'Score: ' + score;
+scoreDiv.style.width = 100;
+scoreDiv.style.height = 100;
+scoreDiv.style.top = 20 + 'px';
+scoreDiv.style.left = 20 + 'px';
+document.body.appendChild(scoreDiv);
+
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
+    var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
+    if (collisionObj !== undefined) {
+      score += 1;
+      document.getElementById('score').innerHTML = 'Score: ' + score;
+      collisionObj.onCollision();
+    }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -82,3 +102,13 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+
+// Collision handler
+// const collisionHandler = (scene) => {
+//   console.log('BAM!');
+//   scene.score += 1;
+//   document.getElementById('score').innerHTML = scene.score;
+// };
+// collisionHandler();
+
+// scene.addEventListener('collision', collisionHandler(scene));

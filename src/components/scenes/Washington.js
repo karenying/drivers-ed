@@ -18,17 +18,6 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
-function findCollisions(obj, collidableMeshList) {
-  var thisBB = new THREE.Box3().copy(obj.bb).applyMatrix4(obj.matrixWorld);
-  for (const mesh of collidableMeshList) {
-    var thatBB = new THREE.Box3().copy(mesh.bb).applyMatrix4(mesh.matrixWorld);
-    if (thisBB.intersectsBox(thatBB)) {
-      return mesh;
-    }
-  }
-  return undefined;
-}
-
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -41,10 +30,8 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        
-        // List of collidable meshes
-        var collidableMeshList = [];
-        this.collidableMeshList = collidableMeshList;
+
+        this.collidableMeshList = []; // List of collidable meshes
 
         // Add road
         const positions = [
@@ -89,9 +76,9 @@ class Washington extends Scene {
 
         const lights = new BasicLights();
         this.add(lights, car);
-        
+
         const coin = new Coin(this);
-        coin.position.set(0, 1, 5);
+        coin.position.set(5 * Math.random() - 2, 0, -(50 + 10 * Math.random()));
         this.add(coin);
         this.collidableMeshList.push(coin);
     }
@@ -100,16 +87,28 @@ class Washington extends Scene {
         this.state.updateList.push(object);
     }
 
+    findCollisions(obj, collidableMeshList) {
+      var thisBB = new THREE.Box3().copy(obj.bb).applyMatrix4(obj.matrixWorld);
+      for (const mesh of collidableMeshList) {
+        var thatBB = new THREE.Box3().copy(mesh.bb).applyMatrix4(mesh.matrixWorld);
+        if (thisBB.intersectsBox(thatBB)) return mesh;
+      }
+      return undefined;
+    }
+
     update(timeStamp) {
         const { updateList } = this.state;
 
         for (const obj of updateList) {
             obj.update(timeStamp);
         }
-        
+
         // Check for collisions
-        var collisionObj = findCollisions(this.driver, this.collidableMeshList);
-        if (collisionObj !== undefined) collisionObj.onCollision();
+        // var collisionObj = this.findCollisions(this.driver, this.collidableMeshList);
+        // if (collisionObj !== undefined) {
+        //   this.dispatchEvent(new Event('collision'));
+        //   collisionObj.onCollision();
+        // }
     }
 }
 
