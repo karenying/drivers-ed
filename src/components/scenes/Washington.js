@@ -14,6 +14,7 @@ import {
     Nassau,
     Fox,
     Grass,
+    Lamppost,
 } from 'objects';
 import { BasicLights } from 'lights';
 
@@ -73,9 +74,9 @@ class Washington extends Scene {
         this.add(fox);
 
         const car = new Car(this);
-
+        const lamppost = new Lamppost(this);
         const lights = new BasicLights();
-        this.add(lights, car);
+        this.add(lights, car, lamppost);
     }
 
     addToUpdateList(object) {
