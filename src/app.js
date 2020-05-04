@@ -16,7 +16,7 @@ const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
 // Add fog
-scene.fog = new Fog(new Color(0xd3d3d3), 0);
+scene.fog = new Fog(new Color(0x7ec0ee), 1, 50);
 
 // Set up camera
 camera.position.set(0, 5, 20);

@@ -7,9 +7,7 @@ import {
     DoubleSide,
     CircleGeometry,
     CylinderGeometry,
-    Vector3,
 } from 'three';
-import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 var Colors = {
     red: 0xcf4f48,
@@ -215,7 +213,7 @@ class Car extends Group {
         let exhaust = new Mesh(geo, mat);
         exhaust.castShadow = true;
         exhaust.receiveShadow = true;
-        exhaust.position.set(-2.5, 1, -0.75);
+        exhaust.position.set(-2.5, 0.75, -0.80);
         this.add(exhaust);
 
         this.scale.set(0.3, 0.3, 0.3);
@@ -223,7 +221,11 @@ class Car extends Group {
         this.rotation.y = Math.PI / 2;
     }
 
-    update(timeStamp) {}
+    update(timeStamp) {
+        // Bob car and exhaust back and forth
+        this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+        this.children[11].rotation.z = Math.sin(timeStamp / 200);
+    }
 }
 
 export default Car;
