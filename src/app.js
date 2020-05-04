@@ -8,11 +8,11 @@
  */
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { WashingtonScene } from 'scenes';
+import { Washington } from 'scenes';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
-const scene = new WashingtonScene(camera);
+const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
 // Add fog

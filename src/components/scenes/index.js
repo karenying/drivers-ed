@@ -1,1 +1,1 @@
-export { default as WashingtonScene } from './WashingtonScene.js';
+export { default as Washington } from './Washington.js';

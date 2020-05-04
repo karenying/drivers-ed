@@ -1,9 +1,9 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Road, Car, McCosh } from 'objects';
+import { Road, Car, WoodyWoo } from 'objects';
 import { BasicLights } from 'lights';
 
-class RoadScene extends Scene {
+class Washington extends Scene {
     constructor(camera) {
         super();
 
@@ -34,7 +34,7 @@ class RoadScene extends Scene {
 
         const car = new Car(this);
 
-        const building = new McCosh(this);
+        const building = new WoodyWoo(this);
 
         const lights = new BasicLights();
         this.add(lights, car, building);
@@ -53,4 +53,4 @@ class RoadScene extends Scene {
     }
 }
 
-export default RoadScene;
+export default Washington;
