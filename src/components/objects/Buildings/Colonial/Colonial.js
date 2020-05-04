@@ -64,9 +64,17 @@ class Colonial extends Group {
     constructor(parent) {
         super();
 
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
+
         this.name = 'colonial';
 
         this.init();
+
+        this.position.set(5, 1, -70);
+        this.rotation.y = Math.PI / 2;
+        parent.addToUpdateList(this);
     }
 
     init() {
@@ -141,6 +149,16 @@ class Colonial extends Group {
         let pillarFour = makeMesh(pillarGeo, pillarMat, -2.4, 0, 0);
         pillar.add(pillarTwo, pillarThree, pillarFour);
         this.add(roof, roof2, pillar);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 90;
+        }
     }
 }
 

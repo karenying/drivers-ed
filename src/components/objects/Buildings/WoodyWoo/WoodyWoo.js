@@ -13,8 +13,12 @@ function createBox(x, y, z, materials) {
 }
 
 class WoodyWoo extends Group {
-    constructor() {
+    constructor(parent) {
         super();
+
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
 
         var materials = {
             stone: new MeshLambertMaterial({
@@ -114,7 +118,20 @@ class WoodyWoo extends Group {
         }
 
         this.add(mainBuilding);
+
         this.scale.set(0.1, 0.1, 0.1);
+        this.position.set(6.5, 1.5, -10);
+        parent.addToUpdateList(this);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 90;
+        }
     }
 }
 

@@ -109,14 +109,23 @@ function makeTriangleRoof(object, x) {
     object.vertices[0].x -= x;
     object.vertices[1].x -= x;
 }
+
 class Cap extends Group {
     constructor(parent) {
         super();
 
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
+
         this.name = 'cap';
 
         this.init();
+        this.position.set(6.5, 1.5, -50);
+        this.rotation.y = Math.PI / 2;
+        parent.addToUpdateList(this);
     }
+
     init() {
         // Cap and Gown Club
         // shapes
@@ -240,6 +249,16 @@ class Cap extends Group {
         tree.rotateY(Math.PI / 4);
         tree.scale.set(0.5, 0.6, 0.5);
         this.add(building, tree);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 90;
+        }
     }
 }
 

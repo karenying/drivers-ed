@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Road, Car, Right } from 'objects';
+import { Road, Car, Fine, WoodyWoo, Friend, Cap, Colonial } from 'objects';
 import { BasicLights } from 'lights';
 
 class Washington extends Scene {
@@ -25,20 +25,14 @@ class Washington extends Scene {
             this.add(road);
         }
 
-        // Add right side
+        // Add right buildings
         /*
-        const rightPositions = [0, -80, -160, -240];
-
-        for (let i = 0; i < 5; i++) {
-            let right = new Right(this);
-            right.position.set(0, 0, rightPositions[i]);
-            this.add(right);
-        }
-
-        */
-
-        let right = new Right(this);
-        this.add(right);
+        let fine = new Fine(this);
+        let woodywoo = new WoodyWoo(this);
+        let friend = new Friend(this);
+        let cap = new Cap(this);
+        let colonial = new Colonial(this);
+        this.add(fine, woodywoo, friend, cap, colonial); */
 
         const car = new Car(this);
 

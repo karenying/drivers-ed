@@ -50,8 +50,12 @@ function createFace(materials) {
 }
 
 class Fine extends Group {
-    constructor() {
+    constructor(parent) {
         super();
+
+        this.state = {
+            cameraPosition: parent.camera.position,
+        };
 
         var materials = {
             stone: new MeshLambertMaterial({
@@ -92,7 +96,20 @@ class Fine extends Group {
         face4.position.set(16, 8, 0);
 
         this.add(mainBuilding);
+
         this.scale.set(0.09, 0.09, 0.09);
+        this.position.set(5, 3.5, 10);
+        parent.addToUpdateList(this);
+    }
+
+    update(timestamp) {
+        const { cameraPosition } = this.state;
+
+        this.position.z++;
+
+        if (this.position.z > cameraPosition.z + 10) {
+            this.position.z -= 90;
+        }
     }
 }
 
