@@ -102,13 +102,6 @@ class Washington extends Scene {
         for (const obj of updateList) {
             obj.update(timeStamp);
         }
-
-        // Check for collisions
-        // var collisionObj = this.findCollisions(this.driver, this.collidableMeshList);
-        // if (collisionObj !== undefined) {
-        //   this.dispatchEvent(new Event('collision'));
-        //   collisionObj.onCollision();
-        // }
     }
 }
 

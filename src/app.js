@@ -76,6 +76,9 @@ scoreDiv.style.width = 100;
 scoreDiv.style.height = 100;
 scoreDiv.style.top = 20 + 'px';
 scoreDiv.style.left = 20 + 'px';
+scoreDiv.style.fontFamily = 'Helvetica';
+scoreDiv.style.fontSize = 28 + 'px';
+scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
 // Render loop
@@ -84,7 +87,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(scene.driver, scene.collidableMeshList);
-    if (collisionObj !== undefined) {
+    if (collisionObj !== undefined && collisionObj.name === 'coin') {
       score += 1;
       document.getElementById('score').innerHTML = 'Score: ' + score;
       collisionObj.onCollision();
