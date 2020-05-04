@@ -27,7 +27,7 @@ class Washington extends Scene {
             updateList: [],
         };
 
-        this.gameSpeed = 0;
+        this.gameSpeed = 0.5;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
