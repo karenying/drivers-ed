@@ -191,18 +191,18 @@ class Fox extends Group {
     if (!this.collected) {
       if (this.state.bob) {
         // Bob back and forth
-        this.rotation.x = 0.05 * Math.sin(timeStamp / 200);
+        this.rotation.x = 0.1 * Math.sin(timeStamp / 200);
         this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
       }
       if (this.state.walking) {
         // front left leg
-        this.children[2].rotation.z = pulseSingle(-5, 20) * (Math.PI/180);
+        this.children[2].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // back left leg
-        this.children[3].rotation.z = pulseSingle(-10, 20) * (Math.PI/180);
+        this.children[3].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // front right leg
-        this.children[4].rotation.z = pulseSingle(30, -5) * (Math.PI/180);
+        this.children[4].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
         // back right leg
-        this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
+        this.children[5].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
       }
       
       // update positions (cross road and move towards car)
