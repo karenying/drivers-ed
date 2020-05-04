@@ -37,7 +37,7 @@ controls.update();
 
 // Add key controls for cube
 function setupKeyControls() {
-  var driver = scene.getObjectByName('driver');
+  var driver = scene.getObjectByName('car');
   document.onkeydown = function(e) {
     driver.inMotion = true;
     switch (e.keyCode) {
