@@ -226,7 +226,7 @@ class Car extends Group {
         exhaust.position.set(-2.5, 0.75, -0.80);
         this.add(exhaust);
 
-        this.scale.set(0.3, 0.3, 0.3);
+        this.scale.set(0.4, 0.4, 0.4);
         this.position.set(0, 0, 10);
         this.rotation.y = Math.PI / 2;
 

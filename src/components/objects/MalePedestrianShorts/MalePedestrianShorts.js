@@ -10,6 +10,8 @@ class MalePedestrianShorts extends Group {
             walking: true,
         };
 
+        this.speed = 0.03;
+
         // head
         var headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
         var head = new Mesh(headGeometry, materials.skin);
@@ -129,6 +131,9 @@ class MalePedestrianShorts extends Group {
 
         this.add(head, leftArm, rightArm, leftLeg, rightLeg);
 
+        this.scale.set(0.25, 0.25, 0.25);
+        this.rotation.y = -1 * (Math.PI/2);
+
         // Add self to parent's update list
         parent.addToUpdateList(this);
     }
@@ -160,6 +165,20 @@ class MalePedestrianShorts extends Group {
             // right leg
             this.children[4].rotation.x = pulseSingle(-40,20) * -1 * (Math.PI/180);
         }
+        
+        // update positions (cross road and move towards car)
+        var newX = this.position.x - this.speed;
+        var newZ = this.position.z + this.parent.gameSpeed;
+        
+        // if pedestrian is done crossing road or no longer visible in scene
+        if (newX < -3 || newZ > this.parent.camera.position.z) {
+            if (Math.random() <= 0.1) {
+            newZ = -(this.parent.fog.far + 10 * Math.random());
+            newX = (Math.floor(Math.random() * 4) + 2);
+            }
+        }
+        this.position.x = newX;
+        this.position.z = newZ;  
     }
 }
 

@@ -174,7 +174,7 @@ class Fox extends Group {
     // visualize bounding box
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
     this.add(bbHelper);
-    this.scale.set(0.5, 0.5, 0.5);
+    this.scale.set(0.25, 0.25, 0.25);
   }
 
   update(timeStamp) {
