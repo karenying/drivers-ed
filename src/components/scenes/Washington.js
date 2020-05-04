@@ -13,7 +13,7 @@ import {
     McCosh,
     Nassau,
     Grass,
-    Coin
+    Coin,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -24,9 +24,10 @@ class Washington extends Scene {
 
         this.state = {
             gui: new Dat.GUI(),
-            gameSpeed: 1,
             updateList: [],
         };
+
+        this.gameSpeed = 0;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -72,7 +73,7 @@ class Washington extends Scene {
         this.add(firestone, frist, mccosh, nassau);
 
         const car = new Car(this);
-        this.driver =  car;
+        this.driver = car;
 
         const lights = new BasicLights();
         this.add(lights, car);
@@ -88,12 +89,16 @@ class Washington extends Scene {
     }
 
     findCollisions(obj, collidableMeshList) {
-      var thisBB = new THREE.Box3().copy(obj.bb).applyMatrix4(obj.matrixWorld);
-      for (const mesh of collidableMeshList) {
-        var thatBB = new THREE.Box3().copy(mesh.bb).applyMatrix4(mesh.matrixWorld);
-        if (thisBB.intersectsBox(thatBB)) return mesh;
-      }
-      return undefined;
+        var thisBB = new THREE.Box3()
+            .copy(obj.bb)
+            .applyMatrix4(obj.matrixWorld);
+        for (const mesh of collidableMeshList) {
+            var thatBB = new THREE.Box3()
+                .copy(mesh.bb)
+                .applyMatrix4(mesh.matrixWorld);
+            if (thisBB.intersectsBox(thatBB)) return mesh;
+        }
+        return undefined;
     }
 
     update(timeStamp) {

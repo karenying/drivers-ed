@@ -12,7 +12,7 @@ class BasicLights extends Group {
         dir.position.set(5, 1, 2);
         dir.target.position.set(0, 0, 0);
 
-        this.add(hemi, dir);
+        this.add(ambi, hemi);
     }
 }
 
