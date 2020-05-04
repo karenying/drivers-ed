@@ -151,7 +151,7 @@ class McCosh extends Group {
         this.position.z += gameSpeed;
 
         if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 60;
+            this.position.z -= 70;
         }
     }
 }

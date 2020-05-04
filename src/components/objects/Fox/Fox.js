@@ -60,14 +60,14 @@ class Fox extends Group {
     }
     parent.addToUpdateList(this);
     this.name = 'fox';
-    
+
     // Create bounding box
     var bb = new THREE.Box3(new THREE.Vector3(-1, -1, -1), new THREE.Vector3(1, 1, 1));
     this.bb = bb;
     this.position.y = 1;
     this.speed = 0.01 + Math.random() * 0.05;
     this.collected = false;
-    
+
     this.init();
   }
 
@@ -185,7 +185,7 @@ class Fox extends Group {
       };
     }
 
-    const pulseSingle = new Pulse(0.5);    
+    const pulseSingle = new Pulse(0.5);
     if (!this.collected) {
       if (this.state.bob) {
         // Bob back and forth
@@ -202,7 +202,7 @@ class Fox extends Group {
         // back right leg
         this.children[5].rotation.z = pulseSingle(20, 0) * (Math.PI/180);
       }
-      
+
       // Cross the road
       var newX = this.position.x + this.speed;
       if (newX > this.parent.width) {
@@ -210,7 +210,7 @@ class Fox extends Group {
         this.speed = 0.01 + Math.random() * 0.05;
       }
       this.position.x = newX;
-    
+
       // Move towards car
       var newZ = this.position.z + this.parent.gameSpeed;
       if (newZ > this.parent.camera.position.z) {
@@ -222,7 +222,7 @@ class Fox extends Group {
     // Advance tween animations, if any exist
     TWEEN.update();
   }
-  
+
   resetParams() {
     this.position.y = 1;
     this.speed = 0.01 + Math.random() * 0.05;

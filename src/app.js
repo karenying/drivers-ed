@@ -81,6 +81,22 @@ scoreDiv.style.fontSize = 28 + 'px';
 scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
+// Set up lives
+var lives = 3;
+
+var lifeDiv = document.createElement('div');
+lifeDiv.id = 'lives';
+lifeDiv.style.position = 'absolute';
+lifeDiv.innerHTML = 'Lives: ' + lives;
+lifeDiv.style.width = 100;
+lifeDiv.style.height = 100;
+lifeDiv.style.top = 60 + 'px';
+lifeDiv.style.left = 20 + 'px';
+lifeDiv.style.fontFamily = 'Helvetica';
+lifeDiv.style.fontSize = 28 + 'px';
+lifeDiv.style.color = 'white';
+document.body.appendChild(lifeDiv);
+
 // Set special items reporter
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
@@ -109,7 +125,9 @@ const onAnimationFrameHandler = (timeStamp) => {
       }
       else if (collisionObj.name === 'fox') {
         if (!collisionObj.collected) score -= 5;
+        if (!collisionObj.collected) lives -= 1;
         document.getElementById('score').innerHTML = 'Score: ' + score;
+        document.getElementById('lives').innerHTML = 'Lives: ' + lives;
         document.getElementById('item').innerHTML = 'You hit a fox!';
         collisionObj.onCollision();
       }

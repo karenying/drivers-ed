@@ -223,6 +223,7 @@ class Nassau extends Group {
         makeWindow(0.125, 0.175, bigPlaneGeo, windowMat, bigWindow);
         building.add(bigWindow);
         this.add(building);
+
     }
 
     update(timestamp) {
@@ -230,7 +231,7 @@ class Nassau extends Group {
         this.position.z += gameSpeed;
 
         if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 60;
+            this.position.z -= 70;
         }
     }
 }

@@ -53,13 +53,18 @@ class Washington extends Scene {
     for (let i = 0; i < 11; i++) {
       const road = new Road(this);
       const grass = new Grass(this);
-      const lamppostLeft = new Lamppost(this);
-      const lamppostRight = new Lamppost(this);
       road.position.set(0, 0, positions[i]);
       grass.position.set(0, 0, positions[i]);
+      this.add(road, grass);
+    }
+
+    // lampposts
+    for (let i = 0; i < 5; i++) {
+      const lamppostLeft = new Lamppost(this);
+      const lamppostRight = new Lamppost(this);
       lamppostLeft.position.set(-2.6, 1, (positions[i] + 10) / 2);
-      lamppostRight.position.set(2.6, 1, (positions[i] + 10) / 2);
-      this.add(road, grass, lamppostLeft, lamppostRight);
+      lamppostRight.position.set(2.6, 1, (positions[i]) / 2);
+      this.add( lamppostLeft, lamppostRight);
     }
 
     // Add right buildings

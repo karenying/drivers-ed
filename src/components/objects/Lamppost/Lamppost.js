@@ -80,7 +80,7 @@ class Lamppost extends Group {
       this.position.z += gameSpeed;
 
       if (this.position.z > cameraPosition.z + 10) {
-          this.position.z -= 90;
+          this.position.z -= 60;
       }
   }
 
