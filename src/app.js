@@ -46,10 +46,10 @@ function setupKeyControls() {
         car.inMotion = true;
         switch (e.keyCode) {
             case 37:
-                car.position.x -= 0.25;
+                if (car.position.x - 0.25 > -car.maxPos) car.position.x -= 0.25;
                 break;
             case 39:
-                car.position.x += 0.25;
+                if (car.position.x + 0.25 < car.maxPos) car.position.x += 0.25;
                 break;
             /*
             case 38:

@@ -78,10 +78,17 @@ class Washington extends Scene {
         const lights = new BasicLights();
         this.add(lights, car);
 
-        const coin = new Coin(this);
-        coin.position.set(5 * Math.random() - 2, 0, -(50 + 10 * Math.random()));
-        this.add(coin);
-        this.collidableMeshList.push(coin);
+        // Add some coins
+        for (let i = 0; i < 5; i++) {
+          var coin = new Coin(this);
+          coin.position.set(car.maxPos * Math.random() - 2, 0, -(50 + 5 * i * Math.random()));
+          this.add(coin);
+          this.collidableMeshList.push(coin);
+        }
+        // const coin = new Coin(this);
+        // coin.position.set(5 * Math.random() - 2, 0, -(50 + 10 * Math.random()));
+        // this.add(coin);
+        // this.collidableMeshList.push(coin);
     }
 
     addToUpdateList(object) {
