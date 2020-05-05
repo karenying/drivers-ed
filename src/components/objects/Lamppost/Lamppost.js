@@ -46,9 +46,11 @@ class Lamppost extends Group {
     super();
     // debugger;
     this.state = {
-      night: parent.state.night,
+      night: false,
+      startTime: parent.startTime,
       cameraPosition: parent.camera.position,
       gameSpeed: parent.gameSpeed,
+      lightsOn: false,
     }
 
     this.init();
@@ -64,23 +66,30 @@ class Lamppost extends Group {
     let lamp = makeMesh(lampGeo, lampMat, 0, 0.6, 0);
     post.add(lamp);
 
-    if (this.state.night) {
-      let light = new PointLight(0xf5cc00, 7, 2.5 );
-      light.position.set(0, 0.6, 0);
-      this.add(light);
-    }
+    let light = new PointLight(0xf5cc00, 0, 2.5 );
+    light.position.set(0, 0.6, 0);
+    this.add(light);
 
     this.add(post);
     this.position.set(-2.6, 0.8, 0);
   }
 
   update(timestamp) {
-      const { cameraPosition, gameSpeed } = this.state;
+      const { cameraPosition, startTime, gameSpeed, lightsOn } = this.state;
+      const currentTime = Date.now() / 1000;
+
+      if ((currentTime - startTime > 10) && !this.state.night) {
+        this.state.night = true;
+      }
 
       this.position.z += gameSpeed;
 
       if (this.position.z > cameraPosition.z + 10) {
           this.position.z -= 60;
+      }
+
+      if (!lightsOn && this.state.night) {
+        this.children[0].intensity = 7;
       }
   }
 

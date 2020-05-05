@@ -30,6 +30,7 @@ class Washington extends Scene {
         };
 
         this.gameSpeed = 0.5;
+        this.startTime = Date.now() / 1000;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
@@ -121,7 +122,7 @@ class Washington extends Scene {
         this.add(chad);
         // this.collidableMeshList.push(chad);
 
-        const lights = new BasicLights();
+        const lights = new BasicLights(this);
         this.add(lights, car);
 
         // Add some coins
@@ -155,7 +156,7 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { updateList, pause } = this.state;
+        const { updateList, pause, startTime } = this.state;
 
         if (!pause){
           for (const obj of updateList) {

@@ -1,21 +1,36 @@
 import { Group, SpotLight, AmbientLight, HemisphereLight } from 'three';
 
 class BasicLights extends Group {
-    constructor(...args) {
+    constructor(parent, ...args) {
+        debugger;
         // Invoke parent Group() constructor with our args
         super(...args);
 
-        const dir = new SpotLight(0xffffff, 1.6, 7, 0.8, 1, 1);
+
+        // const dir = new SpotLight(0xffffff, 1.6, 7, 0.8, 1, 1);
         const ambi = new AmbientLight(0x404040, 1.32);
         const hemi = new HemisphereLight(0xffffbb, 0x080820, 2.3);
+        this.add(ambi, hemi);
 
         // night mode values
-        // const ambi = new AmbientLight(0x404040, 0.2);
-        // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
-        dir.position.set(5, 1, 2);
-        dir.target.position.set(0, 0, 0);
+        // dir.position.set(5, 1, 2);
+        // dir.target.position.set(0, 0, 0);
+        parent.addToUpdateList(this);
+    }
 
-        this.add(ambi, hemi);
+    update(timeStamp) {
+      // edit ambient light
+      if (this.children[0].intensity >= 0.2) {
+        this.children[0].intensity -= 0.001;
+      }
+
+      // edit hemi light
+      if (this.children[1].intensity >= 0.15) {
+        this.children[1].intensity -= 0.005;
+      }
+      // const ambi = new AmbientLight(0x404040, 0.2);
+      // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
+      // this.add(ambi, hemi);
     }
 }
 
