@@ -9,7 +9,6 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
-import * as THREE from 'three';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -65,20 +64,53 @@ function setupKeyControls() {
 
 setupKeyControls();
 
+// Set up css sheet
+let link = document.createElement('link');
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = './src/app.css';
+document.getElementsByTagName('HEAD')[0].appendChild(link);
+
+// Set up intro screen
+let beginContainer = document.createElement('div');
+beginContainer.id = 'begin-container';
+document.body.appendChild(beginContainer);
+
+let beginContent = document.createElement('div');
+beginContent.id = 'begin';
+beginContainer.appendChild(beginContent);
+
+let beginContentText = document.createElement('div');
+beginContentText.id = 'begin-text';
+beginContent.appendChild(beginContentText);
+
+let beginContentTitleText = document.createElement('h1');
+beginContentTitleText.innerText = "DRIVER'S ED";
+beginContentText.appendChild(beginContentTitleText);
+
+let beginContentDescription = document.createElement('p');
+beginContentDescription.innerHTML =
+    "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
+    '<br />' +
+    '<br />' +
+    'Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins.';
+beginContentText.appendChild(beginContentDescription);
+
+let beginContentButton = document.createElement('div');
+beginContentButton.id = 'begin-button';
+beginContentButton.innerHTML = 'BEGIN';
+beginContent.appendChild(beginContentButton);
+beginContentButton.onclick = function () {
+    beginContainer.style.display = 'none';
+    scene.state.pause = false;
+};
+
 // Set up score
 var score = 0;
 
 var scoreDiv = document.createElement('div');
 scoreDiv.id = 'score';
-scoreDiv.style.position = 'absolute';
 scoreDiv.innerHTML = 'Score: ' + score;
-scoreDiv.style.width = 100;
-scoreDiv.style.height = 100;
-scoreDiv.style.top = 20 + 'px';
-scoreDiv.style.left = 20 + 'px';
-scoreDiv.style.fontFamily = 'Helvetica';
-scoreDiv.style.fontSize = 28 + 'px';
-scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
 // Set up lives
@@ -86,28 +118,12 @@ var lives = 3;
 
 var lifeDiv = document.createElement('div');
 lifeDiv.id = 'lives';
-lifeDiv.style.position = 'absolute';
 lifeDiv.innerHTML = 'Lives: ' + lives;
-lifeDiv.style.width = 100;
-lifeDiv.style.height = 100;
-lifeDiv.style.top = 60 + 'px';
-lifeDiv.style.left = 20 + 'px';
-lifeDiv.style.fontFamily = 'Helvetica';
-lifeDiv.style.fontSize = 28 + 'px';
-lifeDiv.style.color = 'white';
 document.body.appendChild(lifeDiv);
 
 // Set special items reporter
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
-itemDiv.style.position = 'absolute';
-itemDiv.style.width = 100;
-itemDiv.style.height = 100;
-itemDiv.style.top = 20 + 'px';
-itemDiv.style.right = 20 + 'px';
-itemDiv.style.fontFamily = 'Helvetica';
-itemDiv.style.fontSize = 28 + 'px';
-itemDiv.style.color = 'white';
 document.body.appendChild(itemDiv);
 
 // Render loop
@@ -153,13 +169,3 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
-
-// Collision handler
-// const collisionHandler = (scene) => {
-//   console.log('BAM!');
-//   scene.score += 1;
-//   document.getElementById('score').innerHTML = scene.score;
-// };
-// collisionHandler();
-
-// scene.addEventListener('collision', collisionHandler(scene));

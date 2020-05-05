@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+    font-family: 'VT323' !important;
+}
+
+#score {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+#lives {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 60px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+#item {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+#begin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#begin {
+    height: 350px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+}
+
+#begin h1 {
+    color: white;
+    font-size: 50px;
+    padding: 0px;
+    margin: 0px;
+    text-shadow: 3px 3px blue;
+    text-align: center;
+}
+
+#begin p {
+    font-family: 'Open Sans' !important;
+    font-style: italic;
+    color: white;
+}
+
+#begin-button {
+    display: flex;
+    background-color: #31c110;
+    height: 50px;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 20px;
+    color: white;
+    font-size: 30px;
+}
+
+#begin-button:hover {
+    background-color: green;
+    color: lightgray;
+}
