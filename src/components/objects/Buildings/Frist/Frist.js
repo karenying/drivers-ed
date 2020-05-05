@@ -4,13 +4,13 @@ function createWindow(x, y, z, materials) {
     var windowGeometry = new BoxGeometry(x, y, z);
     var window = new Mesh(windowGeometry, materials.window);
 
-    var windowDividerGeometryVert = new BoxGeometry(x + 1, y + 0.5, 0.5);
+    var windowDividerGeometryVert = new BoxGeometry(x + 0.25, y + 0.1, 0.1);
     var windowDividerVert = new Mesh(
         windowDividerGeometryVert,
         materials.black
     );
 
-    var windowDividerGeometryHoz = new BoxGeometry(x + 1, 0.5, z + 0.5);
+    var windowDividerGeometryHoz = new BoxGeometry(x + 0.25, 0.1, z + 0.1);
     var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
 
     window.add(windowDividerVert);

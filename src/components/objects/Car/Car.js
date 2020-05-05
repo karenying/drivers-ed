@@ -227,7 +227,7 @@ class Car extends Group {
         this.add(exhaust);
 
         this.scale.set(0.4, 0.4, 0.4);
-        this.position.set(0, 0, 10);
+        this.position.set(0, 0, 12.5);
         this.rotation.y = Math.PI / 2;
 
         // compute bounding box
