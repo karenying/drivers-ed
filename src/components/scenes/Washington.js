@@ -30,7 +30,7 @@ class Washington extends Scene {
             pause: true,
         };
 
-        this.gameSpeed = 1;
+        this.gameSpeed = 0;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
@@ -58,8 +58,8 @@ class Washington extends Scene {
             const lamppostRight = new Lamppost(this);
             road.position.set(0, 0, positions[i]);
             grass.position.set(0, 0, positions[i]);
-            lamppostLeft.position.set(-2.6, 1, (positions[i] + 10) / 2);
-            lamppostRight.position.set(2.6, 1, (positions[i] + 10) / 2);
+            lamppostLeft.position.set(-2.8, 1.5, (positions[i] + 40) / 2);
+            lamppostRight.position.set(2.8, 1.5, (positions[i] + 40) / 2);
             this.add(road, grass, lamppostLeft, lamppostRight);
         }
 

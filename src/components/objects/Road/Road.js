@@ -34,6 +34,7 @@ class Road extends Group {
         let stripe = new Mesh(stripeGeometry, stripeMaterial);
         stripe.rotation.x = Math.PI / 2;
         stripe.position.y = 0.1;
+        stripe.position.z = 5;
 
         this.add(plane, stripe);
         parent.addToUpdateList(this);

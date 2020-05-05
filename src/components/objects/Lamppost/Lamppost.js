@@ -71,6 +71,7 @@ class Lamppost extends Group {
     }
 
     this.add(post);
+    this.scale.set(2, 2, 2);
     this.position.set(-2.6, 0.8, 0);
   }
 
@@ -79,7 +80,7 @@ class Lamppost extends Group {
 
       this.position.z += gameSpeed;
 
-      if (this.position.z > cameraPosition.z + 10) {
+      if (this.position.z > cameraPosition.z) {
           this.position.z -= 60;
       }
   }
