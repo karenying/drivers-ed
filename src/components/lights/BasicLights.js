@@ -17,12 +17,12 @@ class BasicLights extends Group {
 
     update(timeStamp) {
       // edit ambient light
-      if (this.children[0].intensity >= 0.2) {
+      if (this.children[0].intensity >= 0.1) {
         this.children[0].intensity -= 0.001;
       }
 
       // edit hemi light
-      if (this.children[1].intensity >= 0.15) {
+      if (this.children[1].intensity >= 0.05) {
         this.children[1].intensity -= 0.005;
       }
       // const ambi = new AmbientLight(0x404040, 0.2);

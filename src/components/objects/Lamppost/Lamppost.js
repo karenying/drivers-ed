@@ -69,7 +69,7 @@ class Lamppost extends Group {
 
     let light = new SpotLight(0xf5cc00);
     light.intensity = 0;
-    light.position.set(0, 0.8, 0);
+    light.position.set(0.5, 1, 0);
     this.add(light);
 
     this.add(post);
@@ -81,7 +81,7 @@ class Lamppost extends Group {
       const { cameraPosition, startTime, gameSpeed, lightsOn } = this.state;
       const currentTime = Date.now() / 1000;
 
-      if ((currentTime - startTime > 20) && !this.state.night) {
+      if ((currentTime - startTime > 25) && !this.state.night) {
         this.state.night = true;
       }
 
@@ -93,7 +93,7 @@ class Lamppost extends Group {
 
       if (!lightsOn && this.state.night) {
         this.children[0].intensity = 0.06;
-        this.children[0].decay = 5;
+        this.children[0].decay = 3;
       }
   }
 

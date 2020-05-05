@@ -18,7 +18,7 @@ class Road extends Group {
 
         const planeGeometry = new PlaneGeometry(3, 200);
         const planeMaterial = new MeshStandardMaterial({
-            color: 0xadacac,
+            color: 0x7d7163,
             side: DoubleSide,
         });
 
@@ -27,7 +27,7 @@ class Road extends Group {
 
         const stripeGeometry = new PlaneGeometry(0.1, 3);
         const stripeMaterial = new MeshStandardMaterial({
-            color: 0x808080,
+            color: 0x524940,
             side: DoubleSide,
         });
 

@@ -72,15 +72,16 @@ function createWindshield(x, y, z, dx, dy, dz) {
 class Car extends Group {
     constructor(parent) {
         super();
-
-        this.name = 'car';
+        this.state = {
+          night: parent.night,
+          startTime: parent.startTime,
+        }
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
 
         this.init();
-
-        var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+        this.name = 'car';
         this.bb = bb;
         this.maxPos = 2.5;
 
@@ -232,14 +233,16 @@ class Car extends Group {
         this.rotation.y = Math.PI / 2;
 
         // create night mode headlights
-        let beamerOne = new SpotLight(0xffffff);
+        let beamerOne = new SpotLight(0xffffff, 0);
         beamerOne.position.set(1, 1, -1);
         beamerOne.angle = 0.1;
         beamerOne.distance = 80;
-        let beamerTwo= new SpotLight(0xffffff);
+        beamerOne.name = "beamer1";
+        let beamerTwo= new SpotLight(0xffffff, 0);
         beamerTwo.position.set(1, 1, 1);
         beamerTwo.angle = 0.1;
         beamerTwo.distance = 80;
+        beamerTwo.name = "beamer2";
         // beamerOne.target.position.set(1, 1, -5);
         this.add(beamerOne, beamerTwo);
 
@@ -256,6 +259,16 @@ class Car extends Group {
     }
 
     update(timeStamp) {
+        // turn on night mode
+        const currentTime = Date.now() / 1000;
+
+        if ((currentTime - this.state.startTime > 28) && !this.state.night) {
+          this.state.night = true;
+          let beamer = this.getObjectByName("beamer1", true);
+          beamer.intensity = 2.25;
+          beamer = this.getObjectByName("beamer2", true);
+          beamer.intensity = 2.25;
+        }
         // Bob car and exhaust back and forth
         this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
         this.children[11].rotation.z = Math.sin(timeStamp / 200);
