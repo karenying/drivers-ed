@@ -151,13 +151,3 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
-
-// Collision handler
-// const collisionHandler = (scene) => {
-//   console.log('BAM!');
-//   scene.score += 1;
-//   document.getElementById('score').innerHTML = scene.score;
-// };
-// collisionHandler();
-
-// scene.addEventListener('collision', collisionHandler(scene));
