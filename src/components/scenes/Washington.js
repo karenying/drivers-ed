@@ -27,7 +27,7 @@ class Washington extends Scene {
         this.state = {
             updateList: [],
         };
-        this.gameSpeed = 0.5;
+        this.gameSpeed = 0;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -88,31 +88,35 @@ class Washington extends Scene {
         var chadMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x36699c,
-                flatShading: true
+                flatShading: true,
             }),
             hair: new MeshLambertMaterial({
                 color: 0xd1c569,
-                flatShading: true
+                flatShading: true,
             }),
             skin: new MeshLambertMaterial({
-                color: 0xb48A78,
-                flatShading: true
+                color: 0xb48a78,
+                flatShading: true,
             }),
             shorts: new MeshLambertMaterial({
                 color: 0xed7490,
-                flatShading: true
+                flatShading: true,
             }),
             shirt: new MeshLambertMaterial({
                 color: 0x72afed,
-                flatShading: true
+                flatShading: true,
             }),
             shoes: new MeshLambertMaterial({
                 color: 0x3b2403,
-                flatShading: true
-            })
+                flatShading: true,
+            }),
         };
         let chad = new MalePedestrianShorts(this, chadMaterials);
-        chad.position.set(Math.random() * 6 - 3, 0.5, -(70 + 5 * Math.random()));
+        chad.position.set(
+            Math.random() * 6 - 3,
+            0.5,
+            -(70 + 5 * Math.random())
+        );
         this.add(chad);
         // this.collidableMeshList.push(chad);
 

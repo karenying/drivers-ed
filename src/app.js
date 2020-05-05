@@ -9,7 +9,6 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
-import * as THREE from 'three';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -54,20 +53,21 @@ function setupKeyControls() {
 
 setupKeyControls();
 
+// Create new link Element
+let link = document.createElement('link');
+// set the attributes for link element
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = './src/app.css';
+// Append link element to HTML head
+document.getElementsByTagName('HEAD')[0].appendChild(link);
+
 // Set up score
 var score = 0;
 
 var scoreDiv = document.createElement('div');
 scoreDiv.id = 'score';
-scoreDiv.style.position = 'absolute';
 scoreDiv.innerHTML = 'Score: ' + score;
-scoreDiv.style.width = 100;
-scoreDiv.style.height = 100;
-scoreDiv.style.top = 20 + 'px';
-scoreDiv.style.left = 20 + 'px';
-scoreDiv.style.fontFamily = 'Helvetica';
-scoreDiv.style.fontSize = 28 + 'px';
-scoreDiv.style.color = 'white';
 document.body.appendChild(scoreDiv);
 
 // Set up lives
@@ -75,28 +75,12 @@ var lives = 3;
 
 var lifeDiv = document.createElement('div');
 lifeDiv.id = 'lives';
-lifeDiv.style.position = 'absolute';
 lifeDiv.innerHTML = 'Lives: ' + lives;
-lifeDiv.style.width = 100;
-lifeDiv.style.height = 100;
-lifeDiv.style.top = 60 + 'px';
-lifeDiv.style.left = 20 + 'px';
-lifeDiv.style.fontFamily = 'Helvetica';
-lifeDiv.style.fontSize = 28 + 'px';
-lifeDiv.style.color = 'white';
 document.body.appendChild(lifeDiv);
 
 // Set special items reporter
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
-itemDiv.style.position = 'absolute';
-itemDiv.style.width = 100;
-itemDiv.style.height = 100;
-itemDiv.style.top = 20 + 'px';
-itemDiv.style.right = 20 + 'px';
-itemDiv.style.fontFamily = 'Helvetica';
-itemDiv.style.fontSize = 28 + 'px';
-itemDiv.style.color = 'white';
 document.body.appendChild(itemDiv);
 
 // Render loop
@@ -109,20 +93,19 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.collidableMeshList
     );
     if (collisionObj !== undefined) {
-      // console.log(collisionObj.name);
-      if (collisionObj.name === 'coin') {
-        if (!collisionObj.collected) score += 1; // only collect object if not already collected
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        collisionObj.onCollision();
-      }
-      else if (collisionObj.name === 'fox') {
-        if (!collisionObj.collected) score -= 5;
-        if (!collisionObj.collected) lives -= 1;
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-        document.getElementById('item').innerHTML = 'You hit a fox!';
-        collisionObj.onCollision();
-      }
+        // console.log(collisionObj.name);
+        if (collisionObj.name === 'coin') {
+            if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            collisionObj.onCollision();
+        } else if (collisionObj.name === 'fox') {
+            if (!collisionObj.collected) score -= 5;
+            if (!collisionObj.collected) lives -= 1;
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+            document.getElementById('item').innerHTML = 'You hit a fox!';
+            collisionObj.onCollision();
+        }
     }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };

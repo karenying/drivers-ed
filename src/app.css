@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+* {
+    font-family: 'VT323' !important;
+}
+
+#score {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+#lives {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 60px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+}
+
+#item {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    color: white;
+}
