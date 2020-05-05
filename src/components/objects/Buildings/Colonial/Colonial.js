@@ -73,7 +73,7 @@ class Colonial extends Group {
 
         this.init();
 
-        this.position.set(15, 3, -120);
+        this.position.set(15, 3, -130);
         this.rotation.y = Math.PI / 2;
         parent.addToUpdateList(this);
     }
@@ -161,7 +161,7 @@ class Colonial extends Group {
 
 
         if (this.position.z > cameraPosition.z) {
-            this.position.z -= 180;
+            this.position.z -= 200;
         }
     }
 }

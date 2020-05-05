@@ -109,7 +109,7 @@ class Fine extends Group {
 
 
         if (this.position.z > cameraPosition.z) {
-            this.position.z -= 180;
+            this.position.z -= 200;
         }
     }
 }

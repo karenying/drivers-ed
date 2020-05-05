@@ -122,7 +122,7 @@ class Cap extends Group {
         this.name = 'cap';
 
         this.init();
-        this.position.set(18, 3.75, -90);
+        this.position.set(18, 3.75, -100);
         this.rotation.y = Math.PI / 2;
         parent.addToUpdateList(this);
     }
@@ -261,7 +261,7 @@ class Cap extends Group {
         this.position.z += gameSpeed;
 
         if (this.position.z > cameraPosition.z) {
-            this.position.z -= 180;
+            this.position.z -= 200;
         }
     }
 }
