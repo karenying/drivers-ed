@@ -82,5 +82,9 @@
     margin-top: 20px;
     color: white;
     font-size: 30px;
-    box-shadow: 3px 3px white;
+}
+
+#begin-button:hover {
+    background-color: green;
+    color: lightgray;
 }

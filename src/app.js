@@ -89,6 +89,7 @@ let beginContentButton = document.createElement('div');
 beginContentButton.id = 'begin-button';
 beginContentButton.innerHTML = 'BEGIN';
 beginContent.appendChild(beginContentButton);
+beginContentButton.onclick = function () {};
 
 // Set up score
 var score = 0;
