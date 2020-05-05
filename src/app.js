@@ -53,14 +53,24 @@ function setupKeyControls() {
 
 setupKeyControls();
 
-// Create new link Element
+// Set up css sheet
 let link = document.createElement('link');
-// set the attributes for link element
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = './src/app.css';
-// Append link element to HTML head
 document.getElementsByTagName('HEAD')[0].appendChild(link);
+
+// Set up intro screen
+let beginContainer = document.createElement('div');
+beginContainer.id = 'begin-container';
+document.body.appendChild(beginContainer);
+
+let beginPopup = document.createElement('div');
+beginPopup.id = 'begin';
+let beginPopupTitleText = document.createElement('h1');
+beginPopupTitleText.innerText = "Driver's Ed";
+beginPopup.appendChild(beginPopupTitleText);
+beginContainer.appendChild(beginPopup);
 
 // Set up score
 var score = 0;

@@ -33,3 +33,26 @@
     font-size: 28px;
     color: white;
 }
+
+#begin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#begin {
+    height: 700px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#begin h1 {
+    color: white;
+}
