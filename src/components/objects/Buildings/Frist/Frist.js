@@ -285,7 +285,6 @@ class Frist extends Group {
         const { cameraPosition, gameSpeed } = this.state;
 
         this.position.z += gameSpeed;
-
         if (this.position.z > cameraPosition.z + 10) {
             this.position.z -= 70;
         }

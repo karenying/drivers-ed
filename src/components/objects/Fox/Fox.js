@@ -57,6 +57,8 @@ class Fox extends Group {
     this.state = {
       walking: true,
       bob: true,
+      gameSpeed: parent.gameSpeed,
+      cameraPosition: parent.camera.position,
     }
     parent.addToUpdateList(this);
     this.name = 'fox';
@@ -178,6 +180,8 @@ class Fox extends Group {
   }
 
   update(timeStamp) {
+    const { gameSpeed, cameraPosition, walking, bob, pause } = this.state;
+
     var Pulse = function(hertz,fn) {
       if (!fn) fn = Math.sin;
       return function (min,max) {
@@ -188,13 +192,14 @@ class Fox extends Group {
     }
 
     const pulseSingle = new Pulse(0.5);
+
     if (!this.collected) {
-      if (this.state.bob) {
+      if (bob) {
         // Bob back and forth
         this.rotation.x = 0.1 * Math.sin(timeStamp / 200);
         this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
       }
-      if (this.state.walking) {
+      if (walking) {
         // front left leg
         this.children[2].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // back left leg
@@ -207,10 +212,10 @@ class Fox extends Group {
 
       // update positions (cross road and move towards car)
       var newX = this.position.x + this.speed;
-      var newZ = this.position.z + this.parent.gameSpeed;
+      var newZ = this.position.z + gameSpeed;
 
       // if fox is done crossing road or no longer visible in scene
-      if (newX > 3 || newZ > this.parent.camera.position.z) {
+      if (newX > 3 || newZ > cameraPosition.z) {
         if (Math.random() <= 0.1) {
           newZ = -(this.parent.fog.far + 10 * Math.random());
           newX = -1 * (Math.floor(Math.random() * 4) + 2);

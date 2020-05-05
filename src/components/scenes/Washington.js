@@ -26,9 +26,10 @@ class Washington extends Scene {
 
         this.state = {
             updateList: [],
+            pause: false,
         };
-        this.gameSpeed = 0.5;
 
+        this.gameSpeed = 0.5;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
@@ -150,10 +151,12 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { updateList } = this.state;
+        const { updateList, pause } = this.state;
 
-        for (const obj of updateList) {
-            obj.update(timeStamp);
+        if (!pause){
+          for (const obj of updateList) {
+              obj.update(timeStamp);
+          }          
         }
     }
 }

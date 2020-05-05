@@ -16,6 +16,10 @@ const camera = new PerspectiveCamera();
 const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
+// game control variables
+let gameOver = false;
+let paused = true;
+
 // Add fog
 scene.fog = new Fog(new Color(0x7ec0ee), 5, 100);
 
@@ -31,12 +35,18 @@ document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
+// Pause the scene
+function pause() {
+  scene.state.pause = true;
+}
+
 // Add key controls for car
 function setupKeyControls() {
     window.addEventListener('keydown', handleKeyDown, true);
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
+      if (!gameOver) {
         switch (event.keyCode) {
             case 37:
                 if (car.position.x - 0.25 > -car.maxPos) {
@@ -48,7 +58,8 @@ function setupKeyControls() {
                     car.position.x += 0.25;
                 }
                 break;
-        }
+          }
+      }
     }
 }
 
@@ -118,6 +129,11 @@ const onAnimationFrameHandler = (timeStamp) => {
       else if (collisionObj.name === 'fox') {
         if (!collisionObj.collected) score -= 5;
         if (!collisionObj.collected) lives -= 1;
+
+        // game over if lives are 0
+        if (lives <= 0) {
+          gameOver = pause();
+        }
         document.getElementById('score').innerHTML = 'Score: ' + score;
         document.getElementById('lives').innerHTML = 'Lives: ' + lives;
         document.getElementById('item').innerHTML = 'You hit a fox!';
