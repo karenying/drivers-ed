@@ -1,5 +1,6 @@
 import { Scene, Color, MeshLambertMaterial } from 'three';
 import {
+    Sidewalk,
     OvalStatue,
     Road,
     Car,
@@ -30,7 +31,7 @@ class Washington extends Scene {
             pause: true,
         };
 
-        this.gameSpeed = 0;
+        this.gameSpeed = 1;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
@@ -53,14 +54,18 @@ class Washington extends Scene {
 
         for (let i = 0; i < 11; i++) {
             const road = new Road(this);
+            const leftSidewalk = new Sidewalk(this);
+            const rightSidewalk = new Sidewalk(this);
             const grass = new Grass(this);
             const lamppostLeft = new Lamppost(this);
             const lamppostRight = new Lamppost(this);
             road.position.set(0, 0, positions[i]);
+            leftSidewalk.position.set(-4, 0, positions[i]);
+            rightSidewalk.position.set(4, 0, positions[i]);
             grass.position.set(0, 0, positions[i]);
             lamppostLeft.position.set(-2.8, 1.5, (positions[i] + 40) / 2);
             lamppostRight.position.set(2.8, 1.5, (positions[i] + 40) / 2);
-            this.add(road, grass, lamppostLeft, lamppostRight);
+            this.add(road, grass, leftSidewalk, rightSidewalk, lamppostLeft, lamppostRight);
         }
 
         // Add right buildings

@@ -7,4 +7,5 @@ export * from './Lamppost';
 export * from './Coin';
 export * from './MalePedestrianShorts';
 export * from './OvalStatue';
+export * from './Sidewalk';
 
