@@ -20,10 +20,10 @@ let gameOver = false;
 let paused = true;
 
 // Add fog
-scene.fog = new Fog(new Color(0x7ec0ee), 5, 100);
+scene.fog = new Fog(new Color(0x7ec0ee), 1, 200);
 
 // Set up camera
-camera.position.set(0, 5, 20);
+camera.position.set(0, 5, 30);
 camera.lookAt(new Vector3(0, 0, 0));
 
 // Set up renderer, canvas, and minor CSS adjustments

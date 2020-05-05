@@ -85,7 +85,8 @@ class McCosh extends Group {
 
         this.init();
 
-        this.position.set(-6.5, 1, -30);
+        this.scale.set(2.5, 2.5, 2.5);
+        this.position.set(-15, 3.75, -80);
         this.rotation.y = -Math.PI / 2;
         parent.addToUpdateList(this);
     }
@@ -142,6 +143,8 @@ class McCosh extends Group {
         bigWindow1.rotateY((3 * Math.PI) / 2);
         bigWindow2.rotateY(Math.PI / 2);
         building.add(windows, bigWindow1, bigWindow2);
+
+
         this.add(building);
     }
 
@@ -150,8 +153,8 @@ class McCosh extends Group {
 
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 70;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

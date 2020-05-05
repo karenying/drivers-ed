@@ -1,5 +1,6 @@
 import { Scene, Color, MeshLambertMaterial } from 'three';
 import {
+    OvalStatue,
     Road,
     Car,
     Fine,
@@ -29,7 +30,7 @@ class Washington extends Scene {
             pause: true,
         };
 
-        this.gameSpeed = 0.5;
+        this.gameSpeed = 1;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
 
@@ -75,7 +76,8 @@ class Washington extends Scene {
         let frist = new Frist(this);
         let mccosh = new McCosh(this);
         let nassau = new Nassau(this);
-        this.add(firestone, frist, mccosh, nassau);
+        let ovalStatue = new OvalStatue(this);
+        this.add(firestone, frist, mccosh, nassau, ovalStatue);
 
         const car = new Car(this);
         this.driver = car;

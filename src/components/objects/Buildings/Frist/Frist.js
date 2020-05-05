@@ -275,8 +275,8 @@ class Frist extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.07, 0.07, 0.07);
-        this.position.set(-6.5, 1, -10);
+        this.scale.set(0.2, 0.2, 0.2);
+        this.position.set(-17, 3, -35);
         this.rotation.y = Math.PI;
         parent.addToUpdateList(this);
     }
@@ -285,8 +285,8 @@ class Frist extends Group {
         const { cameraPosition, gameSpeed } = this.state;
 
         this.position.z += gameSpeed;
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 70;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

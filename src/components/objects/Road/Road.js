@@ -16,7 +16,7 @@ class Road extends Group {
             pause: false,
         };
 
-        const planeGeometry = new PlaneGeometry(5, 30);
+        const planeGeometry = new PlaneGeometry(5, 200);
         const planeMaterial = new MeshBasicMaterial({
             color: 0x808080,
             side: DoubleSide,

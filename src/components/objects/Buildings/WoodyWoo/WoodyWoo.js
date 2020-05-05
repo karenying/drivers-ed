@@ -120,8 +120,8 @@ class WoodyWoo extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.1, 0.1, 0.1);
-        this.position.set(6.5, 1.5, -10);
+        this.scale.set(0.25, 0.25, 0.25);
+        this.position.set(17, 3.75, -15);
         parent.addToUpdateList(this);
     }
 
@@ -130,8 +130,8 @@ class WoodyWoo extends Group {
 
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 90;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 180;
         }
     }
 }

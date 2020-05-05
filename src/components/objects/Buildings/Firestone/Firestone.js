@@ -153,8 +153,8 @@ class Firestone extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.07, 0.07, 0.07);
-        this.position.set(-5, 0.5, 10);
+        this.scale.set(0.25, 0.25, 0.25);
+        this.position.set(-17, 2, 12);
         this.rotation.y = Math.PI;
         parent.addToUpdateList(this);
     }
@@ -164,8 +164,8 @@ class Firestone extends Group {
 
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 70;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

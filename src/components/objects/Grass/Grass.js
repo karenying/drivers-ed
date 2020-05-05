@@ -21,12 +21,12 @@ class Grass extends Group {
             texture.wrapS = RepeatWrapping;
             texture.wrapT = RepeatWrapping;
 
-            texture.repeat.set(50, 20);
+            texture.repeat.set(100, 200);
             let material = new MeshLambertMaterial({
                 map: texture,
                 side: DoubleSide,
             });
-            const geometry = new PlaneGeometry(50, 30);
+            const geometry = new PlaneGeometry(100, 200);
             let plane = new Mesh(geometry, material);
             plane.rotation.x = Math.PI / 2;
             plane.position.set(0, -0.05, 0);
@@ -39,11 +39,11 @@ class Grass extends Group {
     update(timestamp) {
         const { cameraPosition } = this.state;
 
-        this.position.z += 0.5;
+        // this.position.z += 0.5;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 200;
-        }
+        // if (this.position.z > cameraPosition.z + 10) {
+        //     this.position.z -= 200;
+        // }
     }
 }
 
