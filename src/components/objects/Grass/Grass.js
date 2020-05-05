@@ -26,7 +26,7 @@ class Grass extends Group {
                 map: texture,
                 side: DoubleSide,
             });
-            const geometry = new PlaneGeometry(50, 20);
+            const geometry = new PlaneGeometry(50, 30);
             let plane = new Mesh(geometry, material);
             plane.rotation.x = Math.PI / 2;
             plane.position.set(0, -0.05, 0);
