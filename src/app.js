@@ -65,12 +65,30 @@ let beginContainer = document.createElement('div');
 beginContainer.id = 'begin-container';
 document.body.appendChild(beginContainer);
 
-let beginPopup = document.createElement('div');
-beginPopup.id = 'begin';
-let beginPopupTitleText = document.createElement('h1');
-beginPopupTitleText.innerText = "Driver's Ed";
-beginPopup.appendChild(beginPopupTitleText);
-beginContainer.appendChild(beginPopup);
+let beginContent = document.createElement('div');
+beginContent.id = 'begin';
+beginContainer.appendChild(beginContent);
+
+let beginContentText = document.createElement('div');
+beginContentText.id = 'begin-text';
+beginContent.appendChild(beginContentText);
+
+let beginContentTitleText = document.createElement('h1');
+beginContentTitleText.innerText = "DRIVER'S ED";
+beginContentText.appendChild(beginContentTitleText);
+
+let beginContentDescription = document.createElement('p');
+beginContentDescription.innerHTML =
+    "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
+    '<br />' +
+    '<br />' +
+    'Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins.';
+beginContentText.appendChild(beginContentDescription);
+
+let beginContentButton = document.createElement('div');
+beginContentButton.id = 'begin-button';
+beginContentButton.innerHTML = 'BEGIN';
+beginContent.appendChild(beginContentButton);
 
 // Set up score
 var score = 0;
