@@ -78,7 +78,7 @@ class Lamppost extends Group {
       const { cameraPosition, startTime, gameSpeed, lightsOn } = this.state;
       const currentTime = Date.now() / 1000;
 
-      if ((currentTime - startTime > 10) && !this.state.night) {
+      if ((currentTime - startTime > 20) && !this.state.night) {
         this.state.night = true;
       }
 
