@@ -16,27 +16,34 @@ class Road extends Group {
             pause: false,
         };
 
-        const planeGeometry = new PlaneGeometry(5, 200);
+        const planeGeometry = new PlaneGeometry(3, 200);
         const planeMaterial = new MeshBasicMaterial({
-            color: 0x808080,
+            color: 0xadacac,
             side: DoubleSide,
         });
 
         let plane = new Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = Math.PI / 2;
 
-        const stripeGeometry = new PlaneGeometry(0.2, 3);
+        const stripeGeometry = new PlaneGeometry(0.1, 3);
         const stripeMaterial = new MeshBasicMaterial({
-            color: 0xfad201,
+            color: 0x808080,
             side: DoubleSide,
         });
 
-        let stripe = new Mesh(stripeGeometry, stripeMaterial);
-        stripe.rotation.x = Math.PI / 2;
-        stripe.position.y = 0.1;
-        stripe.position.z = 5;
+        let stripe1 = new Mesh(stripeGeometry, stripeMaterial);
+        stripe1.rotation.x = Math.PI / 2;
+        stripe1.rotation.z = Math.PI / 2;
+        stripe1.position.y = 0.01;
+        stripe1.position.z = 6;
 
-        this.add(plane, stripe);
+        let stripe2 = new Mesh(stripeGeometry, stripeMaterial);
+        stripe2.rotation.x = Math.PI / 2;
+        stripe2.rotation.z = Math.PI / 2;
+        stripe2.position.y = 0.01;
+        stripe2.position.z = 18;
+
+        this.add(plane, stripe1, stripe2);
         parent.addToUpdateList(this);
     }
 

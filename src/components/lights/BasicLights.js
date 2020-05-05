@@ -2,7 +2,6 @@ import { Group, SpotLight, AmbientLight, HemisphereLight } from 'three';
 
 class BasicLights extends Group {
     constructor(parent, ...args) {
-        debugger;
         // Invoke parent Group() constructor with our args
         super(...args);
 

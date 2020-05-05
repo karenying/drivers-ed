@@ -73,7 +73,7 @@ class Colonial extends Group {
 
         this.init();
 
-        this.position.set(5, 1, -70);
+        this.position.set(15, 3, -130);
         this.rotation.y = Math.PI / 2;
         parent.addToUpdateList(this);
     }
@@ -149,6 +149,8 @@ class Colonial extends Group {
         let pillarThree = makeMesh(pillarGeo, pillarMat, -1.6, 0, 0);
         let pillarFour = makeMesh(pillarGeo, pillarMat, -2.4, 0, 0);
         pillar.add(pillarTwo, pillarThree, pillarFour);
+
+        this.scale.set(3, 3, 3)
         this.add(roof, roof2, pillar);
     }
 
@@ -158,8 +160,8 @@ class Colonial extends Group {
         this.position.z += gameSpeed;
 
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 90;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

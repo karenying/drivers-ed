@@ -7,6 +7,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CircleGeometry,
+    PointLight,
     CylinderGeometry,
 } from 'three';
 
@@ -227,8 +228,10 @@ class Car extends Group {
         this.add(exhaust);
 
         this.scale.set(0.4, 0.4, 0.4);
-        this.position.set(0, 0, 10);
+        this.position.set(0, 0, 21);
         this.rotation.y = Math.PI / 2;
+
+        // create night mode headlights
 
         // compute bounding box
         for (const mesh of this.children) {

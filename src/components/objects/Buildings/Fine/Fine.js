@@ -98,8 +98,8 @@ class Fine extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.09, 0.09, 0.09);
-        this.position.set(5, 3.5, 10);
+        this.scale.set(0.15, 0.15, 0.15);
+        this.position.set(12, 6, 15);
         parent.addToUpdateList(this);
     }
 
@@ -108,8 +108,8 @@ class Fine extends Group {
         this.position.z += gameSpeed;
 
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 90;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

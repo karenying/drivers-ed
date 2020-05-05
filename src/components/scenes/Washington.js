@@ -1,5 +1,7 @@
 import { Scene, Color, MeshLambertMaterial } from 'three';
 import {
+    Sidewalk,
+    OvalStatue,
     Road,
     Car,
     Fine,
@@ -29,7 +31,7 @@ class Washington extends Scene {
             pause: true,
         };
 
-        this.gameSpeed = 0.5;
+        this.gameSpeed = 1;
         this.startTime = Date.now() / 1000;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -51,16 +53,35 @@ class Washington extends Scene {
             -200,
         ];
 
+        // lampPositions
+        const lampPositions = [
+            0,
+            -40,
+            -80,
+            -120,
+            -160,
+            -200,
+        ];
+
         for (let i = 0; i < 11; i++) {
             const road = new Road(this);
+            const leftSidewalk = new Sidewalk(this);
+            const rightSidewalk = new Sidewalk(this);
             const grass = new Grass(this);
-            const lamppostLeft = new Lamppost(this);
-            const lamppostRight = new Lamppost(this);
             road.position.set(0, 0, positions[i]);
+            leftSidewalk.position.set(-4, 0, positions[i]);
+            rightSidewalk.position.set(4, 0, positions[i]);
             grass.position.set(0, 0, positions[i]);
-            lamppostLeft.position.set(-2.6, 1, (positions[i] + 10) / 2);
-            lamppostRight.position.set(2.6, 1, (positions[i] + 10) / 2);
-            this.add(road, grass, lamppostLeft, lamppostRight);
+            this.add(road, grass, leftSidewalk, rightSidewalk);
+        }
+
+        // add lamppost
+        for (let i = 0; i < 6; i++) {
+          const lamppostLeft = new Lamppost(this);
+          const lamppostRight = new Lamppost(this);
+          lamppostLeft.position.set(-5.6, 1.5, lampPositions[i]);
+          lamppostRight.position.set(5.6, 1.5, lampPositions[i] + 20);
+          this.add(lamppostLeft, lamppostRight);
         }
 
         // Add right buildings
@@ -76,7 +97,8 @@ class Washington extends Scene {
         let frist = new Frist(this);
         let mccosh = new McCosh(this);
         let nassau = new Nassau(this);
-        this.add(firestone, frist, mccosh, nassau);
+        let ovalStatue = new OvalStatue(this);
+        this.add(firestone, frist, mccosh, nassau, ovalStatue);
 
         const car = new Car(this);
         this.driver = car;

@@ -96,8 +96,8 @@ class Friend extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.1, 0.1, 0.1);
-        this.position.set(6.5, 0.7, -30);
+        this.scale.set(0.25, 0.25, 0.25);
+        this.position.set(17, 1.75, -60);
         parent.addToUpdateList(this);
     }
 
@@ -106,8 +106,8 @@ class Friend extends Group {
 
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 90;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }

@@ -5,6 +5,7 @@ import { Group,
   SphereGeometry,
   DoubleSide,
   PointLight,
+  SpotLight,
   CylinderGeometry } from 'three';
 
 var Colors = {
@@ -46,7 +47,7 @@ class Lamppost extends Group {
     super();
     // debugger;
     this.state = {
-      night: false,
+      night: parent.night,
       startTime: parent.startTime,
       cameraPosition: parent.camera.position,
       gameSpeed: parent.gameSpeed,
@@ -66,11 +67,13 @@ class Lamppost extends Group {
     let lamp = makeMesh(lampGeo, lampMat, 0, 0.6, 0);
     post.add(lamp);
 
-    let light = new PointLight(0xf5cc00, 0, 2.5 );
-    light.position.set(0, 0.6, 0);
+    let light = new SpotLight(0xf5cc00);
+    light.intensity = 0;
+    light.position.set(0, 0.8, 0);
     this.add(light);
 
     this.add(post);
+    this.scale.set(2, 2, 2);
     this.position.set(-2.6, 0.8, 0);
   }
 
@@ -84,12 +87,13 @@ class Lamppost extends Group {
 
       this.position.z += gameSpeed;
 
-      if (this.position.z > cameraPosition.z + 10) {
-          this.position.z -= 60;
+      if (this.position.z > cameraPosition.z) {
+          this.position.z -= 200;
       }
 
       if (!lightsOn && this.state.night) {
-        this.children[0].intensity = 7;
+        this.children[0].intensity = 0.075;
+        this.children[0].decay = 5;
       }
   }
 

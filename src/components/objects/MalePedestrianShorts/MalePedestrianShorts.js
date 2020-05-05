@@ -171,10 +171,10 @@ class MalePedestrianShorts extends Group {
         var newZ = this.position.z + this.parent.gameSpeed;
         
         // if pedestrian is done crossing road or no longer visible in scene
-        if (newX < -3 || newZ > this.parent.camera.position.z) {
+        if (newX < -6 || newZ > this.parent.camera.position.z) {
             if (Math.random() <= 0.1) {
             newZ = -(this.parent.fog.far + 10 * Math.random());
-            newX = (Math.floor(Math.random() * 4) + 2);
+            newX = (Math.floor(Math.random() * 6) + 2);
             }
         }
         this.position.x = newX;

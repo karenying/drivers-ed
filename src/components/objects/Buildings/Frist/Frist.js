@@ -4,13 +4,13 @@ function createWindow(x, y, z, materials) {
     var windowGeometry = new BoxGeometry(x, y, z);
     var window = new Mesh(windowGeometry, materials.window);
 
-    var windowDividerGeometryVert = new BoxGeometry(x + 1, y + 0.5, 0.5);
+    var windowDividerGeometryVert = new BoxGeometry(x + 0.25, y + 0.1, 0.1);
     var windowDividerVert = new Mesh(
         windowDividerGeometryVert,
         materials.black
     );
 
-    var windowDividerGeometryHoz = new BoxGeometry(x + 1, 0.5, z + 0.5);
+    var windowDividerGeometryHoz = new BoxGeometry(x + 0.25, 0.1, z + 0.1);
     var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
 
     window.add(windowDividerVert);
@@ -275,8 +275,8 @@ class Frist extends Group {
 
         this.add(mainBuilding);
 
-        this.scale.set(0.07, 0.07, 0.07);
-        this.position.set(-6.5, 1, -10);
+        this.scale.set(0.2, 0.2, 0.2);
+        this.position.set(-17, 3, -35);
         this.rotation.y = Math.PI;
         parent.addToUpdateList(this);
     }
@@ -285,8 +285,8 @@ class Frist extends Group {
         const { cameraPosition, gameSpeed } = this.state;
 
         this.position.z += gameSpeed;
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 70;
+        if (this.position.z > cameraPosition.z) {
+            this.position.z -= 200;
         }
     }
 }
