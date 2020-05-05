@@ -92,7 +92,7 @@ class Lamppost extends Group {
       }
 
       if (!lightsOn && this.state.night) {
-        this.children[0].intensity = 0.075;
+        this.children[0].intensity = 0.06;
         this.children[0].decay = 5;
       }
   }

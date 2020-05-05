@@ -1,7 +1,7 @@
 import {
     Group,
     PlaneGeometry,
-    MeshBasicMaterial,
+    MeshStandardMaterial,
     Mesh,
     DoubleSide,
 } from 'three';
@@ -17,8 +17,8 @@ class Road extends Group {
         };
 
         const planeGeometry = new PlaneGeometry(5, 200);
-        const planeMaterial = new MeshBasicMaterial({
-            color: 0x808080,
+        const planeMaterial = new MeshStandardMaterial({
+            color: 0x1f1f1f,
             side: DoubleSide,
         });
 
@@ -26,7 +26,7 @@ class Road extends Group {
         plane.rotation.x = Math.PI / 2;
 
         const stripeGeometry = new PlaneGeometry(0.2, 3);
-        const stripeMaterial = new MeshBasicMaterial({
+        const stripeMaterial = new MeshStandardMaterial({
             color: 0xfad201,
             side: DoubleSide,
         });

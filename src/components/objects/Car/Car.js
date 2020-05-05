@@ -7,7 +7,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CircleGeometry,
-    PointLight,
+    SpotLight,
     CylinderGeometry,
 } from 'three';
 
@@ -232,6 +232,16 @@ class Car extends Group {
         this.rotation.y = Math.PI / 2;
 
         // create night mode headlights
+        let beamerOne = new SpotLight(0xffffff);
+        beamerOne.position.set(1, 1, -1);
+        beamerOne.angle = 0.1;
+        beamerOne.distance = 80;
+        let beamerTwo= new SpotLight(0xffffff);
+        beamerTwo.position.set(1, 1, 1);
+        beamerTwo.angle = 0.1;
+        beamerTwo.distance = 80;
+        // beamerOne.target.position.set(1, 1, -5);
+        this.add(beamerOne, beamerTwo);
 
         // compute bounding box
         for (const mesh of this.children) {
