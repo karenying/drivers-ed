@@ -12,7 +12,7 @@ import {Fine,
         MalePedestrianJeans, 
         FemalePedestrianJeans } from 'objects';
 import { BasicLights } from 'lights';
-import { Car } from '../objects';
+import { Car, OvalStatue } from '../objects';
 
 class SeedScene extends Scene {
     constructor() {
@@ -224,7 +224,10 @@ class SeedScene extends Scene {
         var fine = new Fine();
         fine.position.set(0, 40, 0);
 
-        this.add(fine, road, car, lights);
+        var ovalStatue = new OvalStatue();
+        ovalStatue.position.set(0, 19, 0);
+
+        this.add(ovalStatue, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 

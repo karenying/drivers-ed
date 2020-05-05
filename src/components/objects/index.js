@@ -13,3 +13,4 @@ export * from './WoodyWoo';
 export * from './Friend';
 export * from './Firestone';
 export * from './Fine';
+export * from './OvalStatue';
