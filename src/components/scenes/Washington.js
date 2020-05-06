@@ -133,7 +133,7 @@ class Washington extends Scene {
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
             -(50 + 20 * Math.random())
-            );
+        );
         this.add(chad);
         this.collidableMeshList.push(chad);
 
@@ -165,7 +165,7 @@ class Washington extends Scene {
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -(100 + 20 * Math.random())
+            -(30 * Math.random())
             );
         this.collidableMeshList.push(vanessa);
         this.add(vanessa);
@@ -175,7 +175,7 @@ class Washington extends Scene {
         fox.position.set(
           2 * Math.random() * this.edge - this.edge / 2,
           0.5,
-          -(50 + 5 * Math.random()));
+          -(100 * Math.random()));
         this.add(fox);
         this.collidableMeshList.push(fox);
 

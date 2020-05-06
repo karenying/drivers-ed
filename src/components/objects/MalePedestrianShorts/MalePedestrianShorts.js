@@ -198,7 +198,7 @@ class MalePedestrianShorts extends Group {
 
           // if pedestrian is done crossing road or no longer visible in scene
           if (newX < -this.parent.edge) {
-              newZ = -(this.parent.fog.far + 20 * Math.random());
+              newZ = -(this.parent.fog.far + 100 * Math.random());
               newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
               this.resetParams();
           }
