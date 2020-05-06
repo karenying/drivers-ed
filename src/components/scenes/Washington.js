@@ -22,6 +22,7 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
+const backgroundColors = [];
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -29,13 +30,15 @@ class Washington extends Scene {
         this.state = {
             updateList: [],
             pause: true,
+            timeElapsed: -1,
+            threshold: 5,
+            startTime: null,
         };
 
         this.gameSpeed = 1;
-        this.startTime = Date.now() / 1000;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-
+        this.night = false;
         this.collidableMeshList = []; // List of collidable meshes
 
         // Add road
@@ -178,9 +181,32 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { updateList, pause, startTime } = this.state;
+        const { startTime, updateList, pause } = this.state;
 
         if (!pause){
+
+          // change color of sky at night
+          // figures out time elapsed since beginning
+          if (startTime == null) {
+            this.state.startTime = Date.now() / 1000;
+          } else {
+            const currentTime = Date.now() / 1000;
+            this.state.timeElapsed = currentTime - this.state.startTime;
+          }
+
+          // toggle night mode
+          if (this.state.timeElapsed > this.state.threshold) {
+            this.state.night = !this.state.night;
+            this.state.startTime = Date.now() / 1000;
+            this.state.threshold = 10;
+          }
+
+          if (this.state.night) {
+            this.background = new Color(0x0c0052);
+          } else {
+            this.background = new Color(0x7ec0ee);
+          }
+
           for (const obj of updateList) {
               obj.update(timeStamp);
           }

@@ -74,7 +74,11 @@ class Car extends Group {
         super();
         this.state = {
           night: parent.night,
-          startTime: parent.startTime,
+          timeElapsed: -1,
+          lightsOn: false,
+          startTime: null,
+          lightsOn: false,
+          threshold: 5,
         }
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -259,16 +263,40 @@ class Car extends Group {
     }
 
     update(timeStamp) {
-        // turn on night mode
-        const currentTime = Date.now() / 1000;
+        const { lightsOn, startTime } = this.state;
 
-        if ((currentTime - this.state.startTime > 8) && !this.state.night) {
-          this.state.night = true;
+        // figures out time elapsed since beginning
+        if (startTime == null) {
+          this.state.startTime = Date.now() / 1000;
+        } else {
+          const currentTime = Date.now() / 1000;
+          this.state.timeElapsed = currentTime - this.state.startTime;
+        }
+
+        // toggle night mode
+        if (this.state.timeElapsed > this.state.threshold) {
+          this.state.night = !this.state.night;
+          this.state.startTime = Date.now() / 1000;
+          this.state.threshold = 10; 
+        }
+
+        // turns lights on
+        if (!lightsOn && this.state.night) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 2.25;
           beamer = this.getObjectByName("beamer2", true);
           beamer.intensity = 2.25;
+          this.state.lightsOn = true;
         }
+        // turns lights off
+        if (lightsOn && !this.state.night) {
+          let beamer = this.getObjectByName("beamer1", true);
+          beamer.intensity = 0;
+          beamer = this.getObjectByName("beamer2", true);
+          beamer.intensity = 0;
+          this.state.lightsOn = false;
+        }
+
         // Bob car and exhaust back and forth
         this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
         this.children[11].rotation.z = Math.sin(timeStamp / 200);
