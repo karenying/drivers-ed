@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+
 import { Group, BoxGeometry,  Mesh} from "three";
 
 class MalePedestrianShorts extends Group {
@@ -10,7 +13,16 @@ class MalePedestrianShorts extends Group {
             walking: true,
         };
 
-        this.speed = 0.03;
+        this.name = 'pedestrian';
+        this.speed = 0.03; // 0.03
+
+        // Create bounding box
+        var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+        this.bb = bb;
+        this.collected = false;
+
+        // Add self to parent's update list
+        parent.addToUpdateList(this);
 
         // head
         var headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
@@ -134,8 +146,16 @@ class MalePedestrianShorts extends Group {
         this.scale.set(0.25, 0.25, 0.25);
         this.rotation.y = -1 * (Math.PI/2);
 
-        // Add self to parent's update list
-        parent.addToUpdateList(this);
+        // compute bounding box
+        for (const mesh of this.children) {
+          var box = new THREE.Box3();
+          box.setFromObject(mesh);
+          this.bb.union(box);
+        }
+
+        // visualize bounding box
+        var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
+        // this.add(bbHelper);
     }
 
     update(timeStamp) {
@@ -149,7 +169,7 @@ class MalePedestrianShorts extends Group {
         }
 
         var pulseSingle = new Pulse(0.75);
-        
+
         if (this.state.bob) {
             // Bob back and forth
             this.rotation.x = 0.05 * Math.sin(timeStamp / 200);
@@ -165,22 +185,59 @@ class MalePedestrianShorts extends Group {
             // right leg
             this.children[4].rotation.x = pulseSingle(-40,20) * -1 * (Math.PI/180);
         }
-        
+
         // update positions (cross road and move towards car)
-        var newX = this.position.x - this.speed;
         var newZ = this.position.z + this.parent.gameSpeed;
-        
-        // if pedestrian is done crossing road or no longer visible in scene
-        if (newX < -6 || newZ > this.parent.camera.position.z) {
-            if (Math.random() <= 0.1) {
-            newZ = -(this.parent.fog.far + 10 * Math.random());
-            newX = (Math.floor(Math.random() * 6) + 2);
-            }
+        if (newZ > this.parent.camera.position.z) {
+          newZ = -(this.parent.fog.far + 10 * Math.random());
         }
-        this.position.x = newX;
-        this.position.z = newZ;  
+        this.position.z = newZ;
+
+        if (!this.collected) {
+          var newX = this.position.x - this.speed;
+
+          // if pedestrian is done crossing road or no longer visible in scene
+          if (newX < -this.parent.edge) {
+              newZ = -(this.parent.fog.far + 10 * Math.random());
+              newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
+              this.resetParams();
+          }
+          this.position.x = newX;
+        }
+
+        // Advance tween animations, if any exist
+        TWEEN.update();
+    }
+
+    resetParams() {
+      this.position.y = 1;
+      this.collected = false;
+    }
+
+    onCollision() {
+      if (!this.collected) {
+        const spin = new TWEEN.Tween(this.rotation)
+            .to({ y: this.rotation.y + 2 * Math.PI }, 200);
+        const jumpUp = new TWEEN.Tween(this.position)
+            .to({ y: this.position.y + 2 }, 200)
+            .easing(TWEEN.Easing.Quadratic.Out);
+        const fallDown = new TWEEN.Tween(this.position)
+            .to({ y: -1 }, 300)
+            .easing(TWEEN.Easing.Quadratic.In);
+        const resetPos = new TWEEN.Tween(this.position)
+            .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+
+        // Reset position after jumping up and down
+        jumpUp.onComplete(() => fallDown.start());
+        fallDown.onComplete(() => resetPos.start());
+        resetPos.onComplete(() => this.resetParams());
+
+        // Start animation
+        jumpUp.start();
+        spin.start();
+      }
+      this.collected = true;
     }
 }
 
 export default MalePedestrianShorts;
-

@@ -61,20 +61,18 @@ class Coin extends Group {
 
     // visualize bounding box
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-    this.add(bbHelper);
+    // this.add(bbHelper);
   }
 
   update(timeStamp) {
     this.position.y =  0.5 + Math.abs(Math.sin(timeStamp / 110) / 18);
     this.rotation.y += 0.1;
 
-    if (!this.collected) {
-      var newZ = this.position.z + this.speed;
-      if (newZ > this.parent.camera.position.z) {
-        newZ = -(this.parent.fog.far + 50 * Math.random());
-      }
-      this.position.z = newZ;
+    var newZ = this.position.z + this.speed;
+    if (newZ > this.parent.camera.position.z) {
+      newZ = -(this.parent.fog.far + 50 * Math.random());
     }
+    this.position.z = newZ;
 
     // Advance tween animations, if any exist
     TWEEN.update();
@@ -85,23 +83,28 @@ class Coin extends Group {
   }
 
   onCollision() {
+    if (!this.collected) {
+      const spin = new TWEEN.Tween(this.rotation)
+          .to({ y: this.rotation.y + 2 * Math.PI }, 200);
+      const jumpUp = new TWEEN.Tween(this.position)
+          .to({ y: this.position.y + 3 }, 200)
+          .easing(TWEEN.Easing.Quadratic.Out);
+      const fallDown = new TWEEN.Tween(this.position)
+          .to({ y: -1 }, 200)
+          .easing(TWEEN.Easing.Quadratic.In);
+      const resetPos = new TWEEN.Tween(this.position)
+          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+
+      // Reset position after jumping up and down
+      jumpUp.onComplete(() => fallDown.start());
+      fallDown.onComplete(() => resetPos.start());
+      resetPos.onComplete(() => this.resetParams());
+
+      // Start animation
+      jumpUp.start();
+      spin.start();
+    }
     this.collected = true;
-    const jumpUp = new TWEEN.Tween(this.position)
-        .to({ y: this.position.y + 1 }, 100)
-        .easing(TWEEN.Easing.Quadratic.Out);
-    const fallDown = new TWEEN.Tween(this.position)
-        .to({ y: 0 }, 300)
-        .easing(TWEEN.Easing.Quadratic.In);
-    const resetPos = new TWEEN.Tween(this.position)
-        .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
-
-    // Reset position after jumping up and down
-    jumpUp.onComplete(() => fallDown.start());
-    fallDown.onComplete(() => resetPos.start());
-    resetPos.onComplete(() => this.resetParams());
-
-    // Start animation
-    jumpUp.start();
   }
 
 }
