@@ -11,6 +11,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
+import dingLink from './sounds/ding.wav';
+
+// Add sounds
+const ding = new Audio(dingLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -222,6 +226,7 @@ const onAnimationFrameHandler = (timeStamp) => {
         // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
             if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            ding.play();
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
