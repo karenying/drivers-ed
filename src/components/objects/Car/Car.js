@@ -239,7 +239,7 @@ class Car extends Group {
 
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-        this.add(bbHelper);
+        // this.add(bbHelper);
     }
 
     update(timeStamp) {
