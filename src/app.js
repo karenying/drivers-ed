@@ -52,23 +52,47 @@ function pause() {
 // Add key controls for car
 function setupKeyControls() {
     window.addEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('keyup', handleKeyUp, true);
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
         if (!gameOver) {
             switch (event.keyCode) {
+                // left
                 case 37:
+                    car.state.bobbing = false;
                     if (car.position.x - 0.25 > -car.maxPos) {
                         car.position.x -= 0.25;
+                        car.rotation.z = Math.PI / 80;
                     }
                     break;
+                // right
                 case 39:
+                    car.state.bobbing = false;
                     if (car.position.x + 0.25 < car.maxPos) {
                         car.position.x += 0.25;
+                        car.rotation.z = -Math.PI / 80;
                     }
                     break;
                 case 80:
                     scene.state.pause = !scene.state.pause;
+                    break;
+            }
+        }
+    }
+
+    function handleKeyUp(event) {
+        if (!gameOver) {
+            switch (event.keyCode) {
+                // left
+                case 37:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
+                    break;
+                // right
+                case 39:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
                     break;
             }
         }
