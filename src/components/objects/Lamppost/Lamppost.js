@@ -52,7 +52,7 @@ class Lamppost extends Group {
       timeElapsed: -1,
       lightsOn: false,
       startTime: null,
-      threshold: 5, 
+      threshold: 10,
     }
     this.init();
     this.name = 'lamppost';
@@ -94,7 +94,7 @@ class Lamppost extends Group {
       if (this.state.timeElapsed > this.state.threshold) {
         this.state.night = !this.state.night;
         this.state.startTime = Date.now() / 1000;
-        this.state.threshold = 10;
+        this.state.threshold = 20;
       }
 
       this.position.z += gameSpeed;
@@ -107,7 +107,7 @@ class Lamppost extends Group {
       // turns lights on
       if (!lightsOn && this.state.night) {
         this.children[1].material.color.setHex( Colors.yellow );
-        this.children[3].intensity = 0.075;
+        this.children[3].intensity = 0.1;
         this.children[3].decay = 2;
         this.state.lightsOn = true;
       }

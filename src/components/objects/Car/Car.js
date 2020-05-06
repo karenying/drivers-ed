@@ -78,7 +78,7 @@ class Car extends Group {
           lightsOn: false,
           startTime: null,
           lightsOn: false,
-          threshold: 5,
+          threshold: 10,
         }
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -277,7 +277,7 @@ class Car extends Group {
         if (this.state.timeElapsed > this.state.threshold) {
           this.state.night = !this.state.night;
           this.state.startTime = Date.now() / 1000;
-          this.state.threshold = 10; 
+          this.state.threshold = 20;
         }
 
         // turns lights on

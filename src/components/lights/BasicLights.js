@@ -5,8 +5,8 @@ class BasicLights extends Group {
         // Invoke parent Group() constructor with our args
         super(...args);
         this.state = {
-          ambiChange: 0.01,
-          hemiChange: 0.01,
+          ambiChange: 0.005,
+          hemiChange: 0.005,
           timeElapsed: -1,
           startTime: null,
         }
@@ -29,7 +29,7 @@ class BasicLights extends Group {
         this.state.timeElapsed = currentTime - this.state.startTime;
       }
 
-      if (this.state.timeElapsed > 10) {
+      if (this.state.timeElapsed > 20) {
         this.state.ambiChange = -this.state.ambiChange;
         this.state.hemiChange = -this.state.hemiChange;
         this.state.startTime = Date.now() / 1000;
@@ -38,7 +38,12 @@ class BasicLights extends Group {
 
       // edit lights
       this.children[0].intensity -= this.state.ambiChange;
+      this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
+      this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
+
       this.children[1].intensity -= this.state.hemiChange;
+      this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
+      this.children[1].intensity = Math.min(2, this.children[1].intensity);
       // const ambi = new AmbientLight(0x404040, 0.2);
       // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
       // this.add(ambi, hemi);

@@ -31,7 +31,7 @@ class Washington extends Scene {
             updateList: [],
             pause: true,
             timeElapsed: -1,
-            threshold: 5,
+            threshold: 10,
             startTime: null,
         };
 
@@ -198,7 +198,7 @@ class Washington extends Scene {
           if (this.state.timeElapsed > this.state.threshold) {
             this.state.night = !this.state.night;
             this.state.startTime = Date.now() / 1000;
-            this.state.threshold = 10;
+            this.state.threshold = 20;
           }
 
           if (this.state.night) {
