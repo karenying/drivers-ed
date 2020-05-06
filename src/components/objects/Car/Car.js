@@ -122,13 +122,13 @@ class Car extends Group {
             flatShading: true,
         });
         let carTop = new Mesh(top, topMat);
-        carTop.scale.set(2, 2, 2.5);
+        carTop.scale.set(2.5, 2, 2.5);
         carTop.castShadow = true;
         carTop.receiveShadow = true;
         carTop.position.set(0, 2, 0);
         this.add(carTop);
 
-        let windshield = createWindshield(2.1, 1.4, 2, 0, 2.2, 0);
+        let windshield = createWindshield(2, 1.4, 3, 0, 2.2, 0);
         this.add(windshield);
         // let windshieldTwo = createWindshield(1.77, 1.4, 1.7,5,5,5);
         // this.add(windshieldTwo);
@@ -247,12 +247,12 @@ class Car extends Group {
         this.position.set(0, 0, 21);
         // create night mode headlights
         let beamerOne = new SpotLight(0xffffff, 0);
-        beamerOne.position.set(1, 1, -1);
+        beamerOne.position.set(1, 1, 1);
         beamerOne.angle = 0.1;
         beamerOne.distance = 80;
         beamerOne.name = "beamer1";
         let beamerTwo= new SpotLight(0xffffff, 0);
-        beamerTwo.position.set(1, 1, 1);
+        beamerTwo.position.set(-1, 1, 1);
         beamerTwo.angle = 0.1;
         beamerTwo.distance = 80;
         beamerTwo.name = "beamer2";
