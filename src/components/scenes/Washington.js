@@ -22,7 +22,9 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
-const backgroundColors = [];
+const backgroundColors = [
+  0x7ec0ee, 0x659abe, 0x517b98, 0x41627A, 0x344E62,
+  0x41627A, 0x517b98, 0x659abe, 0x7ec0ee, 0x89CDF1];
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -154,6 +156,7 @@ class Washington extends Scene {
             this.add(coin);
             this.collidableMeshList.push(coin);
         }
+        this.state.updateList.push('scene');
     }
 
     addToUpdateList(object) {
@@ -174,7 +177,7 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { startTime, updateList, pause } = this.state;
+        const { startTime, updateList, pause, skyColor } = this.state;
 
         if (!pause){
 
@@ -188,22 +191,28 @@ class Washington extends Scene {
           }
 
           // toggle night mode
-          if (this.state.timeElapsed > this.state.threshold) {
+          if (Math.floor(this.state.timeElapsed % this.state.threshold) == 0) {
             this.state.night = !this.state.night;
-            this.state.startTime = Date.now() / 1000;
             this.state.threshold = 20;
           }
 
-          if (this.state.night) {
-            this.background = new Color(0x345063);
-            this.fog.color = new Color(0x345063);
-          } else {
-            this.background = new Color(0x7ec0ee);
-            this.fog.color = new Color(0x7ec0ee);
-          }
+          // if (this.state.night) {
+          //   this.background = new Color(0x345063);
+          //   this.fog.color = new Color(0x345063);
+          // } else {
+          //   this.background = new Color(0x7ec0ee);
+          //   this.fog.color = new Color(0x7ec0ee);
+          // }
 
           for (const obj of updateList) {
+            if (obj === 'scene') {
+              debugger;
+              this.background = new Color(backgroundColors[Math.floor(this.state.timeElapsed)]);
+              this.fog.color = new Color(backgroundColors[Math.floor(this.state.timeElapsed)]);
+              this.state.skyColor += 0.25;
+            } else{
               obj.update(timeStamp);
+            }
           }
         }
     }
