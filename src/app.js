@@ -254,8 +254,10 @@ const onAnimationFrameHandler = (timeStamp) => {
     }
     // game over if lives are 0
     if (lives <= 0) {
+        if (!gameOver) {
+            lose.play();
+        }
         gameOver = pause();
-        lose.play();
         endContainer.style.display = 'flex';
         endContentScore.innerText = score;
     }
