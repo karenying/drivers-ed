@@ -82,17 +82,30 @@ class Washington extends Scene {
         let frist = new Frist(this);
         let mccosh = new McCosh(this);
         let nassau = new Nassau(this);
-        let ovalStatue = new OvalStatue(this);
-        this.add(firestone, frist, mccosh, nassau, ovalStatue);
+        this.add(firestone, frist, mccosh, nassau);
 
         const car = new Car(this);
         this.driver = car;
 
-        // Add obstacle
+        const lights = new BasicLights();
+        this.add(lights, car);
+
+        // add obstacles
         let fox = new Fox(this);
-        fox.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
         this.add(fox);
         this.collidableMeshList.push(fox);
+
+        // Add some coins
+        for (let i = 0; i < 5; i++) {
+          var coin = new Coin(this);
+          coin.position.set(
+            car.maxPos * Math.random() - 2,
+            0,
+            -(50 + 5 * i * Math.random())
+          );
+          this.add(coin);
+          this.collidableMeshList.push(coin);
+        }
 
         var chadMaterials = {
             eye: new MeshLambertMaterial({
@@ -124,64 +137,10 @@ class Washington extends Scene {
         chad.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
         this.add(chad);
         this.collidableMeshList.push(chad);
-
-        const lights = new BasicLights();
-        this.add(lights, car);
-
-        // Add some coins
-        for (let i = 0; i < 5; i++) {
-            var coin = new Coin(this);
-            coin.position.set(
-                car.maxPos * Math.random() - 2,
-                0,
-                -(50 + 5 * i * Math.random())
-            );
-            this.add(coin);
-            this.collidableMeshList.push(coin);
-        }
     }
 
-// <<<<<<< HEAD
-//     addToUpdateList(object) {
-//         this.state.updateList.push(object);
-// =======
-    // Add right buildings
-    let fine = new Fine(this);
-    let woodywoo = new WoodyWoo(this);
-    let friend = new Friend(this);
-    let cap = new Cap(this);
-    let colonial = new Colonial(this);
-    this.add(fine, woodywoo, friend, cap, colonial);
-
-    // Add left buildings
-    let firestone = new Firestone(this);
-    let frist = new Frist(this);
-    let mccosh = new McCosh(this);
-    let nassau = new Nassau(this);
-    this.add(firestone, frist, mccosh, nassau);
-
-    const car = new Car(this);
-    this.driver = car;
-
-    // add obstacles
-    let fox = new Fox(this);
-    this.add(fox);
-    this.collidableMeshList.push(fox);
-
-    const lights = new BasicLights();
-    this.add(lights, car);
-
-    // Add some coins
-    for (let i = 0; i < 5; i++) {
-      var coin = new Coin(this);
-      coin.position.set(
-        car.maxPos * Math.random() - 2,
-        0,
-        -(50 + 5 * i * Math.random())
-      );
-      this.add(coin);
-      this.collidableMeshList.push(coin);
-// >>>>>>> ce12944908d3c45de68a19cfcbeaf7053adf593a
+    addToUpdateList(obj) {
+      this.state.updateList.push(obj);
     }
 
     findCollisions(obj, collidableMeshList) {
