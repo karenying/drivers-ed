@@ -164,7 +164,6 @@ endContentText.appendChild(endContentDescription);
 
 let endContentScore = document.createElement('h1');
 endContentScore.id = 'end-score';
-endContentScore.innerText = score;
 endContentText.appendChild(endContentScore);
 
 let endContentButton = document.createElement('div');
@@ -205,6 +204,7 @@ const onAnimationFrameHandler = (timeStamp) => {
             if (lives <= 0) {
                 gameOver = pause();
                 endContainer.style.display = 'flex';
+                endContentScore.innerText = score;
             }
             document.getElementById('score').innerHTML = 'Score: ' + score;
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
