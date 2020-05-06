@@ -8,6 +8,8 @@ import {
     MeshLambertMaterial,
 } from 'three';
 
+import grassImg from './grass.png';
+
 class Grass extends Group {
     constructor(parent) {
         super();
@@ -17,7 +19,7 @@ class Grass extends Group {
         };
 
         const loader = new TextureLoader();
-        loader.load('./src/components/objects/Grass/grass.png', (texture) => {
+        loader.load(grassImg, (texture) => {
             texture.wrapS = RepeatWrapping;
             texture.wrapT = RepeatWrapping;
 

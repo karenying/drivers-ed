@@ -9,6 +9,7 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
+import './app.css';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -36,7 +37,7 @@ document.body.appendChild(canvas);
 
 // Pause the scene
 function pause() {
-  scene.state.pause = true;
+    scene.state.pause = true;
 }
 
 // Add key controls for car
@@ -45,31 +46,32 @@ function setupKeyControls() {
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-      if (!gameOver) {
-        switch (event.keyCode) {
-            case 37:
-                if (car.position.x - 0.25 > -car.maxPos) {
-                    car.position.x -= 0.25;
-                }
-                break;
-            case 39:
-                if (car.position.x + 0.25 < car.maxPos) {
-                    car.position.x += 0.25;
-                }
-                break;
-          }
-      }
+        if (!gameOver) {
+            switch (event.keyCode) {
+                case 37:
+                    if (car.position.x - 0.25 > -car.maxPos) {
+                        car.position.x -= 0.25;
+                    }
+                    break;
+                case 39:
+                    if (car.position.x + 0.25 < car.maxPos) {
+                        car.position.x += 0.25;
+                    }
+                    break;
+            }
+        }
     }
 }
 
 setupKeyControls();
 
 // Set up css sheet
+/*
 let link = document.createElement('link');
 link.rel = 'stylesheet';
 link.type = 'text/css';
-link.href = './src/app.css';
-document.getElementsByTagName('HEAD')[0].appendChild(link);
+link.href = css;
+document.getElementsByTagName('HEAD')[0].appendChild(link); */
 
 // Set up intro screen
 let beginContainer = document.createElement('div');
@@ -136,25 +138,24 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.collidableMeshList
     );
     if (collisionObj !== undefined) {
-      // console.log(collisionObj.name);
-      if (collisionObj.name === 'coin') {
-        if (!collisionObj.collected) score += 1; // only collect object if not already collected
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        collisionObj.onCollision();
-      }
-      else if (collisionObj.name === 'fox') {
-        if (!collisionObj.collected) score -= 5;
-        if (!collisionObj.collected) lives -= 1;
+        // console.log(collisionObj.name);
+        if (collisionObj.name === 'coin') {
+            if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            collisionObj.onCollision();
+        } else if (collisionObj.name === 'fox') {
+            if (!collisionObj.collected) score -= 5;
+            if (!collisionObj.collected) lives -= 1;
 
-        // game over if lives are 0
-        if (lives <= 0) {
-          gameOver = pause();
+            // game over if lives are 0
+            if (lives <= 0) {
+                gameOver = pause();
+            }
+            document.getElementById('score').innerHTML = 'Score: ' + score;
+            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+            document.getElementById('item').innerHTML = 'You hit a fox!';
+            collisionObj.onCollision();
         }
-        document.getElementById('score').innerHTML = 'Score: ' + score;
-        document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-        document.getElementById('item').innerHTML = 'You hit a fox!';
-        collisionObj.onCollision();
-      }
     }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
