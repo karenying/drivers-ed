@@ -213,7 +213,7 @@ class Fox extends Group {
       // if fox is done crossing road or no longer visible in scene
       var newX = this.position.x + this.speed;
       if (newX > this.parent.edge) {
-        newZ = -(this.parent.fog.far + 100 * Math.random());
+        newZ = -(this.parent.fog.far + 70 * Math.random());
         newX = -1 * (Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2);
         this.resetParams();
       }
@@ -223,7 +223,7 @@ class Fox extends Group {
     // update positions (cross road and move towards car)
     var newZ = this.position.z + gameSpeed;
     if (newZ > cameraPosition.z) {
-      newZ = -(this.parent.fog.far + 20 * Math.random());
+      newZ = -(this.parent.fog.far + 70 * Math.random());
     }
     this.position.z = newZ;
 

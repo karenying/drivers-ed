@@ -13,7 +13,7 @@ class FemalePedestrianDress extends Group {
         };
 
         this.name = 'pedestrian';
-        this.speed = 0.03; // 0.03
+        this.speed = 0.05; // 0.03
 
         // Create bounding box
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -180,7 +180,7 @@ class FemalePedestrianDress extends Group {
         // update positions (cross road and move towards car)
         var newZ = this.position.z + this.parent.gameSpeed;
         if (newZ > this.parent.camera.position.z) {
-          newZ = -(this.parent.fog.far + 10 * Math.random());
+          newZ = -(this.parent.fog.far + 70 * Math.random());
         }
         this.position.z = newZ;
 
@@ -189,7 +189,7 @@ class FemalePedestrianDress extends Group {
 
           // if pedestrian is done crossing road or no longer visible in scene
           if (newX < -this.parent.edge) {
-              newZ = -(this.parent.fog.far + 20 * Math.random());
+              newZ = -(this.parent.fog.far + 70 * Math.random());
               newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
               this.resetParams();
           }

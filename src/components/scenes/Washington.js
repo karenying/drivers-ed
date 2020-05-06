@@ -18,6 +18,7 @@ import {
     Lamppost,
     Coin,
     MalePedestrianShorts,
+    MalePedestrianJeans,
     FemalePedestrianDress,
 } from 'objects';
 import { BasicLights } from 'lights';
@@ -100,7 +101,19 @@ class Washington extends Scene {
         const car = new Car(this);
         this.driver = car;
 
-        var chadMaterials = {
+        // PEDESTRIAN/FOX OBSTACLES
+        // Add fox
+        let fox = new Fox(this);
+        fox.position.set(
+          2 * Math.random() * this.edge - this.edge / 2,
+          0.5,
+          -(50 * Math.random() + 200)
+        );
+        this.add(fox);
+        this.collidableMeshList.push(fox);
+
+        // Add chad
+        let chadMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x36699c,
                 flatShading: true,
@@ -126,18 +139,18 @@ class Washington extends Scene {
                 flatShading: true,
             }),
         };
-
-        // Add chad
         let chad = new MalePedestrianShorts(this, chadMaterials);
         chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -(50 + 20 * Math.random())
+            -(50 * Math.random() + 50)
         );
+        // console.log(chad.position.z)
         this.add(chad);
         this.collidableMeshList.push(chad);
-
-        var vanessaMaterials = {
+        
+        // Add vanessa
+        let vanessaMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x3b2606,
                 flatShading: true
@@ -159,25 +172,52 @@ class Washington extends Scene {
                 flatShading: true
             })
         };
-
-        // Add vanessa
         let vanessa = new FemalePedestrianDress(this, vanessaMaterials);
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -(30 * Math.random())
+            -(50 * Math.random() + 100)
             );
+        // console.log(vanessa.position.z)
         this.collidableMeshList.push(vanessa);
         this.add(vanessa);
-
-        // Add fox
-        let fox = new Fox(this);
-        fox.position.set(
-          2 * Math.random() * this.edge - this.edge / 2,
-          0.5,
-          -(100 * Math.random()));
-        this.add(fox);
-        this.collidableMeshList.push(fox);
+        
+        // add labib
+        let labibMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x291b06,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0x573502,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x0d1459,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0x245734,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x470722,
+                flatShading: true
+            })
+        };
+        let labib= new MalePedestrianJeans(this, labibMaterials);
+        labib.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(50 * Math.random() + 150)
+            );
+        // console.log(labib.position.z)
+        this.collidableMeshList.push(labib);
+        this.add(labib);
 
         const lights = new BasicLights(this);
         this.add(lights, car);
