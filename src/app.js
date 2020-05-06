@@ -13,10 +13,12 @@ import './app.css';
 import link from './writeup.html';
 import dingLink from './sounds/ding.wav';
 import loseLink from './sounds/lose.wav';
+import hitLink from './sounds/hit.wav';
 
 // Add sounds
 const ding = new Audio(dingLink);
 const lose = new Audio(loseLink);
+const hit = new Audio(hitLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -53,6 +55,7 @@ controls.update();
 // Pause the scene
 function pause() {
     scene.state.pause = true;
+    return true;
 }
 
 // Add key controls for car
@@ -233,13 +236,17 @@ const onAnimationFrameHandler = (timeStamp) => {
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
             if (!collisionObj.collected) lives -= 1;
-
+            if (!gameOver) {
+                hit.play();
+            }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             document.getElementById('item').innerHTML = 'You hit a fox!';
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
             if (!collisionObj.collected) lives -= 1;
-
+            if (!gameOver) {
+                hit.play();
+            }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             document.getElementById('item').innerHTML = 'You hit a pedestrian!';
             collisionObj.onCollision();
