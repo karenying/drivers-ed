@@ -17,7 +17,7 @@
 
 #lives {
     position: absolute;
-    width: 100px;
+    width: 200px;
     height: 100px;
     top: 60px;
     left: 20px;
@@ -35,7 +35,8 @@
     color: white;
 }
 
-#begin-container {
+#begin-container,
+#end-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,8 +47,8 @@
     left: 0px;
 }
 
-#begin {
-    height: 350px;
+#begin-content,
+#end-content {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -56,7 +57,16 @@
     padding: 30px;
 }
 
-#begin h1 {
+#begin-content {
+    height: 340px;
+}
+
+#end-content {
+    height: 250px;
+}
+
+#begin-content h1,
+#end-content h1 {
     color: white;
     font-size: 50px;
     padding: 0px;
@@ -65,13 +75,19 @@
     text-align: center;
 }
 
-#begin p {
+#begin-content p,
+#end-content p {
     font-family: 'Open Sans' !important;
     font-style: italic;
     color: white;
 }
 
-#begin-button {
+#end-content p {
+    text-align: center;
+}
+
+#begin-button,
+#end-button {
     display: flex;
     background-color: #31c110;
     height: 50px;
@@ -84,7 +100,30 @@
     font-size: 30px;
 }
 
-#begin-button:hover {
+#begin-button:hover,
+#end-button:hover {
     background-color: green;
+    color: lightgray;
+}
+
+#writeup-container {
+    position: absolute;
+    bottom: 40px;
+    right: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+
+#writeup-container a {
+    padding: 0px;
+    margin: 0px;
+    font-size: 28px;
+    text-decoration: none;
+    color: white;
+    z-index: 1;
+}
+
+#writeup-container a:hover {
+    text-decoration: underline;
     color: lightgray;
 }
