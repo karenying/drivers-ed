@@ -202,9 +202,11 @@ class Washington extends Scene {
           }
 
           if (this.state.night) {
-            this.background = new Color(0x0c0052);
+            this.background = new Color(0x345063);
+            this.fog.color = new Color(0x345063);
           } else {
             this.background = new Color(0x7ec0ee);
+            this.fog.color = new Color(0x7ec0ee);
           }
 
           for (const obj of updateList) {
