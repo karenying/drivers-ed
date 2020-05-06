@@ -16,7 +16,7 @@ class Road extends Group {
             pause: false,
         };
 
-        const planeGeometry = new PlaneGeometry(5, 200);
+        const planeGeometry = new PlaneGeometry(5, 100);
         const planeMaterial = new MeshBasicMaterial({
             color: 0x808080,
             side: DoubleSide,
@@ -24,19 +24,22 @@ class Road extends Group {
 
         let plane = new Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = Math.PI / 2;
+        this.add(plane);
 
-        const stripeGeometry = new PlaneGeometry(0.2, 3);
-        const stripeMaterial = new MeshBasicMaterial({
-            color: 0xfad201,
-            side: DoubleSide,
-        });
+        let offset = 0;
+        for (let i = 0; i < 6; i++) {
+            const stripeGeometry = new PlaneGeometry(0.2, 3);
+            const stripeMaterial = new MeshBasicMaterial({
+                color: 0xfad201,
+                side: DoubleSide,
+            });
 
-        let stripe = new Mesh(stripeGeometry, stripeMaterial);
-        stripe.rotation.x = Math.PI / 2;
-        stripe.position.y = 0.1;
-        stripe.position.z = 5;
-
-        this.add(plane, stripe);
+            let stripe = new Mesh(stripeGeometry, stripeMaterial);
+            stripe.rotation.x = Math.PI / 2;
+            stripe.position.set(0, 0.05, -30 + offset)
+            this.add(stripe);
+            offset += 15;
+        }
         parent.addToUpdateList(this);
     }
 
@@ -44,8 +47,8 @@ class Road extends Group {
         const { cameraPosition, gameSpeed, pause } = this.state;
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 200;
+        if (this.position.z > cameraPosition.z + 50) {
+            this.position.z -= 360;
         }
     }
 }

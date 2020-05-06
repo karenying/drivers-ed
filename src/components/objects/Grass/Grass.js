@@ -16,6 +16,7 @@ class Grass extends Group {
 
         this.state = {
             cameraPosition: parent.camera.position,
+            gameSpeed: parent.gameSpeed,
         };
 
         const loader = new TextureLoader();
@@ -23,12 +24,12 @@ class Grass extends Group {
             texture.wrapS = RepeatWrapping;
             texture.wrapT = RepeatWrapping;
 
-            texture.repeat.set(100, 200);
+            texture.repeat.set(100, 100);
             let material = new MeshLambertMaterial({
                 map: texture,
                 side: DoubleSide,
             });
-            const geometry = new PlaneGeometry(100, 200);
+            const geometry = new PlaneGeometry(100, 100);
             let plane = new Mesh(geometry, material);
             plane.rotation.x = Math.PI / 2;
             plane.position.set(0, -0.05, 0);
@@ -39,13 +40,13 @@ class Grass extends Group {
     }
 
     update(timestamp) {
-        const { cameraPosition } = this.state;
+        const { cameraPosition, gameSpeed } = this.state;
 
-        // this.position.z += 0.5;
+        this.position.z += gameSpeed;
 
-        // if (this.position.z > cameraPosition.z + 10) {
-        //     this.position.z -= 200;
-        // }
+        if (this.position.z > cameraPosition.z + 50) {
+            this.position.z -= 360;
+        }
     }
 }
 
