@@ -39,6 +39,7 @@ class Washington extends Scene {
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
         this.night = false;
+        this.edge = 10;
         this.collidableMeshList = []; // List of collidable meshes
 
         // Add road
@@ -98,12 +99,6 @@ class Washington extends Scene {
         const car = new Car(this);
         this.driver = car;
 
-        // Add obstacle
-        let fox = new Fox(this);
-        fox.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
-        this.add(fox);
-        this.collidableMeshList.push(fox);
-
         var chadMaterials = {
             eye: new MeshLambertMaterial({
                 color: 0x36699c,
@@ -130,14 +125,27 @@ class Washington extends Scene {
                 flatShading: true,
             }),
         };
-        let chad = new MalePedestrianShorts(this, chadMaterials);
-        chad.position.set(
-            Math.random() * 6 - 3,
+
+        // add three chads
+        for (let i = 0; i < 3; i++) {
+          let chad = new MalePedestrianShorts(this, chadMaterials);
+          chad.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -(70 + 5 * Math.random())
-        );
-        this.add(chad);
-        // this.collidableMeshList.push(chad);
+            -(50 + 20 * Math.random())
+          );
+          this.add(chad);
+          this.collidableMeshList.push(chad);
+        }
+
+        // Add fox
+        let fox = new Fox(this);
+        fox.position.set(
+          2 * Math.random() * this.edge - this.edge / 2,
+          0.5,
+          -(50 + 5 * Math.random()));
+        this.add(fox);
+        this.collidableMeshList.push(fox);
 
         const lights = new BasicLights(this);
         this.add(lights, car);
@@ -148,7 +156,7 @@ class Washington extends Scene {
             coin.position.set(
                 car.maxPos * Math.random() - 2,
                 0,
-                -(50 + 5 * i * Math.random())
+                -(50 + 20 * i * Math.random())
             );
             this.add(coin);
             this.collidableMeshList.push(coin);

@@ -225,21 +225,28 @@ const onAnimationFrameHandler = (timeStamp) => {
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
-            if (!collisionObj.collected) score -= 5;
             if (!collisionObj.collected) lives -= 1;
 
-            // game over if lives are 0
-            if (lives <= 0) {
-                gameOver = pause();
-                endContainer.style.display = 'flex';
-                endContentScore.innerText = score;
-            }
-            document.getElementById('score').innerHTML = 'Score: ' + score;
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             document.getElementById('item').innerHTML = 'You hit a fox!';
             collisionObj.onCollision();
+        } else if (collisionObj.name === 'pedestrian') {
+            if (!collisionObj.collected) lives -= 1;
+
+            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+            document.getElementById('item').innerHTML = 'You hit a pedestrian!';
+            collisionObj.onCollision();
         }
     }
+    // game over if lives are 0
+    if (lives <= 0) {
+        gameOver = pause();
+        endContainer.style.display = 'flex';
+        endContentScore.innerText = score;
+    }
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+    document.getElementById('item').innerHTML = 'You hit a fox!';
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
