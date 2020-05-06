@@ -7,6 +7,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CircleGeometry,
+    SpotLight,
     CylinderGeometry,
 } from 'three';
 
@@ -71,11 +72,20 @@ function createWindshield(x, y, z, dx, dy, dz) {
 class Car extends Group {
     constructor(parent) {
         super();
+        this.state = {
+          night: parent.night,
+          timeElapsed: -1,
+          lightsOn: false,
+          startTime: null,
+          lightsOn: false,
+          threshold: 10,
+        }
 
-        this.name = 'car';
-
-        // Create bounding box
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
+        this.bb = bb;
+
+        this.init();
+        this.name = 'car';
         this.bb = bb;
         this.maxPos = 2.5;
 
@@ -226,6 +236,20 @@ class Car extends Group {
         this.position.set(0, 0, 21);
         this.rotation.y = Math.PI / 2;
 
+        // create night mode headlights
+        let beamerOne = new SpotLight(0xffffff, 0);
+        beamerOne.position.set(1, 1, -1);
+        beamerOne.angle = 0.1;
+        beamerOne.distance = 80;
+        beamerOne.name = "beamer1";
+        let beamerTwo= new SpotLight(0xffffff, 0);
+        beamerTwo.position.set(1, 1, 1);
+        beamerTwo.angle = 0.1;
+        beamerTwo.distance = 80;
+        beamerTwo.name = "beamer2";
+        // beamerOne.target.position.set(1, 1, -5);
+        this.add(beamerOne, beamerTwo);
+
         // compute bounding box
         for (const mesh of this.children) {
           var box = new THREE.Box3();
@@ -239,6 +263,40 @@ class Car extends Group {
     }
 
     update(timeStamp) {
+        const { lightsOn, startTime } = this.state;
+
+        // figures out time elapsed since beginning
+        if (startTime == null) {
+          this.state.startTime = Date.now() / 1000;
+        } else {
+          const currentTime = Date.now() / 1000;
+          this.state.timeElapsed = currentTime - this.state.startTime;
+        }
+
+        // toggle night mode
+        if (this.state.timeElapsed > this.state.threshold) {
+          this.state.night = !this.state.night;
+          this.state.startTime = Date.now() / 1000;
+          this.state.threshold = 20;
+        }
+
+        // turns lights on
+        if (!lightsOn && this.state.night) {
+          let beamer = this.getObjectByName("beamer1", true);
+          beamer.intensity = 2.25;
+          beamer = this.getObjectByName("beamer2", true);
+          beamer.intensity = 2.25;
+          this.state.lightsOn = true;
+        }
+        // turns lights off
+        if (lightsOn && !this.state.night) {
+          let beamer = this.getObjectByName("beamer1", true);
+          beamer.intensity = 0;
+          beamer = this.getObjectByName("beamer2", true);
+          beamer.intensity = 0;
+          this.state.lightsOn = false;
+        }
+
         // Bob car and exhaust back and forth
         this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
         this.children[11].rotation.z = Math.sin(timeStamp / 200);

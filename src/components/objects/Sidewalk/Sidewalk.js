@@ -1,12 +1,12 @@
 import {
     Group,
     PlaneGeometry,
-    MeshBasicMaterial,
+    MeshStandardMaterial,
     Mesh,
     DoubleSide,
 } from 'three';
 
-class Road extends Group {
+class Sidewalk extends Group {
     constructor(parent) {
         super();
 
@@ -16,9 +16,9 @@ class Road extends Group {
             pause: false,
         };
 
-        const planeGeometry = new PlaneGeometry(3, 200);
-        const planeMaterial = new MeshBasicMaterial({
-            color: 0xadacac,
+        const planeGeometry = new PlaneGeometry(3, 100);
+        const planeMaterial = new MeshStandardMaterial({
+            color: 0x3d3c3c,
             side: DoubleSide,
         });
 
@@ -26,35 +26,33 @@ class Road extends Group {
         plane.rotation.x = Math.PI / 2;
 
         const stripeGeometry = new PlaneGeometry(0.1, 3);
-        const stripeMaterial = new MeshBasicMaterial({
-            color: 0x808080,
+        const stripeMaterial = new MeshStandardMaterial({
+            color: 0x1f1f1f,
             side: DoubleSide,
         });
 
-        let stripe1 = new Mesh(stripeGeometry, stripeMaterial);
-        stripe1.rotation.x = Math.PI / 2;
-        stripe1.rotation.z = Math.PI / 2;
-        stripe1.position.y = 0.01;
-        stripe1.position.z = 6;
+        let offset = 0;
+        for (let i = 0; i < 6; i++) {
+            let stripe = new Mesh(stripeGeometry, stripeMaterial);
+            stripe.rotation.x = Math.PI / 2;
+            stripe.rotation.z = Math.PI / 2;
 
-        let stripe2 = new Mesh(stripeGeometry, stripeMaterial);
-        stripe2.rotation.x = Math.PI / 2;
-        stripe2.rotation.z = Math.PI / 2;
-        stripe2.position.y = 0.01;
-        stripe2.position.z = 18;
-
-        this.add(plane, stripe1, stripe2);
+            stripe.position.set(0, 0.01, -30 + offset)
+            this.add(stripe);
+            offset += 15;
+        }
+        this.add(plane);
         parent.addToUpdateList(this);
     }
 
-    update(timestamp) {
+    update() {
         const { cameraPosition, gameSpeed, pause } = this.state;
         this.position.z += gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 10) {
-            this.position.z -= 200;
+        if (this.position.z > cameraPosition.z + 50) {
+            this.position.z -= 270;
         }
     }
 }
 
-export default Road;
+export default Sidewalk;

@@ -25,7 +25,7 @@ class Friend extends Group {
                 flatShading: true,
             }),
             gray: new MeshLambertMaterial({
-                color: 0x494d4d,
+                color: 0xe8e3d1,
                 flatShading: true,
             }),
         };
@@ -46,7 +46,7 @@ class Friend extends Group {
 
         var offset = 0;
         for (var i = 0; i < 7; i++) {
-            var line = createBox(50.5, 0.5, 70.5);
+            var line = createBox(50.5, 0.5, 70.5, materials.gray);
             upperBuilding.add(line);
             line.position.set(0, -10 + offset, 0);
             offset += 3;
@@ -54,7 +54,7 @@ class Friend extends Group {
 
         var offset = 0;
         for (var i = 0; i < 11; i++) {
-            var line = createBox(50.5, 19.5, 0.5);
+            var line = createBox(50.5, 19.5, 0.5, materials.gray);
             upperBuilding.add(line);
             line.position.set(0, 0, -30 + offset);
             offset += 6;
@@ -62,7 +62,7 @@ class Friend extends Group {
 
         var offset = 0;
         for (var i = 0; i < 6; i++) {
-            var line = createBox(0.5, 19.5, 70.5);
+            var line = createBox(0.5, 19.5, 70.5, materials.gray);
             upperBuilding.add(line);
             line.position.set(-17 + offset, 0, 0);
             offset += 7;
@@ -75,7 +75,7 @@ class Friend extends Group {
 
         var offset = 0;
         for (var i = 0; i < 5; i++) {
-            var line = createBox(5, 10.5, 0.5);
+            var line = createBox(5, 10.5, 0.5, materials.gray);
             entrance.add(line);
             line.position.set(-3, 0.25, -10 + offset);
             offset += 5;
@@ -88,7 +88,7 @@ class Friend extends Group {
 
         var offset = 0;
         for (var i = 0; i < 5; i++) {
-            var line = createBox(5, 4, 0.5);
+            var line = createBox(5, 4, 0.5, materials.gray);
             entranceWindows.add(line);
             line.position.set(-3, -0.5, -10 + offset);
             offset += 5;

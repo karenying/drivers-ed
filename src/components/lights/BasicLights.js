@@ -1,21 +1,52 @@
 import { Group, SpotLight, AmbientLight, HemisphereLight } from 'three';
 
 class BasicLights extends Group {
-    constructor(...args) {
+    constructor(parent, ...args) {
         // Invoke parent Group() constructor with our args
         super(...args);
+        this.state = {
+          ambiChange: 0.005,
+          hemiChange: 0.005,
+          timeElapsed: -1,
+          startTime: null,
+        }
 
-        const dir = new SpotLight(0xffffff, 1.6, 7, 0.8, 1, 1);
-        const ambi = new AmbientLight(0x404040, 1.32);
-        const hemi = new HemisphereLight(0xffffbb, 0x080820, 2.3);
+        const ambi = new AmbientLight(0x404040, 1.3);
+        const hemi = new HemisphereLight(0xffffe0, 0x080820, 2);
+        this.add(ambi, hemi);
 
         // night mode values
-        // const ambi = new AmbientLight(0x404040, 0.2);
-        // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
-        dir.position.set(5, 1, 2);
-        dir.target.position.set(0, 0, 0);
+        parent.addToUpdateList(this);
+    }
 
-        this.add(ambi, hemi);
+    update(timeStamp) {
+      const { startTime } = this.state;
+      // figures out time elapsed since beginning
+      if (startTime == null) {
+        this.state.startTime = Date.now() / 1000;
+      } else {
+        const currentTime = Date.now() / 1000;
+        this.state.timeElapsed = currentTime - this.state.startTime;
+      }
+
+      if (this.state.timeElapsed > 20) {
+        this.state.ambiChange = -this.state.ambiChange;
+        this.state.hemiChange = -this.state.hemiChange;
+        this.state.startTime = Date.now() / 1000;
+      }
+
+
+      // edit lights
+      this.children[0].intensity -= this.state.ambiChange;
+      this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
+      this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
+
+      this.children[1].intensity -= this.state.hemiChange;
+      this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
+      this.children[1].intensity = Math.min(2, this.children[1].intensity);
+      // const ambi = new AmbientLight(0x404040, 0.2);
+      // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
+      // this.add(ambi, hemi);
     }
 }
 

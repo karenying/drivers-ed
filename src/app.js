@@ -9,6 +9,8 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
+import './app.css';
+import link from './writeup.html';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -34,9 +36,17 @@ document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
+// Set up controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.enablePan = false;
+controls.minDistance = 4;
+controls.maxDistance = 5000;
+controls.update();
+
 // Pause the scene
 function pause() {
-  scene.state.pause = true;
+    scene.state.pause = true;
 }
 
 // Add key controls for car
@@ -45,31 +55,27 @@ function setupKeyControls() {
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-      if (!gameOver) {
-        switch (event.keyCode) {
-            case 37:
-                if (car.position.x - 0.25 > -car.maxPos) {
-                    car.position.x -= 0.25;
-                }
-                break;
-            case 39:
-                if (car.position.x + 0.25 < car.maxPos) {
-                    car.position.x += 0.25;
-                }
-                break;
-          }
-      }
+        if (!gameOver) {
+            switch (event.keyCode) {
+                case 37:
+                    if (car.position.x - 0.25 > -car.maxPos) {
+                        car.position.x -= 0.25;
+                    }
+                    break;
+                case 39:
+                    if (car.position.x + 0.25 < car.maxPos) {
+                        car.position.x += 0.25;
+                    }
+                    break;
+                case 80:
+                    scene.state.pause = !scene.state.pause;
+                    break;
+            }
+        }
     }
 }
 
 setupKeyControls();
-
-// Set up css sheet
-let link = document.createElement('link');
-link.rel = 'stylesheet';
-link.type = 'text/css';
-link.href = './src/app.css';
-document.getElementsByTagName('HEAD')[0].appendChild(link);
 
 // Set up intro screen
 let beginContainer = document.createElement('div');
@@ -77,7 +83,7 @@ beginContainer.id = 'begin-container';
 document.body.appendChild(beginContainer);
 
 let beginContent = document.createElement('div');
-beginContent.id = 'begin';
+beginContent.id = 'begin-content';
 beginContainer.appendChild(beginContent);
 
 let beginContentText = document.createElement('div');
@@ -100,8 +106,21 @@ let beginContentButton = document.createElement('div');
 beginContentButton.id = 'begin-button';
 beginContentButton.innerHTML = 'BEGIN';
 beginContent.appendChild(beginContentButton);
+
+// Set up writeup link
+let writeupContainer = document.createElement('div');
+writeupContainer.id = 'writeup-container';
+document.body.appendChild(writeupContainer);
+
+let writeupLink = document.createElement('a');
+writeupLink.innerHTML = 'Writeup';
+writeupContainer.append(writeupLink);
+writeupLink.href = link;
+
+// Begin game
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
+    // writeupContainer.style.display = 'none';
     scene.state.pause = false;
 };
 
@@ -125,6 +144,46 @@ document.body.appendChild(lifeDiv);
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
 document.body.appendChild(itemDiv);
+
+// Set up outro screen
+let endContainer = document.createElement('div');
+endContainer.id = 'end-container';
+document.body.appendChild(endContainer);
+
+let endContent = document.createElement('div');
+endContent.id = 'end-content';
+endContainer.appendChild(endContent);
+
+let endContentText = document.createElement('div');
+endContentText.id = 'end-text';
+endContent.appendChild(endContentText);
+
+let endContentTitleText = document.createElement('h1');
+endContentTitleText.innerText = 'GAME OVER';
+endContentText.appendChild(endContentTitleText);
+
+let endContentDescription = document.createElement('p');
+endContentDescription.innerHTML = 'Your score:';
+endContentText.appendChild(endContentDescription);
+
+let endContentScore = document.createElement('h1');
+endContentScore.id = 'end-score';
+endContentText.appendChild(endContentScore);
+
+let endContentButton = document.createElement('div');
+endContentButton.id = 'end-button';
+endContentButton.innerHTML = 'PLAY AGAIN';
+endContent.appendChild(endContentButton);
+
+// End game and reset
+endContentButton.onclick = function () {
+    endContainer.style.display = 'none';
+    scene.state.pause = false;
+    score = 0;
+    lives = 3;
+};
+
+endContainer.style.display = 'none';
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
@@ -160,7 +219,12 @@ const onAnimationFrameHandler = (timeStamp) => {
     // game over if lives are 0
     if (lives <= 0) {
       setTimeout(() => {  gameOver = pause(); }, 500);
+        endContainer.style.display = 'flex';
+        endContentScore.innerText = score;
     }
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+    document.getElementById('item').innerHTML = 'You hit a fox!';
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

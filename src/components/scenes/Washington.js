@@ -22,6 +22,7 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
+const backgroundColors = [];
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -29,44 +30,54 @@ class Washington extends Scene {
         this.state = {
             updateList: [],
             pause: true,
+            timeElapsed: -1,
+            threshold: 10,
+            startTime: null,
         };
 
         this.gameSpeed = 1;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
+        this.night = false;
         this.edge = 10;
-
         this.collidableMeshList = []; // List of collidable meshes
 
         // Add road
         const positions = [
             0,
-            -20,
-            -40,
-            -60,
-            -80,
-            -100,
-            -120,
-            -140,
-            -160,
+            -90,
             -180,
+        ];
+
+        // lampPositions
+        const lampPositions = [
+            0,
+            -40,
+            -80,
+            -120,
+            -160,
             -200,
         ];
 
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 3; i++) {
             const road = new Road(this);
             const leftSidewalk = new Sidewalk(this);
             const rightSidewalk = new Sidewalk(this);
             const grass = new Grass(this);
-            const lamppostLeft = new Lamppost(this);
-            const lamppostRight = new Lamppost(this);
             road.position.set(0, 0, positions[i]);
             leftSidewalk.position.set(-4, 0, positions[i]);
             rightSidewalk.position.set(4, 0, positions[i]);
             grass.position.set(0, 0, positions[i]);
-            lamppostLeft.position.set(-2.8, 1.5, (positions[i] + 40) / 2);
-            lamppostRight.position.set(2.8, 1.5, (positions[i] + 40) / 2);
-            this.add(road, grass, leftSidewalk, rightSidewalk, lamppostLeft, lamppostRight);
+            this.add(road, grass, leftSidewalk, rightSidewalk);
+        }
+
+        // add lamppost
+        for (let i = 0; i < 6; i++) {
+          const lamppostLeft = new Lamppost(this);
+          const lamppostRight = new Lamppost(this);
+          lamppostLeft.position.set(-5.6, 1.5, lampPositions[i]);
+          lamppostRight.position.set(5.6, 1.5, lampPositions[i] + 20);
+          this.add(lamppostLeft, lamppostRight);
         }
 
         // Add right buildings
@@ -86,26 +97,6 @@ class Washington extends Scene {
 
         const car = new Car(this);
         this.driver = car;
-
-        const lights = new BasicLights();
-        this.add(lights, car);
-
-        // add obstacles
-        let fox = new Fox(this);
-        this.add(fox);
-        this.collidableMeshList.push(fox);
-
-        // Add some coins
-        for (let i = 0; i < 5; i++) {
-          var coin = new Coin(this);
-          coin.position.set(
-            car.maxPos * Math.random() - 2,
-            0,
-            -(50 + 5 * i * Math.random())
-          );
-          this.add(coin);
-          this.collidableMeshList.push(coin);
-        }
 
         var chadMaterials = {
             eye: new MeshLambertMaterial({
@@ -133,10 +124,42 @@ class Washington extends Scene {
                 flatShading: true,
             }),
         };
-        let chad = new MalePedestrianShorts(this, chadMaterials);
-        chad.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
-        this.add(chad);
-        this.collidableMeshList.push(chad);
+
+        // add three chads
+        for (let i = 0; i < 3; i++) {
+          let chad = new MalePedestrianShorts(this, chadMaterials);
+          chad.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(50 + 20 * Math.random())
+          );
+          this.add(chad);
+          this.collidableMeshList.push(chad);
+        }
+
+        // Add fox
+        let fox = new Fox(this);
+        fox.position.set(
+          2 * Math.random() * this.edge - this.edge / 2,
+          0.5,
+          -(50 + 5 * Math.random()));
+        this.add(fox);
+        this.collidableMeshList.push(fox);
+
+        const lights = new BasicLights(this);
+        this.add(lights, car);
+
+        // Add some coins
+        for (let i = 0; i < 5; i++) {
+            var coin = new Coin(this);
+            coin.position.set(
+                car.maxPos * Math.random() - 2,
+                0,
+                -(50 + 20 * i * Math.random())
+            );
+            this.add(coin);
+            this.collidableMeshList.push(coin);
+        }
     }
 
     addToUpdateList(obj) {
@@ -157,9 +180,34 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { updateList, pause } = this.state;
+        const { startTime, updateList, pause } = this.state;
 
         if (!pause){
+
+          // change color of sky at night
+          // figures out time elapsed since beginning
+          if (startTime == null) {
+            this.state.startTime = Date.now() / 1000;
+          } else {
+            const currentTime = Date.now() / 1000;
+            this.state.timeElapsed = currentTime - this.state.startTime;
+          }
+
+          // toggle night mode
+          if (this.state.timeElapsed > this.state.threshold) {
+            this.state.night = !this.state.night;
+            this.state.startTime = Date.now() / 1000;
+            this.state.threshold = 20;
+          }
+
+          if (this.state.night) {
+            this.background = new Color(0x345063);
+            this.fog.color = new Color(0x345063);
+          } else {
+            this.background = new Color(0x7ec0ee);
+            this.fog.color = new Color(0x7ec0ee);
+          }
+
           for (const obj of updateList) {
               obj.update(timeStamp);
           }

@@ -223,7 +223,7 @@ class Fox extends Group {
     // update positions (cross road and move towards car)
     var newZ = this.position.z + gameSpeed;
     if (newZ > cameraPosition.z) {
-      newZ = -(this.parent.fog.far + 10 * Math.random());
+      newZ = -(this.parent.fog.far + 20 * Math.random());
     }
     this.position.z = newZ;
 
@@ -232,7 +232,7 @@ class Fox extends Group {
   }
 
   resetParams() {
-    this.position.y = 1;
+    this.position.y = 0.5;
     this.collected = false;
   }
 
