@@ -253,6 +253,41 @@ class Washington extends Scene {
         this.collidableMeshList.push(maria);
         this.add(maria);
 
+        let maxMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x291b06,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x2e150f,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb56e50,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x635f61,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd65e9a,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            })
+        };
+        let max = new MalePedestrianJeans(this, maxMaterials);
+        max.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(100 * Math.random() + 150)
+            );
+        this.collidableMeshList.push(max);
+        this.add(max);
+
         const lights = new BasicLights(this);
         this.add(lights, car);
 
