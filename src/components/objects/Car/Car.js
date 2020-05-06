@@ -74,11 +74,7 @@ class Car extends Group {
 
         this.name = 'car';
 
-        var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
-        this.bb = bb;
-
-        this.init();
-
+        // Create bounding box
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
         this.maxPos = 2.5;
