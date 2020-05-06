@@ -12,9 +12,11 @@ import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
 import dingLink from './sounds/ding.wav';
+import loseLink from './sounds/lose.wav';
 
 // Add sounds
 const ding = new Audio(dingLink);
+const lose = new Audio(loseLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -246,6 +248,7 @@ const onAnimationFrameHandler = (timeStamp) => {
     // game over if lives are 0
     if (lives <= 0) {
         gameOver = pause();
+        lose.play();
         endContainer.style.display = 'flex';
         endContentScore.innerText = score;
     }
