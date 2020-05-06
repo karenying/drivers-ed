@@ -262,7 +262,7 @@ class Car extends Group {
         // turn on night mode
         const currentTime = Date.now() / 1000;
 
-        if ((currentTime - this.state.startTime > 28) && !this.state.night) {
+        if ((currentTime - this.state.startTime > 8) && !this.state.night) {
           this.state.night = true;
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 2.25;

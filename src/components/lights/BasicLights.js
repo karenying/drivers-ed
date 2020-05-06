@@ -19,11 +19,15 @@ class BasicLights extends Group {
       // edit ambient light
       if (this.children[0].intensity >= 0.1) {
         this.children[0].intensity -= 0.001;
+      } else {
+        this.children[0].intensity += 0.001;
       }
 
       // edit hemi light
       if (this.children[1].intensity >= 0.05) {
         this.children[1].intensity -= 0.005;
+      } else {
+        this.children[0].intensity -= 0.001;
       }
       // const ambi = new AmbientLight(0x404040, 0.2);
       // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);

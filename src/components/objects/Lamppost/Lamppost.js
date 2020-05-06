@@ -1,7 +1,7 @@
 import { Group,
   Mesh,
   MeshLambertMaterial,
-  MeshStandardMaterial,
+  MeshBasicMaterial,
   SphereGeometry,
   DoubleSide,
   PointLight,
@@ -20,19 +20,13 @@ const postMat = new MeshLambertMaterial ({
   flatShading: true,
 });
 
-const lampMat = new MeshStandardMaterial({
+const lampMat = new MeshBasicMaterial({
   color: Colors.white,
   flatShading: true,
   transparent: true,
   opacity: 0.8,
 });
 
-const lampNightMat = new MeshStandardMaterial({
-  color: Colors.lightYellow,
-  flatShading: true,
-  transparent: true,
-  opacity: 0.8,
-});
 
 function makeMesh(geo, mat, dx, dy, dz) {
   let mesh = new Mesh(geo, mat);
@@ -64,15 +58,14 @@ class Lamppost extends Group {
     let post = makeMesh(postGeo, postMat, 0, 0, 0);
 
     let lampGeo = new SphereGeometry(0.25, 8, 6);
-    let lamp = makeMesh(lampGeo, lampMat, 0, 0.6, 0);
-    post.add(lamp);
+    let lamp = makeMesh(lampGeo, lampMat, 0, 0.7, 0);
+    this.add(post, lamp);
 
     let light = new SpotLight(0xf5cc00);
     light.intensity = 0;
-    light.position.set(0.5, 1, 0);
+    light.position.set(0.05, 1, 8);
     this.add(light);
 
-    this.add(post);
     this.scale.set(2, 2, 2);
     this.position.set(-2.6, 0.8, 0);
   }
@@ -81,7 +74,7 @@ class Lamppost extends Group {
       const { cameraPosition, startTime, gameSpeed, lightsOn } = this.state;
       const currentTime = Date.now() / 1000;
 
-      if ((currentTime - startTime > 25) && !this.state.night) {
+      if ((currentTime - startTime > 12) && !this.state.night) {
         this.state.night = true;
       }
 
@@ -92,8 +85,10 @@ class Lamppost extends Group {
       }
 
       if (!lightsOn && this.state.night) {
-        this.children[0].intensity = 0.06;
-        this.children[0].decay = 3;
+        debugger;
+        this.children[1].material.color.setHex( Colors.yellow );
+        this.children[2].intensity = 0.06;
+        this.children[2].decay = 3;
       }
   }
 
