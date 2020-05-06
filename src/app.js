@@ -219,7 +219,12 @@ const onAnimationFrameHandler = (timeStamp) => {
     // game over if lives are 0
     if (lives <= 0) {
       setTimeout(() => {  gameOver = pause(); }, 500);
+        endContainer.style.display = 'flex';
+        endContentScore.innerText = score;
     }
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+    document.getElementById('item').innerHTML = 'You hit a fox!';
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
