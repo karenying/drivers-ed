@@ -10,6 +10,7 @@ import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
+import link from './writeup.html';
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -54,23 +55,23 @@ function setupKeyControls() {
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-      if (!gameOver) {
-        switch (event.keyCode) {
-            case 37:
-                if (car.position.x - 0.25 > -car.maxPos) {
-                    car.position.x -= 0.25;
-                }
-                break;
-            case 39:
-                if (car.position.x + 0.25 < car.maxPos) {
-                    car.position.x += 0.25;
-                }
-                break;
-            case 80:
-              scene.state.pause = !scene.state.pause;
-              break;
-          }
-      }
+        if (!gameOver) {
+            switch (event.keyCode) {
+                case 37:
+                    if (car.position.x - 0.25 > -car.maxPos) {
+                        car.position.x -= 0.25;
+                    }
+                    break;
+                case 39:
+                    if (car.position.x + 0.25 < car.maxPos) {
+                        car.position.x += 0.25;
+                    }
+                    break;
+                case 80:
+                    scene.state.pause = !scene.state.pause;
+                    break;
+            }
+        }
     }
 }
 
@@ -114,7 +115,7 @@ document.body.appendChild(writeupContainer);
 let writeupLink = document.createElement('a');
 writeupLink.innerHTML = 'Writeup';
 writeupContainer.append(writeupLink);
-writeupLink.href = './writeup.html';
+writeupLink.href = link;
 
 // Begin game
 beginContentButton.onclick = function () {
