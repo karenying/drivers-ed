@@ -20,6 +20,7 @@ import {
     MalePedestrianShorts,
     MalePedestrianJeans,
     FemalePedestrianDress,
+    FemalePedestrianJeans,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -145,7 +146,6 @@ class Washington extends Scene {
             0.5,
             -(50 * Math.random() + 50)
         );
-        // console.log(chad.position.z)
         this.add(chad);
         this.collidableMeshList.push(chad);
         
@@ -178,7 +178,6 @@ class Washington extends Scene {
             0.5,
             -(50 * Math.random() + 100)
             );
-        // console.log(vanessa.position.z)
         this.collidableMeshList.push(vanessa);
         this.add(vanessa);
         
@@ -215,9 +214,79 @@ class Washington extends Scene {
             0.5,
             -(50 * Math.random() + 150)
             );
-        // console.log(labib.position.z)
         this.collidableMeshList.push(labib);
         this.add(labib);
+
+        // add maria
+        let mariaMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x2d5432,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x4d3803,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0x997446,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd61a39,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x237066,
+                flatShading: true
+            })
+        };
+        let maria = new FemalePedestrianJeans(this, mariaMaterials);
+        maria.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(100 * Math.random() + 100)
+            );
+        this.collidableMeshList.push(maria);
+        this.add(maria);
+
+        let maxMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x291b06,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x2e150f,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb56e50,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x635f61,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd65e9a,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            })
+        };
+        let max = new MalePedestrianJeans(this, maxMaterials);
+        max.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(100 * Math.random() + 150)
+            );
+        this.collidableMeshList.push(max);
+        this.add(max);
 
         const lights = new BasicLights(this);
         this.add(lights, car);
