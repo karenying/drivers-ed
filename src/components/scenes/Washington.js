@@ -18,6 +18,7 @@ import {
     Lamppost,
     Coin,
     MalePedestrianShorts,
+    FemalePedestrianDress,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -39,7 +40,7 @@ class Washington extends Scene {
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
         this.night = false;
-        this.edge = 10;
+        this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
 
         // Add road
@@ -126,17 +127,48 @@ class Washington extends Scene {
             }),
         };
 
-        // add three chads
-        for (let i = 0; i < 3; i++) {
-          let chad = new MalePedestrianShorts(this, chadMaterials);
-          chad.position.set(
+        // Add chad
+        let chad = new MalePedestrianShorts(this, chadMaterials);
+        chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
             -(50 + 20 * Math.random())
-          );
-          this.add(chad);
-          this.collidableMeshList.push(chad);
-        }
+            );
+        this.add(chad);
+        this.collidableMeshList.push(chad);
+
+        var vanessaMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x3b2606,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            dress: new MeshLambertMaterial({
+                color: 0x7015d1,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0xd8d1e0,
+                flatShading: true
+            })
+        };
+
+        // Add vanessa
+        let vanessa = new FemalePedestrianDress(this, vanessaMaterials);
+        vanessa.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -(100 + 20 * Math.random())
+            );
+        this.collidableMeshList.push(vanessa);
+        this.add(vanessa);
 
         // Add fox
         let fox = new Fox(this);
@@ -151,12 +183,12 @@ class Washington extends Scene {
         this.add(lights, car);
 
         // Add some coins
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 12; i++) {
             var coin = new Coin(this);
             coin.position.set(
-                car.maxPos * Math.random() - 2,
+                2 * car.maxPos * Math.random() - 2.5,
                 0,
-                -(50 + 20 * i * Math.random())
+                -(250 * Math.random())
             );
             this.add(coin);
             this.collidableMeshList.push(coin);
