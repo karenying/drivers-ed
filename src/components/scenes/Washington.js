@@ -34,6 +34,7 @@ class Washington extends Scene {
         this.gameSpeed = 1;
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
+        this.edge = 10;
 
         this.collidableMeshList = []; // List of collidable meshes
 
@@ -120,13 +121,9 @@ class Washington extends Scene {
             }),
         };
         let chad = new MalePedestrianShorts(this, chadMaterials);
-        chad.position.set(
-            Math.random() * 6 - 3,
-            0.5,
-            -(70 + 5 * Math.random())
-        );
+        chad.position.set(Math.random() * 6 - 3, 0.5, -(50 + 5 * Math.random()));
         this.add(chad);
-        // this.collidableMeshList.push(chad);
+        this.collidableMeshList.push(chad);
 
         const lights = new BasicLights();
         this.add(lights, car);
