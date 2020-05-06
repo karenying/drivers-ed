@@ -46,7 +46,6 @@ class Washington extends Scene {
             0,
             -90,
             -180,
-            -270,
         ];
 
         // lampPositions
@@ -59,7 +58,7 @@ class Washington extends Scene {
             -200,
         ];
 
-        for (let i = 0; i < 11; i++) {
+        for (let i = 0; i < 3; i++) {
             const road = new Road(this);
             const leftSidewalk = new Sidewalk(this);
             const rightSidewalk = new Sidewalk(this);

@@ -39,13 +39,13 @@ class Grass extends Group {
         });
     }
 
-    update(timestamp) {
+    update() {
         const { cameraPosition, gameSpeed } = this.state;
 
         this.position.z += gameSpeed;
 
         if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 360;
+            this.position.z -= 270;
         }
     }
 }
