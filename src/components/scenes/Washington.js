@@ -21,6 +21,7 @@ import {
     MalePedestrianJeans,
     FemalePedestrianDress,
     FemalePedestrianJeans,
+    Tree
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -68,6 +69,16 @@ class Washington extends Scene {
             -200,
         ];
 
+        // treePositions
+        const treePositions = [
+            10,
+            -40,
+            -90,
+            -140,
+            -190,
+            -240,
+        ];
+
         for (let i = 0; i < 3; i++) {
             const road = new Road(this);
             const leftSidewalk = new Sidewalk(this);
@@ -87,6 +98,20 @@ class Washington extends Scene {
           lamppostLeft.position.set(-5.6, 1.5, lampPositions[i]);
           lamppostRight.position.set(5.6, 1.5, lampPositions[i] + 20);
           this.add(lamppostLeft, lamppostRight);
+        }
+
+        // add some random trees
+        for (let i = 0; i < 6; i++) {
+            const rightTree = new Tree(this);
+            const leftTree = new Tree(this);
+            rightTree.state.type = Math.floor(Math.random() * 3);
+            leftTree.state.type = Math.floor(Math.random() * 3);
+            rightTree.create();
+            leftTree.create();
+            rightTree.position.set(7, 1.75, treePositions[i]);
+            leftTree.position.set(-7, 1.75, treePositions[i] + 20);
+            this.add(rightTree);
+            this.add(leftTree);
         }
 
         // Add right buildings
@@ -336,7 +361,7 @@ class Washington extends Scene {
         
         if (!newGameStarted) {
             // car continues bobbling even when paused
-            updateList[31].bobble(timeStamp);
+            // updateList[31].bobble(timeStamp);
         }
 
         if (!pause && newGameStarted){

@@ -5,6 +5,7 @@ export * from './Road';
 export * from './Fox';
 export * from './Lamppost';
 export * from './Coin';
+export * from './Tree';
 export * from './MalePedestrianShorts';
 export * from './MalePedestrianJeans';
 export * from './FemalePedestrianDress';
