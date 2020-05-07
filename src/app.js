@@ -87,6 +87,12 @@ function setupKeyControls() {
                 case 38:
                     scene.accelerating = true;
                     break;
+                // space bar (stop)
+                case 32:
+                    console.log(scene.stopped);
+                    if (scene.stopped) scene.stopped = false;
+                    else scene.stopped = true;
+                    break;
                 case 80:
                     scene.state.pause = !scene.state.pause;
                     break;
