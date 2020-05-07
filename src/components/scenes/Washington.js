@@ -39,6 +39,10 @@ class Washington extends Scene {
         };
 
         this.gameSpeed = 1;
+        this.maxGameSpeed = 3;
+        this.minGameSpeed = 1;
+        this.accelerating = false;
+
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
         this.night = false;
@@ -148,7 +152,7 @@ class Washington extends Scene {
         );
         this.add(chad);
         this.collidableMeshList.push(chad);
-        
+
         // Add vanessa
         let vanessaMaterials = {
             eye: new MeshLambertMaterial({
@@ -180,7 +184,7 @@ class Washington extends Scene {
             );
         this.collidableMeshList.push(vanessa);
         this.add(vanessa);
-        
+
         // add labib
         let labibMaterials = {
             eye: new MeshLambertMaterial({
@@ -325,6 +329,10 @@ class Washington extends Scene {
         const { startTime, updateList, pause } = this.state;
 
         if (!pause){
+          // accelerate or decelerate if appropriate
+          if (this.accelerating)
+            this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.025);
+          else this.gameSpeed = Math.max(this.minGameSpeed, this.gameSpeed - 0.2);
 
           // change color of sky at night
           // figures out time elapsed since beginning

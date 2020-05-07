@@ -83,6 +83,10 @@ function setupKeyControls() {
                         car.rotation.z = -Math.PI / 80;
                     }
                     break;
+                // up
+                case 38:
+                    scene.accelerating = true;
+                    break;
                 case 80:
                     scene.state.pause = !scene.state.pause;
                     break;
@@ -102,6 +106,10 @@ function setupKeyControls() {
                 case 39:
                     car.rotation.z = 0;
                     car.state.bobbing = true;
+                    break;
+                // up
+                case 38:
+                    scene.accelerating = false;
                     break;
             }
         }

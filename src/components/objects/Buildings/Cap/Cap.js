@@ -115,8 +115,8 @@ class Cap extends Group {
         super();
 
         this.state = {
-            cameraPosition: parent.camera.position,
-            gameSpeed: parent.gameSpeed,
+            cameraPosition: parent.camera.position
+            // gameSpeed: parent.gameSpeed,
         };
 
         this.name = 'cap';
@@ -256,9 +256,9 @@ class Cap extends Group {
     }
 
     update(timestamp) {
-        const { cameraPosition, gameSpeed } = this.state;
+        const { cameraPosition } = this.state;
 
-        this.position.z += gameSpeed;
+        this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z) {
             this.position.z -= 200;

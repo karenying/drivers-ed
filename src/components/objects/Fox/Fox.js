@@ -57,7 +57,7 @@ class Fox extends Group {
     this.state = {
       walking: true,
       bob: true,
-      gameSpeed: parent.gameSpeed,
+      // gameSpeed: parent.gameSpeed,
       cameraPosition: parent.camera.position,
     }
     parent.addToUpdateList(this);
@@ -180,7 +180,7 @@ class Fox extends Group {
   }
 
   update(timeStamp) {
-    const { gameSpeed, cameraPosition, walking, bob, pause } = this.state;
+    const { cameraPosition, walking, bob, pause } = this.state;
 
     var Pulse = function(hertz,fn) {
       if (!fn) fn = Math.sin;
@@ -221,7 +221,7 @@ class Fox extends Group {
     }
 
     // update positions (cross road and move towards car)
-    var newZ = this.position.z + gameSpeed;
+    var newZ = this.position.z + this.parent.gameSpeed;
     if (newZ > cameraPosition.z) {
       newZ = -(this.parent.fog.far + 70 * Math.random());
     }
