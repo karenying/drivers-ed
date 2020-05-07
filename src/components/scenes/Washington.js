@@ -32,10 +32,11 @@ class Washington extends Scene {
 
         this.state = {
             updateList: [],
-            pause: true,
+            pause: false,
             timeElapsed: -1,
             threshold: 10,
             startTime: null,
+            newGameStarted: false,
         };
 
         this.gameSpeed = 1;
@@ -326,13 +327,18 @@ class Washington extends Scene {
     }
 
     update(timeStamp) {
-        const { startTime, updateList, pause } = this.state;
+        const { startTime, updateList, pause, newGameStarted } = this.state;
         if (this.stopped) {
           this.gameSpeed = Math.max(0, this.gameSpeed - 0.25);
           // return;
         }
+        
+        if (!newGameStarted) {
+            // car continues bobbling even when paused
+            updateList[30].bobble(timeStamp);
+        }
 
-        if (!pause){
+        if (!pause && newGameStarted){
           // accelerate or decelerate if appropriate
           if (this.accelerating)
             this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.05);
@@ -373,9 +379,6 @@ class Washington extends Scene {
           for (const obj of updateList) {
               obj.update(timeStamp);
           }
-        } else {
-            // car continues bobbling even when paused
-            updateList[30].update(timeStamp);
         }
     }
 }

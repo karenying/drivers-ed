@@ -312,6 +312,14 @@ class Car extends Group {
             this.children[18].rotation.z = Math.sin(timeStamp / 200);
         }
     }
+
+    bobble(timeStamp) {
+        if (this.state.bobbing) {
+            // Bob car and exhaust back and forth
+            this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+        }
+    }
 }
 
 export default Car;

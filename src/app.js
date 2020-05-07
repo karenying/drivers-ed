@@ -28,7 +28,6 @@ const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
 // game control variables
 let gameOver = false;
-let paused = true;
 
 // Add fog
 scene.fog = new Fog(new Color(0x7ec0ee), 1, 200);
@@ -169,7 +168,7 @@ writeupLink.href = link;
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
     // writeupContainer.style.display = 'none';
-    scene.state.pause = false;
+    scene.state.newGameStarted = true;
 };
 
 // Set up score
