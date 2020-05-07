@@ -124,6 +124,22 @@ class Washington extends Scene {
         let colonial = new Colonial(this);
         this.add(fine, woodywoo, friend, cap, colonial);
 
+        // add some areas of trees
+        let zOffset = 0;
+        for (let r = 0; r < 6; r++) {
+            let xOffset = 0;
+            for (let i = 0; i < 6; i++) {
+                const tree = new Tree(this);
+                tree.state.type = Math.floor(Math.random() * 3);
+                tree.state.offset = 200;
+                tree.create();
+                tree.position.set(12 + xOffset, 1.75, -170 + zOffset);
+                xOffset += 3;
+                this.add(tree);
+            }
+            zOffset += 4;
+        }
+
         // Add left buildings
         let firestone = new Firestone(this);
         let frist = new Frist(this);

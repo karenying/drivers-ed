@@ -7,6 +7,7 @@
  *
  */
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
@@ -49,6 +50,14 @@ canvas.style.display = 'block'; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
+
+// Set up controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.enablePan = false;
+controls.minDistance = 4;
+controls.maxDistance = 500;
+controls.update();
 
 // Pause the scene
 function pause() {

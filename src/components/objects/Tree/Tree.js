@@ -36,6 +36,7 @@ class Tree extends Group {
     this.state = {
       cameraPosition: parent.camera.position,
       type: 0,
+      offset: 290,
     }
 
     parent.addToUpdateList(this);
@@ -75,11 +76,11 @@ class Tree extends Group {
   }
 
   update() {
-    const { cameraPosition } = this.state;
+    const { cameraPosition, offset } = this.state;
     this.position.z += this.parent.gameSpeed;
 
     if (this.position.z > cameraPosition.z) {
-        this.position.z -= 290;
+        this.position.z -= offset;
     }
   }
 }
