@@ -7,7 +7,6 @@
  *
  */
 import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
@@ -16,7 +15,7 @@ import loseLink from './assets/lose.wav';
 import hitLink from './assets/hit.wav';
 import goLink from './assets/go.wav';
 import countdownLink from './assets/countdown.wav';
-import skullLink from './assets/skull.png';
+import heartLink from './assets/heart.png';
 
 // Add sounds
 const ding = new Audio(dingLink);
@@ -50,14 +49,6 @@ canvas.style.display = 'block'; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
-
-// Set up controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-// controls.enablePan = false;
-// controls.minDistance = 4;
-// controls.maxDistance = 5000;
-// controls.update();
 
 // Pause the scene
 function pause() {
@@ -156,7 +147,7 @@ beginContentDescription.innerHTML =
     "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
     '<br />' +
     '<br />' +
-    'Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins.';
+    "Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins. Hit three people and you're kicked out of the class.";
 beginContentText.appendChild(beginContentDescription);
 
 let beginContentButton = document.createElement('div');
@@ -227,17 +218,16 @@ itemDiv.id = 'item';
 document.body.appendChild(itemDiv);
 
 // Set up skulls
-let skullDiv = document.createElement('div');
-skullDiv.id = 'skull';
+let heartDiv = document.createElement('div');
+heartDiv.id = 'heart';
 
 for (let i = 0; i < lives; i++) {
-    let skullImg = document.createElement('img');
-    skullImg.id = 'skullImg';
-    skullImg.src = skullLink;
-    skullDiv.appendChild(skullImg);
+    let heartImg = document.createElement('img');
+    heartImg.src = heartLink;
+    heartDiv.appendChild(heartImg);
 }
 
-document.body.appendChild(skullDiv);
+document.body.appendChild(heartDiv);
 
 // Set up outro screen
 let endContainer = document.createElement('div');
@@ -301,7 +291,7 @@ const onAnimationFrameHandler = (timeStamp) => {
         } else if (collisionObj.name === 'fox') {
             if (!collisionObj.collected) {
                 lives -= 1;
-                skullDiv.removeChild(skullDiv.lastChild);
+                heartDiv.removeChild(heartDiv.lastChild);
             }
             if (!gameOver) {
                 hit.play();
@@ -310,7 +300,7 @@ const onAnimationFrameHandler = (timeStamp) => {
         } else if (collisionObj.name === 'pedestrian') {
             if (!collisionObj.collected) {
                 lives -= 1;
-                skullDiv.removeChild(skullDiv.lastChild);
+                heartDiv.removeChild(heartDiv.lastChild);
             }
             if (!gameOver) {
                 hit.play();

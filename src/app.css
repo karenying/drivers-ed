@@ -145,14 +145,15 @@
     color: lightgray;
 }
 
-#skull {
+#heart {
     position: absolute;
     top: 82px;
     left: 130px;
     display: flex;
 }
 
-#skull img {
+#heart img {
     height: 25px;
     width: 25px;
+    padding-right: 4px;
 }
