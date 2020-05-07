@@ -11,12 +11,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
-import dingLink from './sounds/ding.wav';
-import loseLink from './sounds/lose.wav';
-import hitLink from './sounds/hit.wav';
-import goLink from './sounds/go.wav';
-import countdownLink from './sounds/countdown.wav';
-
+import dingLink from './assets/ding.wav';
+import loseLink from './assets/lose.wav';
+import hitLink from './assets/hit.wav';
+import goLink from './assets/go.wav';
+import countdownLink from './assets/countdown.wav';
+import skullLink from './assets/skull.png';
 
 // Add sounds
 const ding = new Audio(dingLink);
@@ -187,20 +187,19 @@ beginContentButton.onclick = function () {
     // writeupContainer.style.display = 'none';
     countDownDiv.style.display = 'flex';
     let timeleft = 3;
-    let countDownInterval = setInterval(function(){
+    let countDownInterval = setInterval(function () {
         if (timeleft < 0) {
             countDownDiv.style.display = 'none';
             clearInterval(countDownInterval);
-        }
-        else if (timeleft == 0) {
-            countDownNumber.innerText = "Go!";
+        } else if (timeleft == 0) {
+            countDownNumber.innerText = 'Go!';
             go.play();
             scene.state.newGameStarted = true;
             newGameStarted = true;
         } else {
             countDownNumber.innerText = timeleft;
             countdown.play();
-        } 
+        }
         timeleft -= 1;
     }, 1000);
 };
@@ -218,13 +217,26 @@ var lives = 3;
 
 var lifeDiv = document.createElement('div');
 lifeDiv.id = 'lives';
-lifeDiv.innerHTML = 'Lives: ' + lives;
+lifeDiv.innerHTML = 'Lives: ';
+
 document.body.appendChild(lifeDiv);
 
 // Set special items reporter
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
 document.body.appendChild(itemDiv);
+
+let skullDiv = document.createElement('div');
+skullDiv.id = 'skull';
+
+for (let i = 0; i < lives; i++) {
+    let skullImg = document.createElement('img');
+    skullImg.id = 'skullImg';
+    skullImg.src = skullLink;
+    skullDiv.appendChild(skullImg);
+}
+
+document.body.appendChild(skullDiv);
 
 // Set up outro screen
 let endContainer = document.createElement('div');
@@ -281,25 +293,31 @@ const onAnimationFrameHandler = (timeStamp) => {
         // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
             if (!collisionObj.collected) {
-                score += 1; // only collect object if not already collected      
+                score += 1; // only collect object if not already collected
                 let dingClone = ding.cloneNode();
                 dingClone.play();
             }
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
-            if (!collisionObj.collected) lives -= 1;
+            if (!collisionObj.collected) {
+                lives -= 1;
+                skullDiv.removeChild(skullDiv.lastChild);
+            }
             if (!gameOver) {
                 hit.play();
             }
-            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+            // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
-            if (!collisionObj.collected) lives -= 1;
+            if (!collisionObj.collected) {
+                lives -= 1;
+                skullDiv.removeChild(skullDiv.lastChild);
+            }
             if (!gameOver) {
                 hit.play();
             }
-            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+            // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         }
     }
@@ -313,7 +331,7 @@ const onAnimationFrameHandler = (timeStamp) => {
         endContentScore.innerText = score;
     }
     document.getElementById('score').innerHTML = 'Score: ' + score;
-    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
+    // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
