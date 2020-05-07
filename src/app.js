@@ -226,6 +226,7 @@ var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
 document.body.appendChild(itemDiv);
 
+// Set up skulls
 let skullDiv = document.createElement('div');
 skullDiv.id = 'skull';
 
@@ -282,7 +283,6 @@ endContainer.style.display = 'none';
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(
@@ -290,7 +290,6 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.collidableMeshList
     );
     if (collisionObj !== undefined) {
-        // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
             if (!collisionObj.collected) {
                 score += 1; // only collect object if not already collected
@@ -307,7 +306,6 @@ const onAnimationFrameHandler = (timeStamp) => {
             if (!gameOver) {
                 hit.play();
             }
-            // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
             if (!collisionObj.collected) {
@@ -317,7 +315,6 @@ const onAnimationFrameHandler = (timeStamp) => {
             if (!gameOver) {
                 hit.play();
             }
-            // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         }
     }
@@ -331,7 +328,6 @@ const onAnimationFrameHandler = (timeStamp) => {
         endContentScore.innerText = score;
     }
     document.getElementById('score').innerHTML = 'Score: ' + score;
-    // document.getElementById('lives').innerHTML = 'Lives: ' + lives;
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
