@@ -5,30 +5,10 @@
     font-family: 'VT323' !important;
 }
 
-#countdown {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    min-width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-#countdown h1 {
-    color: white;
-    font-size: 80px;
-    padding: 0px;
-    margin: 0px;
-    text-shadow: 3px 3px blue;
-    text-align: center;
-}
-
 #score,
 #lives {
     position: absolute;
-    width: 150px;
+    width: 175px;
     height: 75px;
     left: 20px;
     font-size: 30px;
@@ -56,8 +36,8 @@
 }
 
 #begin-container,
-#end-container {
-    display: flex;
+#end-container,
+#countdown {
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -65,6 +45,15 @@
     position: absolute;
     top: 0px;
     left: 0px;
+}
+
+#begin-container,
+#end-container {
+    display: flex;
+}
+
+#countdown {
+    display: none;
 }
 
 #begin-content,
@@ -86,13 +75,22 @@
 }
 
 #begin-content h1,
-#end-content h1 {
+#end-content h1,
+#countdown h1 {
     color: white;
-    font-size: 50px;
     padding: 0px;
     margin: 0px;
     text-shadow: 3px 3px blue;
     text-align: center;
+}
+
+#begin-content h1,
+#end-content h1 {
+    font-size: 50px;
+}
+
+#countdown h1 {
+    font-size: 80px;
 }
 
 #begin-content p,
@@ -145,4 +143,16 @@
 #writeup-container a:hover {
     text-decoration: underline;
     color: lightgray;
+}
+
+#skull {
+    position: absolute;
+    top: 82px;
+    left: 130px;
+    display: flex;
+}
+
+#skull img {
+    height: 25px;
+    width: 25px;
 }
