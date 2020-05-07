@@ -42,6 +42,7 @@ class Washington extends Scene {
         this.maxGameSpeed = 3;
         this.minGameSpeed = 1;
         this.accelerating = false;
+        this.stopped = false;
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
@@ -100,8 +101,7 @@ class Washington extends Scene {
         let frist = new Frist(this);
         let mccosh = new McCosh(this);
         let nassau = new Nassau(this);
-        let ovalStatue = new OvalStatue(this);
-        this.add(firestone, frist, mccosh, nassau, ovalStatue);
+        this.add(firestone, frist, mccosh, nassau);
 
         const car = new Car(this);
         this.driver = car;
@@ -308,8 +308,8 @@ class Washington extends Scene {
         }
     }
 
-    addToUpdateList(object) {
-        this.state.updateList.push(object);
+    addToUpdateList(obj) {
+      this.state.updateList.push(obj);
     }
 
     findCollisions(obj, collidableMeshList) {
@@ -327,12 +327,24 @@ class Washington extends Scene {
 
     update(timeStamp) {
         const { startTime, updateList, pause } = this.state;
+        if (this.stopped) {
+          this.gameSpeed = Math.max(0, this.gameSpeed - 0.25);
+          // return;
+        }
 
         if (!pause){
           // accelerate or decelerate if appropriate
           if (this.accelerating)
-            this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.025);
-          else this.gameSpeed = Math.max(this.minGameSpeed, this.gameSpeed - 0.2);
+            this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.05);
+          else {
+            if (!this.stopped) {
+              // decelerate if slowing down from acceleration
+              if (this.gameSpeed >= this.minGameSpeed)
+                this.gameSpeed = Math.max(this.minGameSpeed, this.gameSpeed - 0.1);
+              // accelerate if starting up from stopped state
+              else this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.1);
+            }
+          }
 
           // change color of sky at night
           // figures out time elapsed since beginning
