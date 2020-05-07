@@ -14,12 +14,17 @@ import link from './writeup.html';
 import dingLink from './sounds/ding.wav';
 import loseLink from './sounds/lose.wav';
 import hitLink from './sounds/hit.wav';
+import goLink from './sounds/go.wav';
+import countdownLink from './sounds/countdown.wav';
+
 
 // Add sounds
 const ding = new Audio(dingLink);
 ding.load();
 const lose = new Audio(loseLink);
 const hit = new Audio(hitLink);
+const go = new Audio(goLink);
+const countdown = new Audio(countdownLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -189,12 +194,13 @@ beginContentButton.onclick = function () {
         }
         else if (timeleft == 0) {
             countDownNumber.innerText = "Go!";
+            go.play();
             scene.state.newGameStarted = true;
             newGameStarted = true;
         } else {
             countDownNumber.innerText = timeleft;
+            countdown.play();
         } 
-        console.log(timeleft)
         timeleft -= 1;
     }, 1000);
 };
