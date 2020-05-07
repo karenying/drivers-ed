@@ -28,6 +28,8 @@ const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
 // game control variables
 let gameOver = false;
+let paused = false;
+let newGameStarted = false;
 
 // Add fog
 scene.fog = new Fog(new Color(0x7ec0ee), 1, 200);
@@ -54,6 +56,7 @@ document.body.appendChild(canvas);
 
 // Pause the scene
 function pause() {
+    paused = true;
     scene.state.pause = true;
     return true;
 }
@@ -65,7 +68,12 @@ function setupKeyControls() {
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-        if (!gameOver) {
+        if (event.keyCode === 80 && !gameOver && newGameStarted) {
+            paused = !paused;
+            scene.state.pause = !scene.state.pause;
+        }
+
+        if (!gameOver && newGameStarted && !paused) {
             switch (event.keyCode) {
                 // left
                 case 37:
@@ -93,15 +101,12 @@ function setupKeyControls() {
                     if (scene.stopped) scene.stopped = false;
                     else scene.stopped = true;
                     break;
-                case 80:
-                    scene.state.pause = !scene.state.pause;
-                    break;
             }
         }
     }
 
     function handleKeyUp(event) {
-        if (!gameOver) {
+        if (!gameOver && newGameStarted && !paused) {
             switch (event.keyCode) {
                 // left
                 case 37:
@@ -169,6 +174,7 @@ beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
     // writeupContainer.style.display = 'none';
     scene.state.newGameStarted = true;
+    newGameStarted = true;
 };
 
 // Set up score
@@ -226,6 +232,7 @@ endContent.appendChild(endContentButton);
 endContentButton.onclick = function () {
     endContainer.style.display = 'none';
     scene.state.pause = false;
+    paused = false;
     score = 0;
     lives = 3;
     gameOver = false;
