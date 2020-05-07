@@ -31,6 +31,14 @@ const camera = new PerspectiveCamera();
 const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
+// // Set up controls
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.enablePan = false;
+// controls.minDistance = 4;
+// controls.maxDistance = 500;
+// controls.update();
+
 // game control variables
 let gameOver = false;
 let paused = false;
@@ -50,14 +58,6 @@ canvas.style.display = 'block'; // Removes padding below canvas
 document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
-
-// Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 500;
-controls.update();
 
 // Pause the scene
 function pause() {

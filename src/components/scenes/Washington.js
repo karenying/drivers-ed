@@ -29,6 +29,8 @@ import * as THREE from 'three';
 const backgroundColors = [
   0x7ec0ee, 0x659abe, 0x517b98, 0x41627A, 0x344E62,
   0x41627A, 0x517b98, 0x659abe, 0x7ec0ee, 0x89CDF1];
+let currColor = "#7ec0ee";
+
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -370,6 +372,48 @@ class Washington extends Scene {
         return undefined;
     }
 
+    // blends 2 colors together with the given percent
+    // https://stackoverflow.com/questions/3080421/javascript-color-gradient
+    getGradientColor(start_color, end_color, percent) {
+        // strip the leading # if it's there
+        start_color = start_color.replace(/^\s*#|\s*$/g, '');
+        end_color = end_color.replace(/^\s*#|\s*$/g, '');
+     
+        // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+        if(start_color.length == 3){
+          start_color = start_color.replace(/(.)/g, '$1$1');
+        }
+     
+        if(end_color.length == 3){
+          end_color = end_color.replace(/(.)/g, '$1$1');
+        }
+     
+        // get colors
+        var start_red = parseInt(start_color.substr(0, 2), 16),
+            start_green = parseInt(start_color.substr(2, 2), 16),
+            start_blue = parseInt(start_color.substr(4, 2), 16);
+     
+        var end_red = parseInt(end_color.substr(0, 2), 16),
+            end_green = parseInt(end_color.substr(2, 2), 16),
+            end_blue = parseInt(end_color.substr(4, 2), 16);
+     
+        // calculate new color
+        var diff_red = end_red - start_red;
+        var diff_green = end_green - start_green;
+        var diff_blue = end_blue - start_blue;
+     
+        diff_red = ( (diff_red * percent) + start_red ).toString(16).split('.')[0];
+        diff_green = ( (diff_green * percent) + start_green ).toString(16).split('.')[0];
+        diff_blue = ( (diff_blue * percent) + start_blue ).toString(16).split('.')[0];
+     
+        // ensure 2 digits by color
+        if( diff_red.length == 1 ) diff_red = '0' + diff_red
+        if( diff_green.length == 1 ) diff_green = '0' + diff_green
+        if( diff_blue.length == 1 ) diff_blue = '0' + diff_blue
+     
+        return '#' + diff_red + diff_green + diff_blue;
+    };
+
     update(timeStamp) {
         const { startTime, updateList, pause, newGameStarted } = this.state;
         if (this.stopped) {
@@ -379,7 +423,7 @@ class Washington extends Scene {
 
         if (!newGameStarted) {
             // car continues bobbling even when paused
-            // updateList[31].bobble(timeStamp);
+            this.driver.bobble(timeStamp);
         }
 
 
@@ -404,6 +448,17 @@ class Washington extends Scene {
           } else {
             const currentTime = Date.now() / 1000;
             this.timeElapsed = currentTime - this.state.startTime;
+            // from day to night
+            let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
+            // from night to day
+            if (!this.night) {
+                newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
+            }
+            if (newColor !== currColor) {
+                currColor = newColor;
+                this.background = new Color(currColor);
+                this.fog.color = new Color(currColor);
+            }
           }
 
           // toggle night mode
