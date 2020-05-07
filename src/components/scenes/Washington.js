@@ -42,6 +42,7 @@ class Washington extends Scene {
             newGameStarted: false,
         };
 
+        currColor = "#7ec0ee";
         this.gameSpeed = 1;
         this.maxGameSpeed = 3;
         this.minGameSpeed = 1;

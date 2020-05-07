@@ -31,7 +31,7 @@ const camera = new PerspectiveCamera();
 const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
-// // Set up controls
+// Set up controls
 // const controls = new OrbitControls(camera, canvas);
 // controls.enableDamping = true;
 // controls.enablePan = false;
@@ -191,6 +191,8 @@ beginContentButton.onclick = function () {
         if (timeleft < 0) {
             countDownDiv.style.display = 'none';
             clearInterval(countDownInterval);
+            countDownNumber.innerText = '';
+            countDownDiv.style.display = 'none';
         } else if (timeleft == 0) {
             countDownNumber.innerText = 'Go!';
             go.play();
