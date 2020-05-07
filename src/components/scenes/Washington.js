@@ -26,7 +26,9 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
-const backgroundColors = [];
+const backgroundColors = [
+  0x7ec0ee, 0x659abe, 0x517b98, 0x41627A, 0x344E62,
+  0x41627A, 0x517b98, 0x659abe, 0x7ec0ee, 0x89CDF1];
 class Washington extends Scene {
     constructor(camera) {
         super();
@@ -34,8 +36,6 @@ class Washington extends Scene {
         this.state = {
             updateList: [],
             pause: false,
-            timeElapsed: -1,
-            threshold: 10,
             startTime: null,
             newGameStarted: false,
         };
@@ -49,6 +49,8 @@ class Washington extends Scene {
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
         this.night = false;
+        this.timeElapsed = -1;
+        this.threshold = 30;
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
 
@@ -358,11 +360,12 @@ class Washington extends Scene {
           this.gameSpeed = Math.max(0, this.gameSpeed - 0.25);
           // return;
         }
-        
+
         if (!newGameStarted) {
             // car continues bobbling even when paused
             // updateList[31].bobble(timeStamp);
         }
+
 
         if (!pause && newGameStarted){
           // accelerate or decelerate if appropriate
@@ -378,35 +381,40 @@ class Washington extends Scene {
             }
           }
 
-          // change color of sky at night
-          // figures out time elapsed since beginning
+          // night mode calculations
+          // calculate start time on game start
           if (startTime == null) {
             this.state.startTime = Date.now() / 1000;
           } else {
             const currentTime = Date.now() / 1000;
-            this.state.timeElapsed = currentTime - this.state.startTime;
+            this.timeElapsed = currentTime - this.state.startTime;
           }
 
           // toggle night mode
-          if (this.state.timeElapsed > this.state.threshold) {
-            this.state.night = !this.state.night;
+          if (this.timeElapsed > this.threshold) {
+            this.night = !this.night;
+            this.timeElapsed = 0;
             this.state.startTime = Date.now() / 1000;
-            this.state.threshold = 20;
-          }
-
-          if (this.state.night) {
-            this.background = new Color(0x345063);
-            this.fog.color = new Color(0x345063);
-          } else {
-            this.background = new Color(0x7ec0ee);
-            this.fog.color = new Color(0x7ec0ee);
+            this.threshold = 60;
           }
 
           for (const obj of updateList) {
-              obj.update(timeStamp);
+            obj.update(timeStamp);
           }
+        }
+
+        if (pause && newGameStarted) {
+          this.state.startTime = Date.now() / 1000 + this.timeElapsed;
         }
     }
 }
 
 export default Washington;
+
+// if (this.state.night) {
+//   this.background = new Color(0x345063);
+//   this.fog.color = new Color(0x345063);
+// } else {
+//   this.background = new Color(0x7ec0ee);
+//   this.fog.color = new Color(0x7ec0ee);
+// }

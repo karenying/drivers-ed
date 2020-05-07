@@ -147,7 +147,7 @@ beginContentDescription.innerHTML =
     "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
     '<br />' +
     '<br />' +
-    "Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins. Hit three people and you're kicked out of the class.";
+    "Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins. Hit 3 obstacles and you're kicked out of the class!";
 beginContentText.appendChild(beginContentDescription);
 
 let beginContentButton = document.createElement('div');

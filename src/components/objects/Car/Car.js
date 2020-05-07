@@ -74,10 +74,7 @@ class Car extends Group {
     constructor(parent) {
         super();
         this.state = {
-          night: parent.night,
-          timeElapsed: -1,
           lightsOn: false,
-          startTime: null,
           lightsOn: false,
           threshold: 10,
           bobbing: true,
@@ -272,33 +269,19 @@ class Car extends Group {
     }
 
     update(timeStamp) {
-        const { lightsOn, startTime } = this.state;
-
-        // figures out time elapsed since beginning
-        if (startTime == null) {
-          this.state.startTime = Date.now() / 1000;
-        } else {
-          const currentTime = Date.now() / 1000;
-          this.state.timeElapsed = currentTime - this.state.startTime;
-        }
-
-        // toggle night mode
-        if (this.state.timeElapsed > this.state.threshold) {
-          this.state.night = !this.state.night;
-          this.state.startTime = Date.now() / 1000;
-          this.state.threshold = 20;
-        }
+        const { lightsOn } = this.state;
 
         // turns lights on
-        if (!lightsOn && this.state.night) {
+        if (!lightsOn && this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 2.25;
           beamer = this.getObjectByName("beamer2", true);
           beamer.intensity = 2.25;
           this.state.lightsOn = true;
         }
+        
         // turns lights off
-        if (lightsOn && !this.state.night) {
+        if (lightsOn && !this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 0;
           beamer = this.getObjectByName("beamer2", true);
