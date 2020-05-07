@@ -102,7 +102,8 @@ class Washington extends Scene {
         let frist = new Frist(this);
         let mccosh = new McCosh(this);
         let nassau = new Nassau(this);
-        this.add(firestone, frist, mccosh, nassau);
+        let ovalStatue = new OvalStatue(this);
+        this.add(firestone, frist, mccosh, nassau, ovalStatue);
 
         const car = new Car(this);
         this.driver = car;
@@ -335,7 +336,7 @@ class Washington extends Scene {
         
         if (!newGameStarted) {
             // car continues bobbling even when paused
-            updateList[30].bobble(timeStamp);
+            updateList[31].bobble(timeStamp);
         }
 
         if (!pause && newGameStarted){
