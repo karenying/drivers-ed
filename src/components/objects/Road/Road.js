@@ -12,7 +12,7 @@ class Road extends Group {
 
         this.state = {
             cameraPosition: parent.camera.position,
-            gameSpeed: parent.gameSpeed,
+            // gameSpeed: parent.gameSpeed,
             pause: false,
         };
 
@@ -45,8 +45,8 @@ class Road extends Group {
     }
 
     update() {
-        const { cameraPosition, gameSpeed, pause } = this.state;
-        this.position.z += gameSpeed;
+        const { cameraPosition } = this.state;
+        this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z + 50) {
             this.position.z -= 270;

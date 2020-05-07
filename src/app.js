@@ -11,6 +11,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
+import dingLink from './sounds/ding.wav';
+import loseLink from './sounds/lose.wav';
+import hitLink from './sounds/hit.wav';
+
+// Add sounds
+const ding = new Audio(dingLink);
+const lose = new Audio(loseLink);
+const hit = new Audio(hitLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -47,28 +55,61 @@ controls.update();
 // Pause the scene
 function pause() {
     scene.state.pause = true;
+    return true;
 }
 
 // Add key controls for car
 function setupKeyControls() {
     window.addEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('keyup', handleKeyUp, true);
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
         if (!gameOver) {
             switch (event.keyCode) {
+                // left
                 case 37:
+                    car.state.bobbing = false;
                     if (car.position.x - 0.25 > -car.maxPos) {
                         car.position.x -= 0.25;
+                        car.rotation.z = Math.PI / 80;
                     }
                     break;
+                // right
                 case 39:
+                    car.state.bobbing = false;
                     if (car.position.x + 0.25 < car.maxPos) {
                         car.position.x += 0.25;
+                        car.rotation.z = -Math.PI / 80;
                     }
+                    break;
+                // up
+                case 38:
+                    scene.accelerating = true;
                     break;
                 case 80:
                     scene.state.pause = !scene.state.pause;
+                    break;
+            }
+        }
+    }
+
+    function handleKeyUp(event) {
+        if (!gameOver) {
+            switch (event.keyCode) {
+                // left
+                case 37:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
+                    break;
+                // right
+                case 39:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
+                    break;
+                // up
+                case 38:
+                    scene.accelerating = false;
                     break;
             }
         }
@@ -181,6 +222,7 @@ endContentButton.onclick = function () {
     scene.state.pause = false;
     score = 0;
     lives = 3;
+    gameOver = false;
 };
 
 endContainer.style.display = 'none';
@@ -198,31 +240,36 @@ const onAnimationFrameHandler = (timeStamp) => {
         // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
             if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            ding.play();
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
             if (!collisionObj.collected) lives -= 1;
-
+            if (!gameOver) {
+                hit.play();
+            }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-            document.getElementById('item').innerHTML = 'You hit a fox!';
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
             if (!collisionObj.collected) lives -= 1;
-
+            if (!gameOver) {
+                hit.play();
+            }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-            document.getElementById('item').innerHTML = 'You hit a pedestrian!';
             collisionObj.onCollision();
         }
     }
     // game over if lives are 0
     if (lives <= 0) {
+        if (!gameOver) {
+            lose.play();
+        }
         gameOver = pause();
         endContainer.style.display = 'flex';
         endContentScore.innerText = score;
     }
     document.getElementById('score').innerHTML = 'Score: ' + score;
     document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-    document.getElementById('item').innerHTML = 'You hit a fox!';
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

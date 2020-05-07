@@ -48,7 +48,7 @@ class Lamppost extends Group {
     this.state = {
       night: parent.night,
       cameraPosition: parent.camera.position,
-      gameSpeed: parent.gameSpeed,
+      // gameSpeed: parent.gameSpeed,
       timeElapsed: -1,
       lightsOn: false,
       startTime: null,
@@ -81,7 +81,7 @@ class Lamppost extends Group {
   }
 
   update(timestamp) {
-      const { startTime, cameraPosition, gameSpeed, lightsOn } = this.state;
+      const { startTime, cameraPosition, lightsOn } = this.state;
 
       // figures out time elapsed since beginning
       if (startTime == null) {
@@ -97,7 +97,7 @@ class Lamppost extends Group {
         this.state.threshold = 20;
       }
 
-      this.position.z += gameSpeed;
+      this.position.z += this.parent.gameSpeed;
 
       if (this.position.z > cameraPosition.z) {
           this.position.z -= 200;

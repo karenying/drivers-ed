@@ -15,8 +15,8 @@ class Grass extends Group {
         super();
 
         this.state = {
-            cameraPosition: parent.camera.position,
-            gameSpeed: parent.gameSpeed,
+            cameraPosition: parent.camera.position
+            // gameSpeed: parent.gameSpeed,
         };
 
         const loader = new TextureLoader();
@@ -40,9 +40,8 @@ class Grass extends Group {
     }
 
     update() {
-        const { cameraPosition, gameSpeed } = this.state;
-
-        this.position.z += gameSpeed;
+        const { cameraPosition } = this.state;
+        this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z + 50) {
             this.position.z -= 270;

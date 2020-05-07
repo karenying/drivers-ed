@@ -30,8 +30,8 @@ class Firestone extends Group {
         super();
 
         this.state = {
-            cameraPosition: parent.camera.position,
-            gameSpeed: parent.gameSpeed,
+            cameraPosition: parent.camera.position
+            // gameSpeed: parent.gameSpeed,
         };
 
         var materials = {
@@ -160,9 +160,8 @@ class Firestone extends Group {
     }
 
     update(timestamp) {
-        const { cameraPosition, gameSpeed } = this.state;
-
-        this.position.z += gameSpeed;
+        const { cameraPosition } = this.state;
+        this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z) {
             this.position.z -= 200;
