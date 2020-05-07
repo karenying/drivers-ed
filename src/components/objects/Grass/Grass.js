@@ -5,7 +5,7 @@ import {
     DoubleSide,
     TextureLoader,
     RepeatWrapping,
-    MeshLambertMaterial,
+    MeshToonMaterial,
 } from 'three';
 
 import grassImg from './grass.png';
@@ -25,7 +25,7 @@ class Grass extends Group {
             texture.wrapT = RepeatWrapping;
 
             texture.repeat.set(100, 100);
-            let material = new MeshLambertMaterial({
+            let material = new MeshToonMaterial({
                 map: texture,
                 side: DoubleSide,
             });

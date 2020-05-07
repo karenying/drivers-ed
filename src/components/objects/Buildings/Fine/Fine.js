@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BoxGeometry(x, y, z);
@@ -59,15 +59,15 @@ class Fine extends Group {
         };
 
         var materials = {
-            stone: new MeshLambertMaterial({
+            stone: new MeshToonMaterial({
                 color: 0x63502c,
                 flatShading: true,
             }),
-            window: new MeshLambertMaterial({
+            window: new MeshToonMaterial({
                 color: 0x406e66,
                 flatShading: true,
             }),
-            main: new MeshLambertMaterial({
+            main: new MeshToonMaterial({
                 color: 0x695735,
                 flatShading: true,
             }),

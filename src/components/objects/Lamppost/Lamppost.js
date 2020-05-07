@@ -1,6 +1,6 @@
 import { Group,
   Mesh,
-  MeshLambertMaterial,
+  MeshToonMaterial,
   MeshBasicMaterial,
   SphereGeometry,
   DoubleSide,
@@ -15,7 +15,7 @@ var Colors = {
   lightYellow: 0xfae789,
 };
 
-const postMat = new MeshLambertMaterial ({
+const postMat = new MeshToonMaterial ({
   color: Colors.black,
   flatShading: true,
 });
@@ -25,7 +25,7 @@ const bulbMat = new MeshBasicMaterial({
   flatShading: true,
 });
 
-const lampMat = new MeshLambertMaterial({
+const lampMat = new MeshToonMaterial({
   color: Colors.white,
   flatShading: true,
   transparent: true,
@@ -88,7 +88,7 @@ class Lamppost extends Group {
       // turns lights on
       if (!lightsOn && this.parent.night) {
         this.children[1].material.color.setHex( Colors.yellow );
-        this.children[3].intensity = 0.1;
+        this.children[3].intensity = 0.05;
         this.children[3].decay = 2;
         this.state.lightsOn = true;
       }
