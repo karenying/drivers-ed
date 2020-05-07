@@ -10,6 +10,16 @@ import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
+import link from './writeup.html';
+import dingLink from './sounds/ding.wav';
+import loseLink from './sounds/lose.wav';
+import hitLink from './sounds/hit.wav';
+
+// Add sounds
+const ding = new Audio(dingLink);
+ding.load();
+const lose = new Audio(loseLink);
+const hit = new Audio(hitLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
@@ -18,7 +28,8 @@ const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
 // game control variables
 let gameOver = false;
-let paused = true;
+let paused = false;
+let newGameStarted = false;
 
 // Add fog
 scene.fog = new Fog(new Color(0x7ec0ee), 1, 200);
@@ -36,41 +47,83 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 5000;
-controls.update();
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.enablePan = false;
+// controls.minDistance = 4;
+// controls.maxDistance = 5000;
+// controls.update();
 
 // Pause the scene
 function pause() {
+    paused = true;
     scene.state.pause = true;
+    return true;
 }
 
 // Add key controls for car
 function setupKeyControls() {
     window.addEventListener('keydown', handleKeyDown, true);
+    window.addEventListener('keyup', handleKeyUp, true);
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-      if (!gameOver) {
-        switch (event.keyCode) {
-            case 37:
-                if (car.position.x - 0.25 > -car.maxPos) {
-                    car.position.x -= 0.25;
-                }
-                break;
-            case 39:
-                if (car.position.x + 0.25 < car.maxPos) {
-                    car.position.x += 0.25;
-                }
-                break;
-            case 80:
-              scene.state.pause = !scene.state.pause;
-              break;
-          }
-      }
+        if (event.keyCode === 80 && !gameOver && newGameStarted) {
+            paused = !paused;
+            scene.state.pause = !scene.state.pause;
+        }
+
+        if (!gameOver && newGameStarted && !paused) {
+            switch (event.keyCode) {
+                // left
+                case 37:
+                    car.state.bobbing = false;
+                    if (car.position.x - 0.25 > -car.maxPos) {
+                        car.position.x -= 0.25;
+                        car.rotation.z = Math.PI / 80;
+                    }
+                    break;
+                // right
+                case 39:
+                    car.state.bobbing = false;
+                    if (car.position.x + 0.25 < car.maxPos) {
+                        car.position.x += 0.25;
+                        car.rotation.z = -Math.PI / 80;
+                    }
+                    break;
+                // up
+                case 38:
+                    scene.accelerating = true;
+                    break;
+                // space bar (stop)
+                case 32:
+                    console.log(scene.stopped);
+                    if (scene.stopped) scene.stopped = false;
+                    else scene.stopped = true;
+                    break;
+            }
+        }
+    }
+
+    function handleKeyUp(event) {
+        if (!gameOver && newGameStarted && !paused) {
+            switch (event.keyCode) {
+                // left
+                case 37:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
+                    break;
+                // right
+                case 39:
+                    car.rotation.z = 0;
+                    car.state.bobbing = true;
+                    break;
+                // up
+                case 38:
+                    scene.accelerating = false;
+                    break;
+            }
+        }
     }
 }
 
@@ -106,6 +159,13 @@ beginContentButton.id = 'begin-button';
 beginContentButton.innerHTML = 'BEGIN';
 beginContent.appendChild(beginContentButton);
 
+// Set up countdown
+var countDownDiv = document.createElement('div');
+countDownDiv.id = 'countdown';
+document.body.appendChild(countDownDiv);
+let countDownNumber = document.createElement('h1');
+countDownDiv.appendChild(countDownNumber);
+
 // Set up writeup link
 let writeupContainer = document.createElement('div');
 writeupContainer.id = 'writeup-container';
@@ -114,13 +174,29 @@ document.body.appendChild(writeupContainer);
 let writeupLink = document.createElement('a');
 writeupLink.innerHTML = 'Writeup';
 writeupContainer.append(writeupLink);
-writeupLink.href = './writeup.html';
+writeupLink.href = link;
 
 // Begin game
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
     // writeupContainer.style.display = 'none';
-    scene.state.pause = false;
+    countDownDiv.style.display = 'flex';
+    let timeleft = 3;
+    let countDownInterval = setInterval(function(){
+        if (timeleft < 0) {
+            countDownDiv.style.display = 'none';
+            clearInterval(countDownInterval);
+        }
+        else if (timeleft == 0) {
+            countDownNumber.innerText = "Go!";
+            scene.state.newGameStarted = true;
+            newGameStarted = true;
+        } else {
+            countDownNumber.innerText = timeleft;
+        } 
+        console.log(timeleft)
+        timeleft -= 1;
+    }, 1000);
 };
 
 // Set up score
@@ -178,8 +254,10 @@ endContent.appendChild(endContentButton);
 endContentButton.onclick = function () {
     endContainer.style.display = 'none';
     scene.state.pause = false;
+    paused = false;
     score = 0;
     lives = 3;
+    gameOver = false;
 };
 
 endContainer.style.display = 'none';
@@ -196,25 +274,40 @@ const onAnimationFrameHandler = (timeStamp) => {
     if (collisionObj !== undefined) {
         // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
-            if (!collisionObj.collected) score += 1; // only collect object if not already collected
+            if (!collisionObj.collected) {
+                score += 1; // only collect object if not already collected      
+                let dingClone = ding.cloneNode();
+                dingClone.play();
+            }
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
-            if (!collisionObj.collected) score -= 5;
             if (!collisionObj.collected) lives -= 1;
-
-            // game over if lives are 0
-            if (lives <= 0) {
-                gameOver = pause();
-                endContainer.style.display = 'flex';
-                endContentScore.innerText = score;
+            if (!gameOver) {
+                hit.play();
             }
-            document.getElementById('score').innerHTML = 'Score: ' + score;
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-            document.getElementById('item').innerHTML = 'You hit a fox!';
+            collisionObj.onCollision();
+        } else if (collisionObj.name === 'pedestrian') {
+            if (!collisionObj.collected) lives -= 1;
+            if (!gameOver) {
+                hit.play();
+            }
+            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         }
     }
+    // game over if lives are 0
+    if (lives <= 0) {
+        if (!gameOver) {
+            lose.play();
+        }
+        gameOver = pause();
+        endContainer.style.display = 'flex';
+        endContentScore.innerText = score;
+    }
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

@@ -46,13 +46,8 @@ class Lamppost extends Group {
     super();
 
     this.state = {
-      night: parent.night,
       cameraPosition: parent.camera.position,
-      gameSpeed: parent.gameSpeed,
-      timeElapsed: -1,
       lightsOn: false,
-      startTime: null,
-      threshold: 10,
     }
     this.init();
     this.name = 'lamppost';
@@ -81,23 +76,9 @@ class Lamppost extends Group {
   }
 
   update(timestamp) {
-      const { startTime, cameraPosition, gameSpeed, lightsOn } = this.state;
+      const { cameraPosition, lightsOn } = this.state;
 
-      // figures out time elapsed since beginning
-      if (startTime == null) {
-        this.state.startTime = Date.now() / 1000;
-      } else {
-        const currentTime = Date.now() / 1000;
-        this.state.timeElapsed = currentTime - this.state.startTime;
-      }
-
-      if (this.state.timeElapsed > this.state.threshold) {
-        this.state.night = !this.state.night;
-        this.state.startTime = Date.now() / 1000;
-        this.state.threshold = 20;
-      }
-
-      this.position.z += gameSpeed;
+      this.position.z += this.parent.gameSpeed;
 
       if (this.position.z > cameraPosition.z) {
           this.position.z -= 200;
@@ -105,7 +86,7 @@ class Lamppost extends Group {
 
       // night mode
       // turns lights on
-      if (!lightsOn && this.state.night) {
+      if (!lightsOn && this.parent.night) {
         this.children[1].material.color.setHex( Colors.yellow );
         this.children[3].intensity = 0.1;
         this.children[3].decay = 2;
@@ -113,7 +94,7 @@ class Lamppost extends Group {
       }
 
       // turns lights off
-      if (lightsOn && !this.state.night) {
+      if (lightsOn && !this.parent.night) {
         this.children[1].material.color.setHex( Colors.white );
         this.children[3].intensity = 0.0;
         this.state.lightsOn = false;

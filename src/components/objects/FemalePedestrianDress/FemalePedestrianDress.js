@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import { Group, BoxGeometry,  Mesh} from "three";
+import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
-class MalePedestrianShorts extends Group {
+class FemalePedestrianDress extends Group {
     constructor(parent, materials) {
         super();
 
@@ -13,7 +13,7 @@ class MalePedestrianShorts extends Group {
         };
 
         this.name = 'pedestrian';
-        this.speed = 0.03; // 0.03
+        this.speed = 0.05; // 0.03
 
         // Create bounding box
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -33,7 +33,7 @@ class MalePedestrianShorts extends Group {
         var leftEye = new Mesh(leftEyeGeometry, materials.eye);
         leftEye.name = "left eye";
         head.add(leftEye);
-        leftEye.position.set(-0.4, 0.25, 0.4);
+        leftEye.position.set(-.4, 0.25, 0.4);
 
         var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
         var rightEye = new Mesh(rightEyeGeometry, materials.eye);
@@ -53,11 +53,17 @@ class MalePedestrianShorts extends Group {
         head.add(rightEar);
         rightEar.position.set(0.85, 0, 0);
 
-        var hairGeometry = new BoxGeometry(1.7, 0.5, 1);
+        var bangsGeometry = new BoxGeometry(1.7, 0.5, 1);
+        var bangs = new Mesh(bangsGeometry, materials.hair);
+        bangs.name = "bangs";
+        head.add(bangs);
+        bangs.position.set(0, 0.9, 0);
+
+        var hairGeometry = new BoxGeometry(2, 3, 1);
         var hair = new Mesh(hairGeometry, materials.hair);
         hair.name = "hair";
         head.add(hair);
-        hair.position.set(0, 0.9, 0);
+        hair.position.set(0, -0.25, -0.5);
 
         var noseGeometry = new BoxGeometry(0.25, 0.5, 0.25);
         var nose = new Mesh(noseGeometry, materials.skin);
@@ -66,11 +72,25 @@ class MalePedestrianShorts extends Group {
         nose.position.set(0, 0, 0.4);
         nose.rotation.x = -20 * (Math.PI/180);
 
-        var shirtGeometry = new BoxGeometry(1.75, 2, 1);
-        var shirt = new Mesh(shirtGeometry, materials.shirt);
-        head.add(shirt)
-        shirt.name = "shirt";
-        shirt.position.set(0, -1.75, 0);
+        var dressGeometry = new BoxGeometry(1.75, 3, 1);
+        var dress = new Mesh(dressGeometry, materials.dress);
+        head.add(dress)
+        dress.name = "dress";
+        dress.position.set(0, -2.25, 0);
+
+        var dressFrontSkirtGeometry = new BoxGeometry(1.74, 1, 0.7);
+        var dressFrontSkirt = new Mesh(dressFrontSkirtGeometry, materials.dress);
+        dress.add(dressFrontSkirt)
+        dressFrontSkirt.name = "dressSkirt";
+        dressFrontSkirt.position.set(0, -0.9, 0.5);
+        dressFrontSkirt.rotation.x = -35 * (Math.PI/180);
+
+        var dressBackSkirtGeometry = new BoxGeometry(1.74, 1, 0.7);
+        var dressBackSkirt = new Mesh(dressBackSkirtGeometry, materials.dress);
+        dress.add(dressBackSkirt)
+        dressBackSkirt.name = "dressSkirt";
+        dressBackSkirt.position.set(0, -0.9, -0.5);
+        dressBackSkirt.rotation.x = 35 * (Math.PI/180);
 
         // left arm
         var leftArmGeometry = new BoxGeometry(0.45, 2, 0.5);
@@ -79,13 +99,6 @@ class MalePedestrianShorts extends Group {
         leftArm.name = "left arm";
         leftArm.position.set(-1.15, 3, 0);
 
-        var leftShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        leftShirtGeometry.translate(0, -1, 0);
-        var leftShirt = new Mesh(leftShirtGeometry, materials.shirt);
-        leftShirt.name = "left shirt";
-        leftArm.add(leftShirt);
-        leftShirt.position.set(0, 0.75, 0);
-
         // right arm
         var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
         rightArmGeometry.translate(0, -1, 0);
@@ -93,26 +106,12 @@ class MalePedestrianShorts extends Group {
         rightArm.name = "right arm";
         rightArm.position.set(1.15, 3, 0);
 
-        var rightShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        rightShirtGeometry.translate(0, -1, 0);
-        var rightShirt = new Mesh(rightShirtGeometry, materials.shirt);
-        rightShirt.name = "right shirt";
-        rightArm.add(rightShirt);
-        rightShirt.position.set(0, 0.75, 0);
-
         // left leg
         var leftLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
         leftLegGeometry.translate(0, -1, 0);
         var leftLeg = new Mesh(leftLegGeometry, materials.skin);
         leftLeg.name = "left leg";
         leftLeg.position.set(-0.5, 1.25, 0);
-
-        var leftShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        leftShortsGeometry.translate(0, -1, 0);
-        var leftShorts = new Mesh(leftShortsGeometry, materials.shorts);
-        leftShorts.name = "left shorts";
-        leftLeg.add(leftShorts);
-        leftShorts.position.set(0, 0.75, 0);
 
         var leftShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
         var leftShoe = new Mesh(leftShoeGeometry, materials.shoes);
@@ -126,13 +125,6 @@ class MalePedestrianShorts extends Group {
         var rightLeg = new Mesh(rightLegGeometry, materials.skin);
         rightLeg.name = "right leg";
         rightLeg.position.set(0.5, 1.25, 0);
-
-        var rightShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        rightShortsGeometry.translate(0, -1, 0);
-        var rightShorts = new Mesh(rightShortsGeometry, materials.shorts);
-        rightShorts.name = "right shorts";
-        rightLeg.add(rightShorts);
-        rightShorts.position.set(0, 0.75, 0);
 
         var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
         var rightShoe = new Mesh(rightShoeGeometry, materials.shoes);
@@ -239,4 +231,4 @@ class MalePedestrianShorts extends Group {
     }
 }
 
-export default MalePedestrianShorts;
+export default FemalePedestrianDress;

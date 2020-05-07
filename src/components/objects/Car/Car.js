@@ -9,6 +9,7 @@ import {
     CircleGeometry,
     SpotLight,
     CylinderGeometry,
+    AxesHelper,
 } from 'three';
 
 var Colors = {
@@ -73,12 +74,10 @@ class Car extends Group {
     constructor(parent) {
         super();
         this.state = {
-          night: parent.night,
-          timeElapsed: -1,
           lightsOn: false,
-          startTime: null,
           lightsOn: false,
           threshold: 10,
+          bobbing: true,
         }
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -96,7 +95,7 @@ class Car extends Group {
     }
 
     init() {
-        let body = new BoxGeometry(4, 0.5, 2.5);
+        let body = new BoxGeometry(2.5, 0.5, 4);
         let bodyMat = new MeshToonMaterial({
             color: Colors.red,
         });
@@ -112,7 +111,6 @@ class Car extends Group {
             1 / Math.sqrt(2),
             1,
             4,
-            1
         );
         top.rotateY(Math.PI / 4);
         top.computeFlatVertexNormals();
@@ -121,13 +119,13 @@ class Car extends Group {
             flatShading: true,
         });
         let carTop = new Mesh(top, topMat);
-        carTop.scale.set(2, 2, 2.5);
+        carTop.scale.set(2.5, 2, 2.5);
         carTop.castShadow = true;
         carTop.receiveShadow = true;
         carTop.position.set(0, 2, 0);
         this.add(carTop);
 
-        let windshield = createWindshield(2.1, 1.4, 2, 0, 2.2, 0);
+        let windshield = createWindshield(2, 1.4, 3, 0, 2.2, 0);
         this.add(windshield);
         // let windshieldTwo = createWindshield(1.77, 1.4, 1.7,5,5,5);
         // this.add(windshieldTwo);
@@ -177,6 +175,16 @@ class Car extends Group {
             0.6,
             1.2
         );
+        wheelOne.rotation.y = Math.PI/2;
+        wheelTwo.rotation.y = Math.PI/2;
+        wheelThree.rotation.y = Math.PI/2;
+        wheelFour.rotation.y = Math.PI/2;
+        carBody.add(wheelOne);
+        carBody.add(wheelTwo);
+        carBody.add(wheelThree);
+        carBody.add(wheelFour);
+
+
         this.add(wheelOne);
         this.add(wheelTwo);
         this.add(wheelThree);
@@ -189,9 +197,8 @@ class Car extends Group {
             side: DoubleSide,
         });
         let license = new Mesh(licenseGeo, licenseMaterial);
-        license.rotateY(Math.PI / 2);
-        license.position.set(-2.01, 1, 0);
-        this.add(license);
+        carBody.add(license);
+        license.position.set(0, 0, 2.01)
 
         // creates headlights
         let headLightGeo = new CircleGeometry(0.15, 32);
@@ -201,12 +208,10 @@ class Car extends Group {
         });
         let headLightOne = new Mesh(headLightGeo, headLightMaterial);
         let headLightTwo = new Mesh(headLightGeo, headLightMaterial);
-        headLightOne.rotateY(Math.PI / 2);
-        headLightOne.position.set(-2.01, 1, -1);
-        headLightTwo.rotateY(Math.PI / 2);
-        headLightTwo.position.set(-2.01, 1, 1);
-        this.add(headLightOne);
-        this.add(headLightTwo);
+        carBody.add(headLightOne);
+        headLightOne.position.set(1, 0, 2.01);
+        carBody.add(headLightTwo);
+        headLightTwo.position.set(-1, 0, 2.01);
 
         // create exhaust pipe
         let pipe = createCylinderTwo(
@@ -220,7 +225,9 @@ class Car extends Group {
             0.78,
             -0.8
         );
-        this.add(pipe);
+        carBody.add(pipe);
+        pipe.rotation.y = Math.PI/2;
+        pipe.position.set(-0.75, -0.2, 2);
 
         let geo = new BoxGeometry(0.2, 0.2, 0.2);
         let mat = new MeshToonMaterial({
@@ -229,21 +236,20 @@ class Car extends Group {
         let exhaust = new Mesh(geo, mat);
         exhaust.castShadow = true;
         exhaust.receiveShadow = true;
-        exhaust.position.set(-2.5, 0.75, -0.80);
+        exhaust.position.set(-0.75, 0.75, 2.5);
         this.add(exhaust);
+        exhaust.name = "exhaust"
 
         this.scale.set(0.4, 0.4, 0.4);
         this.position.set(0, 0, 21);
-        this.rotation.y = Math.PI / 2;
-
         // create night mode headlights
         let beamerOne = new SpotLight(0xffffff, 0);
-        beamerOne.position.set(1, 1, -1);
+        beamerOne.position.set(1, 1, 1);
         beamerOne.angle = 0.1;
         beamerOne.distance = 80;
         beamerOne.name = "beamer1";
         let beamerTwo= new SpotLight(0xffffff, 0);
-        beamerTwo.position.set(1, 1, 1);
+        beamerTwo.position.set(-1, 1, 1);
         beamerTwo.angle = 0.1;
         beamerTwo.distance = 80;
         beamerTwo.name = "beamer2";
@@ -259,37 +265,23 @@ class Car extends Group {
 
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-        this.add(bbHelper);
+        // this.add(bbHelper);
     }
 
     update(timeStamp) {
-        const { lightsOn, startTime } = this.state;
-
-        // figures out time elapsed since beginning
-        if (startTime == null) {
-          this.state.startTime = Date.now() / 1000;
-        } else {
-          const currentTime = Date.now() / 1000;
-          this.state.timeElapsed = currentTime - this.state.startTime;
-        }
-
-        // toggle night mode
-        if (this.state.timeElapsed > this.state.threshold) {
-          this.state.night = !this.state.night;
-          this.state.startTime = Date.now() / 1000;
-          this.state.threshold = 20;
-        }
+        const { lightsOn } = this.state;
 
         // turns lights on
-        if (!lightsOn && this.state.night) {
+        if (!lightsOn && this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 2.25;
           beamer = this.getObjectByName("beamer2", true);
           beamer.intensity = 2.25;
           this.state.lightsOn = true;
         }
+        
         // turns lights off
-        if (lightsOn && !this.state.night) {
+        if (lightsOn && !this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 0;
           beamer = this.getObjectByName("beamer2", true);
@@ -297,9 +289,19 @@ class Car extends Group {
           this.state.lightsOn = false;
         }
 
-        // Bob car and exhaust back and forth
-        this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
-        this.children[11].rotation.z = Math.sin(timeStamp / 200);
+        if (this.state.bobbing) {
+            // Bob car and exhaust back and forth
+            this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+        }
+    }
+
+    bobble(timeStamp) {
+        if (this.state.bobbing) {
+            // Bob car and exhaust back and forth
+            this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+        }
     }
 }
 

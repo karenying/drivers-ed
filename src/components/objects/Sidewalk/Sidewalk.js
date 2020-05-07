@@ -6,20 +6,19 @@ import {
     DoubleSide,
 } from 'three';
 
-class Road extends Group {
+class Sidewalk extends Group {
     constructor(parent) {
         super();
 
         this.state = {
             cameraPosition: parent.camera.position,
-            gameSpeed: parent.gameSpeed,
+            // gameSpeed: parent.gameSpeed,
             pause: false,
         };
 
-
         const planeGeometry = new PlaneGeometry(3, 100);
         const planeMaterial = new MeshStandardMaterial({
-            color: 0xadacac,
+            color: 0x3d3c3c,
             side: DoubleSide,
         });
 
@@ -28,7 +27,7 @@ class Road extends Group {
 
         const stripeGeometry = new PlaneGeometry(0.1, 3);
         const stripeMaterial = new MeshStandardMaterial({
-            color: 0x524940,
+            color: 0x1f1f1f,
             side: DoubleSide,
         });
 
@@ -42,19 +41,18 @@ class Road extends Group {
             this.add(stripe);
             offset += 15;
         }
-
         this.add(plane);
         parent.addToUpdateList(this);
     }
 
-    update(timestamp) {
-        const { cameraPosition, gameSpeed, pause } = this.state;
-        this.position.z += gameSpeed;
+    update() {
+        const { cameraPosition, pause } = this.state;
+        this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 360;
+            this.position.z -= 270;
         }
     }
 }
 
-export default Road;
+export default Sidewalk;

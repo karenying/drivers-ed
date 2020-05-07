@@ -57,7 +57,7 @@ class Fox extends Group {
     this.state = {
       walking: true,
       bob: true,
-      gameSpeed: parent.gameSpeed,
+      // gameSpeed: parent.gameSpeed,
       cameraPosition: parent.camera.position,
     }
     parent.addToUpdateList(this);
@@ -175,12 +175,12 @@ class Fox extends Group {
 
     // visualize bounding box
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-    this.add(bbHelper);
+    // this.add(bbHelper);
     this.scale.set(0.5, 0.5, 0.5);
   }
 
   update(timeStamp) {
-    const { gameSpeed, cameraPosition, walking, bob, pause } = this.state;
+    const { cameraPosition, walking, bob, pause } = this.state;
 
     var Pulse = function(hertz,fn) {
       if (!fn) fn = Math.sin;
@@ -210,50 +210,55 @@ class Fox extends Group {
         this.children[5].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
       }
 
-      // update positions (cross road and move towards car)
-      var newX = this.position.x + this.speed;
-      var newZ = this.position.z + gameSpeed;
-
       // if fox is done crossing road or no longer visible in scene
-      if (newX > 6 || newZ > cameraPosition.z) {
-        if (Math.random() <= 0.1) {
-          newZ = -(this.parent.fog.far + 10 * Math.random());
-          newX = -1 * (Math.floor(Math.random() * 6) + 2);
-        }
+      var newX = this.position.x + this.speed;
+      if (newX > this.parent.edge) {
+        newZ = -(this.parent.fog.far + 70 * Math.random());
+        newX = -1 * (Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2);
+        this.resetParams();
       }
       this.position.x = newX;
-      this.position.z = newZ;
     }
+
+    // update positions (cross road and move towards car)
+    var newZ = this.position.z + this.parent.gameSpeed;
+    if (newZ > cameraPosition.z) {
+      newZ = -(this.parent.fog.far + 70 * Math.random());
+    }
+    this.position.z = newZ;
 
     // Advance tween animations, if any exist
     TWEEN.update();
   }
 
   resetParams() {
-    this.position.y = 1;
-    // this.speed = 0.01 + Math.random() * 0.05;
-    this.speed = 0.03;
+    this.position.y = 0.5;
     this.collected = false;
   }
 
   onCollision() {
+    if (!this.collected) {
+      const spin = new TWEEN.Tween(this.rotation)
+          .to({ y: this.rotation.y + 2 * Math.PI }, 200);
+      const jumpUp = new TWEEN.Tween(this.position)
+          .to({ y: this.position.y + 2 }, 200)
+          .easing(TWEEN.Easing.Quadratic.Out);
+      const fallDown = new TWEEN.Tween(this.position)
+          .to({ y: -1 }, 300)
+          .easing(TWEEN.Easing.Quadratic.In);
+      const resetPos = new TWEEN.Tween(this.position)
+          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+
+      // Reset position after jumping up and down
+      jumpUp.onComplete(() => fallDown.start());
+      fallDown.onComplete(() => resetPos.start());
+      resetPos.onComplete(() => this.resetParams());
+
+      // Start animation
+      jumpUp.start();
+      spin.start();
+    }
     this.collected = true;
-    const jumpUp = new TWEEN.Tween(this.position)
-        .to({ y: this.position.y + 1 }, 100)
-        .easing(TWEEN.Easing.Quadratic.Out);
-    const fallDown = new TWEEN.Tween(this.position)
-        .to({ y: 0 }, 300)
-        .easing(TWEEN.Easing.Quadratic.In);
-    const resetPos = new TWEEN.Tween(this.position)
-        .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
-
-    // Reset position after jumping up and down
-    jumpUp.onComplete(() => fallDown.start());
-    fallDown.onComplete(() => resetPos.start());
-    resetPos.onComplete(() => this.resetParams());
-
-    // Start animation
-    jumpUp.start();
   }
 }
 

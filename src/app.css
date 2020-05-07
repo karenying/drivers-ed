@@ -5,24 +5,44 @@
     font-family: 'VT323' !important;
 }
 
-#score {
+#countdown {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 100%;
     position: absolute;
-    width: 200px;
-    height: 100px;
-    top: 20px;
-    left: 20px;
-    font-size: 28px;
+    top: 0px;
+    left: 0px;
+}
+
+#countdown h1 {
     color: white;
+    font-size: 80px;
+    padding: 0px;
+    margin: 0px;
+    text-shadow: 3px 3px blue;
+    text-align: center;
+}
+
+#score,
+#lives {
+    position: absolute;
+    width: 150px;
+    height: 75px;
+    left: 20px;
+    font-size: 30px;
+    color: white;
+    padding: 20px 20px 20px 30px;
+}
+
+#score {
+    top: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #lives {
-    position: absolute;
-    width: 200px;
-    height: 100px;
     top: 60px;
-    left: 20px;
-    font-size: 28px;
-    color: white;
 }
 
 #item {

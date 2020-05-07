@@ -5,10 +5,10 @@ class BasicLights extends Group {
         // Invoke parent Group() constructor with our args
         super(...args);
         this.state = {
-          ambiChange: 0.005,
-          hemiChange: 0.005,
-          timeElapsed: -1,
-          startTime: null,
+          ambiChange: 0.01,
+          hemiChange: 0.01,
+          darken: true,
+          first: true,
         }
 
         const ambi = new AmbientLight(0x404040, 1.3);
@@ -20,33 +20,32 @@ class BasicLights extends Group {
     }
 
     update(timeStamp) {
-      const { startTime } = this.state;
-      // figures out time elapsed since beginning
-      if (startTime == null) {
-        this.state.startTime = Date.now() / 1000;
-      } else {
-        const currentTime = Date.now() / 1000;
-        this.state.timeElapsed = currentTime - this.state.startTime;
+
+      if (!this.parent.night) {
+        if (this.state.darken) {
+          this.children[0].intensity -= this.state.ambiChange;
+          this.children[1].intensity -= this.state.hemiChange;
+        } else {
+          this.children[0].intensity += this.state.ambiChange;
+          this.children[1].intensity += this.state.hemiChange;
+        }
+        this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
+        this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
+
+        this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
+        this.children[1].intensity = Math.min(2, this.children[1].intensity);
+
+        if (!this.state.first && this.parent.timeElapsed >= 0.5 * this.parent.threshold) {
+          debugger;
+          this.state.darken = true;
+        }
       }
 
-      if (this.state.timeElapsed > 20) {
-        this.state.ambiChange = -this.state.ambiChange;
-        this.state.hemiChange = -this.state.hemiChange;
-        this.state.startTime = Date.now() / 1000;
+      // during night
+      else {
+        this.state.first = false;
+        this.state.darken = false;
       }
-
-
-      // edit lights
-      this.children[0].intensity -= this.state.ambiChange;
-      this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
-      this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
-
-      this.children[1].intensity -= this.state.hemiChange;
-      this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
-      this.children[1].intensity = Math.min(2, this.children[1].intensity);
-      // const ambi = new AmbientLight(0x404040, 0.2);
-      // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
-      // this.add(ambi, hemi);
     }
 }
 
