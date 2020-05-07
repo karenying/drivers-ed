@@ -241,7 +241,6 @@ const onAnimationFrameHandler = (timeStamp) => {
                 hit.play();
             }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-            document.getElementById('item').innerHTML = 'You hit a fox!';
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
             if (!collisionObj.collected) lives -= 1;
@@ -249,7 +248,6 @@ const onAnimationFrameHandler = (timeStamp) => {
                 hit.play();
             }
             document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-            document.getElementById('item').innerHTML = 'You hit a pedestrian!';
             collisionObj.onCollision();
         }
     }
@@ -264,7 +262,6 @@ const onAnimationFrameHandler = (timeStamp) => {
     }
     document.getElementById('score').innerHTML = 'Score: ' + score;
     document.getElementById('lives').innerHTML = 'Lives: ' + lives;
-    document.getElementById('item').innerHTML = 'You hit a fox!';
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
