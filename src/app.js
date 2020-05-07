@@ -17,6 +17,7 @@ import hitLink from './sounds/hit.wav';
 
 // Add sounds
 const ding = new Audio(dingLink);
+ding.load();
 const lose = new Audio(loseLink);
 const hit = new Audio(hitLink);
 
@@ -245,8 +246,11 @@ const onAnimationFrameHandler = (timeStamp) => {
     if (collisionObj !== undefined) {
         // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
-            if (!collisionObj.collected) score += 1; // only collect object if not already collected
-            ding.play();
+            if (!collisionObj.collected) {
+                score += 1; // only collect object if not already collected      
+                let dingClone = ding.cloneNode();
+                dingClone.play();
+            }
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {

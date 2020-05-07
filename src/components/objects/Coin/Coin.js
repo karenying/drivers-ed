@@ -70,6 +70,10 @@ class Coin extends Group {
     var newZ = this.position.z + this.parent.gameSpeed;
     if (newZ > this.parent.camera.position.z) {
       newZ = -(this.parent.fog.far + 70 * Math.random());
+      while (newZ > this.parent.camera.position.z - 50) {
+        console.log("hi")
+        newZ = -(this.parent.fog.far + 70 * Math.random());
+      }
     }
     this.position.z = newZ;
 

@@ -296,13 +296,16 @@ class Washington extends Scene {
         this.add(lights, car);
 
         // Add some coins
+        let offset = 0;
         for (let i = 0; i < 12; i++) {
             var coin = new Coin(this);
-            coin.position.set(
-                2 * car.maxPos * Math.random() - 2.5,
-                0,
-                -(250 * Math.random())
-            );
+            // coin.position.set(
+            //     2 * car.maxPos * Math.random() - 2.5,
+            //     0,
+            //     -(250 * Math.random())
+            // );
+            coin.position.set(0, 0, -40 - offset);
+            offset += 2;
             this.add(coin);
             this.collidableMeshList.push(coin);
         }
