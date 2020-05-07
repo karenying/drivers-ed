@@ -194,8 +194,9 @@ beginContentButton.onclick = function () {
         } else {
             countDownNumber.innerText = timeleft;
         } 
+        console.log(timeleft)
         timeleft -= 1;
-    }, 500);
+    }, 1000);
 };
 
 // Set up score
