@@ -373,6 +373,9 @@ class Washington extends Scene {
           for (const obj of updateList) {
               obj.update(timeStamp);
           }
+        } else {
+            // car continues bobbling even when paused
+            updateList[30].update(timeStamp);
         }
     }
 }
