@@ -214,6 +214,7 @@ endContentButton.onclick = function () {
     scene.state.pause = false;
     score = 0;
     lives = 3;
+    gameOver = false;
 };
 
 endContainer.style.display = 'none';
