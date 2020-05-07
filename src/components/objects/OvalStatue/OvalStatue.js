@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh} from "three";
+import { Group, BoxGeometry, MeshToonMaterial, Mesh} from "three";
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BoxGeometry(x, y, z);
@@ -16,15 +16,15 @@ class OvalStatue extends Group {
         };
 
         var materials = {
-            stone: new MeshLambertMaterial({
+            stone: new MeshToonMaterial({
                 color: 0x41929e,
                 flatShading: true
             }),
-            blue: new MeshLambertMaterial({
+            blue: new MeshToonMaterial({
                 color: 0x41969e,
                 flatShading: true
             }),
-            base: new MeshLambertMaterial({
+            base: new MeshToonMaterial({
                 color: 0x2f3634,
                 flatShading: true
             }),

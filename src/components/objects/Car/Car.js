@@ -274,12 +274,12 @@ class Car extends Group {
         // turns lights on
         if (!lightsOn && this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 2.25;
+          beamer.intensity = 2;
           beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 2.25;
+          beamer.intensity = 2;
           this.state.lightsOn = true;
         }
-        
+
         // turns lights off
         if (lightsOn && !this.parent.night) {
           let beamer = this.getObjectByName("beamer1", true);

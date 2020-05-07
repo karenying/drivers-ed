@@ -1,4 +1,4 @@
-import { Scene, Color, MeshLambertMaterial } from 'three';
+import { Scene, Color, MeshToonMaterial } from 'three';
 import {
     Sidewalk,
     OvalStatue,
@@ -50,7 +50,7 @@ class Washington extends Scene {
         this.background = new Color(0x7ec0ee);
         this.night = false;
         this.timeElapsed = -1;
-        this.threshold = 30;
+        this.threshold = 25;
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
 
@@ -164,27 +164,27 @@ class Washington extends Scene {
 
         // Add chad
         let chadMaterials = {
-            eye: new MeshLambertMaterial({
+            eye: new MeshToonMaterial({
                 color: 0x36699c,
                 flatShading: true,
             }),
-            hair: new MeshLambertMaterial({
+            hair: new MeshToonMaterial({
                 color: 0xd1c569,
                 flatShading: true,
             }),
-            skin: new MeshLambertMaterial({
+            skin: new MeshToonMaterial({
                 color: 0xb48a78,
                 flatShading: true,
             }),
-            shorts: new MeshLambertMaterial({
+            shorts: new MeshToonMaterial({
                 color: 0xed7490,
                 flatShading: true,
             }),
-            shirt: new MeshLambertMaterial({
+            shirt: new MeshToonMaterial({
                 color: 0x72afed,
                 flatShading: true,
             }),
-            shoes: new MeshLambertMaterial({
+            shoes: new MeshToonMaterial({
                 color: 0x3b2403,
                 flatShading: true,
             }),
@@ -200,23 +200,23 @@ class Washington extends Scene {
 
         // Add vanessa
         let vanessaMaterials = {
-            eye: new MeshLambertMaterial({
+            eye: new MeshToonMaterial({
                 color: 0x3b2606,
                 flatShading: true
             }),
-            hair: new MeshLambertMaterial({
+            hair: new MeshToonMaterial({
                 color: 0x000000,
                 flatShading: true
             }),
-            skin: new MeshLambertMaterial({
+            skin: new MeshToonMaterial({
                 color: 0xb48A78,
                 flatShading: true
             }),
-            dress: new MeshLambertMaterial({
+            dress: new MeshToonMaterial({
                 color: 0x7015d1,
                 flatShading: true
             }),
-            shoes: new MeshLambertMaterial({
+            shoes: new MeshToonMaterial({
                 color: 0xd8d1e0,
                 flatShading: true
             })
@@ -232,27 +232,27 @@ class Washington extends Scene {
 
         // add labib
         let labibMaterials = {
-            eye: new MeshLambertMaterial({
+            eye: new MeshToonMaterial({
                 color: 0x291b06,
                 flatShading: true
             }),
-            hair: new MeshLambertMaterial({
+            hair: new MeshToonMaterial({
                 color: 0x000000,
                 flatShading: true
             }),
-            skin: new MeshLambertMaterial({
+            skin: new MeshToonMaterial({
                 color: 0x573502,
                 flatShading: true
             }),
-            jeans: new MeshLambertMaterial({
+            jeans: new MeshToonMaterial({
                 color: 0x0d1459,
                 flatShading: true
             }),
-            shirt: new MeshLambertMaterial({
+            shirt: new MeshToonMaterial({
                 color: 0x245734,
                 flatShading: true
             }),
-            shoes: new MeshLambertMaterial({
+            shoes: new MeshToonMaterial({
                 color: 0x470722,
                 flatShading: true
             })
@@ -268,27 +268,27 @@ class Washington extends Scene {
 
         // add maria
         let mariaMaterials = {
-            eye: new MeshLambertMaterial({
+            eye: new MeshToonMaterial({
                 color: 0x2d5432,
                 flatShading: true
             }),
-            hair: new MeshLambertMaterial({
+            hair: new MeshToonMaterial({
                 color: 0x4d3803,
                 flatShading: true
             }),
-            skin: new MeshLambertMaterial({
+            skin: new MeshToonMaterial({
                 color: 0x997446,
                 flatShading: true
             }),
-            jeans: new MeshLambertMaterial({
+            jeans: new MeshToonMaterial({
                 color: 0x000000,
                 flatShading: true
             }),
-            shirt: new MeshLambertMaterial({
+            shirt: new MeshToonMaterial({
                 color: 0xd61a39,
                 flatShading: true
             }),
-            shoes: new MeshLambertMaterial({
+            shoes: new MeshToonMaterial({
                 color: 0x237066,
                 flatShading: true
             })
@@ -303,27 +303,27 @@ class Washington extends Scene {
         this.add(maria);
 
         let maxMaterials = {
-            eye: new MeshLambertMaterial({
+            eye: new MeshToonMaterial({
                 color: 0x291b06,
                 flatShading: true
             }),
-            hair: new MeshLambertMaterial({
+            hair: new MeshToonMaterial({
                 color: 0x2e150f,
                 flatShading: true
             }),
-            skin: new MeshLambertMaterial({
+            skin: new MeshToonMaterial({
                 color: 0xb56e50,
                 flatShading: true
             }),
-            jeans: new MeshLambertMaterial({
+            jeans: new MeshToonMaterial({
                 color: 0x635f61,
                 flatShading: true
             }),
-            shirt: new MeshLambertMaterial({
+            shirt: new MeshToonMaterial({
                 color: 0xd65e9a,
                 flatShading: true
             }),
-            shoes: new MeshLambertMaterial({
+            shoes: new MeshToonMaterial({
                 color: 0x000000,
                 flatShading: true
             })
@@ -411,7 +411,7 @@ class Washington extends Scene {
             this.night = !this.night;
             this.timeElapsed = 0;
             this.state.startTime = Date.now() / 1000;
-            this.threshold = 60;
+            this.threshold = 50;
           }
 
           for (const obj of updateList) {

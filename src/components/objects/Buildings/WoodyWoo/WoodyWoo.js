@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
 
 function createPillar(x, y, z, materials) {
     var pillarGeometry = new BoxGeometry(x, y, z);
@@ -22,11 +22,11 @@ class WoodyWoo extends Group {
         };
 
         var materials = {
-            stone: new MeshLambertMaterial({
+            stone: new MeshToonMaterial({
                 color: 0xbdb9aa,
                 flatShading: true,
             }),
-            pillar: new MeshLambertMaterial({
+            pillar: new MeshToonMaterial({
                 color: 0x9c988c,
                 flatShading: true,
             }),

@@ -1,7 +1,7 @@
 import { Group, Color, SpotLight, AmbientLight, HemisphereLight } from 'three';
 
 const skyBlue = new Color(0x7ec0ee);
-const nightBlue = new Color(0x345063);
+const nightBlue = new Color(0x11223d);
 
 class BasicLights extends Group {
     constructor(parent, ...args) {
