@@ -49,7 +49,7 @@ class Washington extends Scene {
         this.background = new Color(0x7ec0ee);
         this.night = false;
         this.timeElapsed = -1;
-        this.threshold = 5;
+        this.threshold = 30;
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
 
@@ -369,7 +369,7 @@ class Washington extends Scene {
             this.night = !this.night;
             this.timeElapsed = 0;
             this.state.startTime = Date.now() / 1000;
-            this.threshold = 10;
+            this.threshold = 60;
           }
 
           for (const obj of updateList) {
