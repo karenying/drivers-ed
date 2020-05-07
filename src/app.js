@@ -159,6 +159,13 @@ beginContentButton.id = 'begin-button';
 beginContentButton.innerHTML = 'BEGIN';
 beginContent.appendChild(beginContentButton);
 
+// Set up countdown
+var countDownDiv = document.createElement('div');
+countDownDiv.id = 'countdown';
+document.body.appendChild(countDownDiv);
+let countDownNumber = document.createElement('h1');
+countDownDiv.appendChild(countDownNumber);
+
 // Set up writeup link
 let writeupContainer = document.createElement('div');
 writeupContainer.id = 'writeup-container';
@@ -173,8 +180,22 @@ writeupLink.href = link;
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
     // writeupContainer.style.display = 'none';
-    scene.state.newGameStarted = true;
-    newGameStarted = true;
+    countDownDiv.style.display = 'flex';
+    let timeleft = 3;
+    let countDownInterval = setInterval(function(){
+        if (timeleft < 0) {
+            countDownDiv.style.display = 'none';
+            clearInterval(countDownInterval);
+        }
+        else if (timeleft == 0) {
+            countDownNumber.innerText = "Go!";
+            scene.state.newGameStarted = true;
+            newGameStarted = true;
+        } else {
+            countDownNumber.innerText = timeleft;
+        } 
+        timeleft -= 1;
+    }, 500);
 };
 
 // Set up score

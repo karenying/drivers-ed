@@ -5,6 +5,26 @@
     font-family: 'VT323' !important;
 }
 
+#countdown {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    min-width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#countdown h1 {
+    color: white;
+    font-size: 80px;
+    padding: 0px;
+    margin: 0px;
+    text-shadow: 3px 3px blue;
+    text-align: center;
+}
+
 #score,
 #lives {
     position: absolute;
