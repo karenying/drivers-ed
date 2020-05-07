@@ -40,16 +40,12 @@ class BasicLights extends Group {
         // this.parent.fog.color = skyBlue;
 
         if (this.state.darken) {
-          // this.children[0].intensity -= this.state.ambiChange;
-          // this.children[1].intensity -= this.state.hemiChange;
           let newAmbi = this.interpolate(ambiDay, ambiNight, this.parent.timeElapsed/this.parent.threshold);
           let newHemi = this.interpolate(ambiDay, hemiNight, this.parent.timeElapsed/this.parent.threshold);
 
           this.children[0].intensity = newAmbi;
           this.children[1].intensity = newHemi;
         } else {
-          // this.children[0].intensity += this.state.ambiChange;
-          // this.children[1].intensity += this.state.hemiChange;
 
           let newAmbi = this.interpolate(ambiNight, ambiDay, this.parent.timeElapsed/this.parent.threshold);
           let newHemi = this.interpolate(ambiNight, hemiDay, this.parent.timeElapsed/this.parent.threshold);
@@ -57,12 +53,6 @@ class BasicLights extends Group {
           this.children[0].intensity = newAmbi;
           this.children[1].intensity = newHemi;
         }
-        // this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
-        // this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
-
-        // this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
-        // this.children[1].intensity = Math.min(2, this.children[1].intensity);
-
         if (!this.state.first && this.parent.timeElapsed >= 0.5 * this.parent.threshold) {
           this.state.darken = true;
         }
