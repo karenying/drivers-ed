@@ -8,8 +8,8 @@ class BasicLights extends Group {
         // Invoke parent Group() constructor with our args
         super(...args);
         this.state = {
-          ambiChange: 0.001,
-          hemiChange: 0.001,
+          ambiChange: 0.002,
+          hemiChange: 0.002,
           darken: true,
           first: true,
         }
