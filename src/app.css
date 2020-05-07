@@ -5,17 +5,6 @@
     font-family: 'VT323' !important;
 }
 
-#countdown {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    min-width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
 #score,
 #lives {
     position: absolute;
@@ -47,8 +36,8 @@
 }
 
 #begin-container,
-#end-container {
-    display: flex;
+#end-container,
+#countdown {
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -56,6 +45,15 @@
     position: absolute;
     top: 0px;
     left: 0px;
+}
+
+#begin-container,
+#end-container {
+    display: flex;
+}
+
+#countdown {
+    display: none;
 }
 
 #begin-content,
