@@ -11,4 +11,3 @@ export * from './FemalePedestrianDress';
 export * from './FemalePedestrianJeans';
 export * from './OvalStatue';
 export * from './Sidewalk';
-
