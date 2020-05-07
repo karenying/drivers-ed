@@ -267,6 +267,11 @@ endContentButton.onclick = function () {
     score = 0;
     lives = 3;
     gameOver = false;
+    for (let i = 0; i < lives; i++) {
+        let heartImg = document.createElement('img');
+        heartImg.src = heartLink;
+        heartDiv.appendChild(heartImg);
+    }
 };
 
 endContainer.style.display = 'none';
