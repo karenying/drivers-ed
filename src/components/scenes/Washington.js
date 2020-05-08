@@ -360,7 +360,7 @@ class Washington extends Scene {
         // Add other cars
         var otherCar1 = new OtherCar(this, 0x3396ff);
         otherCar1.position.set(
-          -1.5,
+          -1.5 + Math.random(),
           0,
           -(250 * Math.random())
         );
@@ -370,7 +370,7 @@ class Washington extends Scene {
 
         var otherCar2 = new OtherCar(this, 0xffed16);
         otherCar2.position.set(
-          -1.5,
+          -1.5 + Math.random(),
           0,
           -(250 * Math.random())
         );
@@ -458,7 +458,7 @@ class Washington extends Scene {
             if (!this.stopped) {
               // decelerate if slowing down from acceleration
               if (this.gameSpeed >= this.minGameSpeed)
-                this.gameSpeed = Math.max(this.minGameSpeed, this.gameSpeed - 0.1);
+                this.gameSpeed = Math.max(this.minGameSpeed, this.gameSpeed - 0.05);
               // accelerate if starting up from stopped state
               else this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.1);
             }

@@ -98,7 +98,7 @@ function setupKeyControls() {
                     break;
                 // up
                 case 38:
-                    if (!stopped) scene.accelerating = true;
+                    scene.accelerating = true;
                     break;
                 // space bar (stop)
                 case 32:

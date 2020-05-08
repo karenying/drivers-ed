@@ -88,9 +88,11 @@ class OtherCar extends Group {
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
 
-        this.init();
+        // this.init();
         this.name = 'otherCar';
         this.bb = bb;
+        this.rightProb = 0.1;
+        this.leftProb = 0.1;
 
         this.init();
 
@@ -257,8 +259,6 @@ class OtherCar extends Group {
         beamerTwo.angle = 0.1;
         beamerTwo.distance = 80;
         beamerTwo.name = "beamer2";
-        beamerOne.target.position.set(0, 1, this.position.z - 5);
-        beamerTwo.target.position.set(0, 1, this.position.z - 5);
         this.add(beamerOne, beamerTwo);
 
         // compute bounding box
@@ -293,11 +293,18 @@ class OtherCar extends Group {
           beamer.intensity = 0;
           this.state.lightsOn = false;
         }
+        
+        if (lightsOn) {
+          let beamer = this.getObjectByName("beamer1", true);
+          beamer.target.updateMatrixWorld();
+          beamer = this.getObjectByName("beamer2", true);
+          beamer.target.updateMatrixWorld();
+        }
 
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
-            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+            this.children[7].rotation.z = Math.sin(timeStamp / 200);
         }
         
         var newZ = this.position.z + (1 + Math.random()) * Math.max(this.parent.gameSpeed, 0.5);
