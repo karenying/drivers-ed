@@ -74,6 +74,11 @@ function setupKeyControls() {
 
     function handleKeyDown(event) {
         if (event.keyCode === 80 && !gameOver && newGameStarted) {
+            if (!paused) {
+                pausedContainer.style.display = 'flex';
+            } else {
+                pausedContainer.style.display = 'none';
+            }
             paused = !paused;
             scene.state.pause = !scene.state.pause;
         }
@@ -268,6 +273,27 @@ let endContentButton = document.createElement('div');
 endContentButton.id = 'end-button';
 endContentButton.innerHTML = 'PLAY AGAIN';
 endContent.appendChild(endContentButton);
+
+// Set up paused screen
+let pausedContainer = document.createElement('div');
+pausedContainer.id = 'paused';
+document.body.appendChild(pausedContainer);
+
+let pausedContent = document.createElement('div');
+pausedContent.id = 'paused-content';
+pausedContainer.appendChild(pausedContent);
+
+let pausedContentText = document.createElement('div');
+pausedContentText.id = 'paused-text';
+pausedContent.appendChild(pausedContentText);
+
+let pausedContentTitleText = document.createElement('h1');
+pausedContentTitleText.innerText = 'PAUSED';
+pausedContentText.appendChild(pausedContentTitleText);
+
+let pausedContentDescription = document.createElement('p');
+pausedContentDescription.innerHTML = 'Press the p key to unpause!';
+pausedContentText.appendChild(pausedContentDescription);
 
 // End game and reset
 endContentButton.onclick = function () {
