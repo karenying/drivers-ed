@@ -87,6 +87,7 @@ class Coin extends Group {
 
   onCollision() {
     if (!this.collected) {
+      this.collected = true;
       const spin = new TWEEN.Tween(this.rotation)
           .to({ y: this.rotation.y + 2 * Math.PI }, 200);
       const jumpUp = new TWEEN.Tween(this.position)
@@ -107,7 +108,6 @@ class Coin extends Group {
       jumpUp.start();
       spin.start();
     }
-    this.collected = true;
   }
 
 }
