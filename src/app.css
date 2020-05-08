@@ -37,7 +37,8 @@
 
 #begin-container,
 #end-container,
-#countdown {
+#countdown,
+#paused {
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -52,12 +53,14 @@
     display: flex;
 }
 
-#countdown {
+#countdown,
+#paused {
     display: none;
 }
 
 #begin-content,
-#end-content {
+#end-content,
+#paused-content {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -76,7 +79,8 @@
 
 #begin-content h1,
 #end-content h1,
-#countdown h1 {
+#countdown h1,
+#paused-content h1 {
     color: white;
     padding: 0px;
     margin: 0px;
@@ -85,7 +89,8 @@
 }
 
 #begin-content h1,
-#end-content h1 {
+#end-content h1,
+#paused-content h1 {
     font-size: 50px;
 }
 
@@ -94,7 +99,8 @@
 }
 
 #begin-content p,
-#end-content p {
+#end-content p,
+#paused-content p{
     font-family: 'Open Sans' !important;
     font-style: italic;
     color: white;
