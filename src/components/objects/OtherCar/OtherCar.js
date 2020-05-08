@@ -93,6 +93,10 @@ class OtherCar extends Group {
         this.bb = bb;
         this.rightProb = 0.1;
         this.leftProb = 0.1;
+        this.lightTarget = new THREE.Object3D();
+        this.lightTarget.position.z = -5;
+        this.lightTarget.position.y = 1;
+        this.add(this.lightTarget);
 
         this.init();
 
@@ -251,14 +255,16 @@ class OtherCar extends Group {
         // create night mode headlights
         let beamerOne = new SpotLight(0xffffff, 0);
         beamerOne.position.set(1, 1, 1);
-        beamerOne.angle = 0.1;
-        beamerOne.distance = 80;
+        beamerOne.angle = 0.15;
+        beamerOne.distance = 30;
         beamerOne.name = "beamer1";
         let beamerTwo= new SpotLight(0xffffff, 0);
         beamerTwo.position.set(-1, 1, 1);
-        beamerTwo.angle = 0.1;
-        beamerTwo.distance = 80;
+        beamerTwo.angle = 0.15;
+        beamerTwo.distance = 30;
         beamerTwo.name = "beamer2";
+        beamerOne.target = this.lightTarget;
+        beamerTwo.target = this.lightTarget;
         this.add(beamerOne, beamerTwo);
 
         // compute bounding box
@@ -279,9 +285,9 @@ class OtherCar extends Group {
         // turns lights on
         if (!lightsOn && this.parent.night == 2) {
           let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 2;
+          beamer.intensity = 1;
           beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 2;
+          beamer.intensity = 1;
           this.state.lightsOn = true;
         }
 
