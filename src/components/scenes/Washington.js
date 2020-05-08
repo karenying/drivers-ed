@@ -22,7 +22,8 @@ import {
     FemalePedestrianDress,
     FemalePedestrianJeans,
     Tree,
-    OtherCar
+    OtherCar,
+    Gem,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -204,7 +205,7 @@ class Washington extends Scene {
             );
         this.collidableMeshList.push(maria);
         this.add(maria);
-        
+
         // add max
         let max = new MalePedestrianJeans(this, 'max');
         max.position.set(
@@ -229,6 +230,18 @@ class Washington extends Scene {
             this.add(coin);
             this.collidableMeshList.push(coin);
         }
+
+        for (let i = 0; i < 1; i++) {
+            var gem = new Gem(this);
+            gem.position.set(
+                2 * car.maxPos * Math.random() - 2.5,
+                0,
+                -(250 * Math.random())
+            );
+            this.add(gem);
+            this.collidableMeshList.push(gem);
+        }
+        this.add(gem);
 
         this.collidableCarList = [];
 
