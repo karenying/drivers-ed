@@ -6,14 +6,17 @@ import { Group,
   DoubleSide,
   PointLight,
   SpotLight,
+  Color,
   CylinderGeometry } from 'three';
 
 var Colors = {
   black: 0x000000,
   white: 0xffffff,
-  yellow: 0xffff00,
+  yellow: 0xffcc00,
   lightYellow: 0xfae789,
 };
+
+let currColor = '#ffffff';
 
 const postMat = new MeshToonMaterial ({
   color: Colors.black,
@@ -47,7 +50,6 @@ class Lamppost extends Group {
 
     this.state = {
       cameraPosition: parent.camera.position,
-      lightsOn: false,
     }
     this.init();
     this.name = 'lamppost';
@@ -69,10 +71,15 @@ class Lamppost extends Group {
     let light = new PointLight(0xf5cc00);
     light.intensity = 0;
     light.position.set(0.05, 1, 8);
+    light.decay = 2;
     this.add(light);
 
     this.scale.set(2, 2, 2);
     this.position.set(-2.6, 0.8, 0);
+  }
+
+  interpolate(start, end, percent) {
+    return (start * (1 - percent)) + (end * percent);
   }
 
   update(timestamp) {
@@ -86,21 +93,33 @@ class Lamppost extends Group {
 
       // night mode
       // turns lights on
-      if (!lightsOn && this.parent.night == 2) {
-        this.children[1].material.color.setHex( Colors.yellow );
-        this.children[3].intensity = 0.05;
-        this.children[3].decay = 2;
-        this.state.lightsOn = true;
-      }
-
       // turns lights off
-      if (lightsOn && this.parent.night !==2) {
+      if (lightsOn && this.parent.night == 0) {
         this.children[1].material.color.setHex( Colors.white );
         this.children[3].intensity = 0.0;
         this.state.lightsOn = false;
+      } else if (this.parent.night == 1) {
+        let newIntensity = this.interpolate(0, 0.05, this.parent.timeElapsed/this.parent.threshold);
+        let newColor = this.parent.getGradientColor('#ffffff', '#ffcc00', this.parent.timeElapsed/this.parent.threshold);
+        if (newColor !== currColor) {
+            currColor = newColor;
+            this.children[1].material.color = new Color(currColor);
+        }
+        this.children[3].intensity = newIntensity;
+      } else if (!lightsOn && this.parent.night == 2) {
+        this.children[1].material.color.setHex( Colors.yellow );
+        this.children[3].intensity = 0.05;
+        this.state.lightsOn = true;
+      } else if (this.parent.night == 3) {
+        let newIntensity = this.interpolate(0.05, 0, this.parent.timeElapsed/this.parent.threshold);
+        let newColor = this.parent.getGradientColor('#ffcc00', '#ffffff', this.parent.timeElapsed/this.parent.threshold);
+        if (newColor !== currColor) {
+            currColor = newColor;
+            this.children[1].material.color = new Color(currColor);
+        }
+        this.children[3].intensity = newIntensity;
       }
   }
-
 }
 
 export default Lamppost;

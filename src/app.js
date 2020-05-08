@@ -102,7 +102,6 @@ function setupKeyControls() {
                     break;
                 // space bar (stop)
                 case 32:
-                    console.log(scene.stopped);
                     if (scene.stopped) scene.stopped = false;
                     else scene.stopped = true;
                     break;

@@ -26,9 +26,6 @@ import {
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
-const backgroundColors = [
-  0x7ec0ee, 0x659abe, 0x517b98, 0x41627A, 0x344E62,
-  0x41627A, 0x517b98, 0x659abe, 0x7ec0ee, 0x89CDF1];
 let currColor = "#7ec0ee";
 
 class Washington extends Scene {
@@ -43,7 +40,7 @@ class Washington extends Scene {
         };
 
         currColor = "#7ec0ee";
-        this.gameSpeed = 1;
+        this.gameSpeed = 0;
         this.maxGameSpeed = 3;
         this.minGameSpeed = 1;
         this.accelerating = false;
@@ -56,10 +53,8 @@ class Washington extends Scene {
 
         // for night mode
         this.night = 0;
-        // this.darken = true;
-        // this.first = true;
         this.timeElapsed = -1;
-        this.threshold = 20;
+        this.threshold = 5;
 
         // Add road
         const positions = [
