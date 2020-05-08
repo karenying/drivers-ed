@@ -166,7 +166,7 @@ class Washington extends Scene {
         this.collidableMeshList.push(fox);
 
         // Add chad
-        let chad = new MalePedestrianShorts(this, 'chad');
+        let chad = new MalePedestrianShorts(this, 'chad', false);
         chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -176,7 +176,7 @@ class Washington extends Scene {
         this.collidableMeshList.push(chad);
 
         // Add vanessa
-        let vanessa = new FemalePedestrianDress(this, 'vanessa');
+        let vanessa = new FemalePedestrianDress(this, 'vanessa', false);
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -186,7 +186,7 @@ class Washington extends Scene {
         this.add(vanessa);
 
         // add labib
-        let labib= new MalePedestrianJeans(this, 'matt');
+        let labib= new MalePedestrianJeans(this, 'labib', false);
         labib.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -196,7 +196,7 @@ class Washington extends Scene {
         this.add(labib);
 
         // add maria
-        let maria = new FemalePedestrianJeans(this, 'maria');
+        let maria = new FemalePedestrianJeans(this, 'maria', false);
         maria.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -204,16 +204,73 @@ class Washington extends Scene {
             );
         this.collidableMeshList.push(maria);
         this.add(maria);
-        
-        // add max
-        let max = new MalePedestrianJeans(this, 'max');
+
+        let max = new MalePedestrianJeans(this, 'max', false);
         max.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -(100 * Math.random() + 150)
+            -(100 * Math.random() + 200)
             );
         this.collidableMeshList.push(max);
         this.add(max);
+
+        // add cluster of students
+         let tom = new MalePedestrianShorts(this, 'tom', true);
+         tom.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+         );
+         this.add(tom);
+         this.collidableMeshList.push(tom);
+         let jeff = new MalePedestrianShorts(this, 'jeff', true);
+         jeff.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+         );
+         this.add(jeff);
+         this.collidableMeshList.push(jeff);
+         let claire = new FemalePedestrianDress(this, 'claire', true);
+         claire.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+             );
+         this.collidableMeshList.push(claire);
+         this.add(claire);
+         let tina = new FemalePedestrianDress(this, 'tina', true);
+         tina.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+             );
+         this.collidableMeshList.push(tina);
+         this.add(tina);
+         let matt = new MalePedestrianJeans(this, 'matt', true);
+         matt.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+             );
+         this.collidableMeshList.push(matt);
+         this.add(matt);
+         let kaitlyn = new FemalePedestrianJeans(this, 'kaitlyn', true);
+         kaitlyn.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+             );
+         this.collidableMeshList.push(kaitlyn);
+         this.add(kaitlyn);
+         let brittney = new FemalePedestrianJeans(this, 'brittney', true);
+         brittney.position.set(
+             2 * Math.random() * this.edge - this.edge / 2,
+             0.5,
+             -1000
+             );
+         this.collidableMeshList.push(brittney);
+         this.add(brittney);
 
         const lights = new BasicLights(this);
         this.add(lights, car);

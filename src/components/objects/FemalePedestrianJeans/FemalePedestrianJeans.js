@@ -3,7 +3,7 @@ import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianJeans extends Group {
-    constructor(parent, nameType) {
+    constructor(parent, nameType, partOfCluster) {
         super();
 
         // Init state
@@ -11,6 +11,7 @@ class FemalePedestrianJeans extends Group {
             bob: true,
             walking: true,
             type: nameType,
+            cluster: partOfCluster,
         };
 
         this.name = 'pedestrian';
@@ -272,7 +273,11 @@ class FemalePedestrianJeans extends Group {
         // update positions (cross road and move towards car)
         var newZ = this.position.z + this.parent.gameSpeed;
         if (newZ > this.parent.camera.position.z) {
-          newZ = -(this.parent.fog.far + 70 * Math.random());
+            if (!this.state.cluster) {
+                newZ = -(this.parent.fog.far + 70 * Math.random());
+            } else {
+                newZ = -1000
+            }
         }
         this.position.z = newZ;
 
@@ -281,9 +286,13 @@ class FemalePedestrianJeans extends Group {
 
           // if pedestrian is done crossing road or no longer visible in scene
           if (newX > this.parent.edge) {
-              newZ = -(this.parent.fog.far + 70 * Math.random());
-              newX = -1 * (Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2);
-              this.resetParams();
+                if (!this.state.cluster) {
+                    newZ = -(this.parent.fog.far + 70 * Math.random());
+                } else {
+                    newZ = -1000
+                }
+                newX = -1 * (Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2);
+                this.resetParams();
           }
           this.position.x = newX;
         }

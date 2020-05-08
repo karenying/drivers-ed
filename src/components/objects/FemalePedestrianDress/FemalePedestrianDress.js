@@ -3,7 +3,7 @@ import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianDress extends Group {
-    constructor(parent, nameType) {
+    constructor(parent, nameType, partOfCluster) {
         super();
 
         // Init state
@@ -11,6 +11,7 @@ class FemalePedestrianDress extends Group {
             bob: true,
             walking: true,
             type: nameType,
+            cluster: partOfCluster,
         };
 
         let materials = this.getMaterials();
@@ -193,7 +194,7 @@ class FemalePedestrianDress extends Group {
                         flatShading: true
                     }),
                     dress: new MeshToonMaterial({
-                        color: 0x3c246b,
+                        color: 0xc9ba12,
                         flatShading: true
                     }),
                     shoes: new MeshToonMaterial({
@@ -260,7 +261,11 @@ class FemalePedestrianDress extends Group {
         // update positions (cross road and move towards car)
         var newZ = this.position.z + this.parent.gameSpeed;
         if (newZ > this.parent.camera.position.z) {
-          newZ = -(this.parent.fog.far + 70 * Math.random());
+            if (!this.state.cluster) {
+                newZ = -(this.parent.fog.far + 70 * Math.random());
+            } else {
+                newZ = -1000
+            }
         }
         this.position.z = newZ;
 
@@ -269,9 +274,13 @@ class FemalePedestrianDress extends Group {
 
           // if pedestrian is done crossing road or no longer visible in scene
           if (newX < -this.parent.edge) {
-              newZ = -(this.parent.fog.far + 70 * Math.random());
-              newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
-              this.resetParams();
+                if (!this.state.cluster) {
+                    newZ = -(this.parent.fog.far + 70 * Math.random());
+                } else {
+                    newZ = -1000
+                }
+                newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
+                this.resetParams();
           }
           this.position.x = newX;
         }
