@@ -1,16 +1,19 @@
 import * as THREE from 'three';
-import { Group, BoxGeometry,  Mesh} from "three";
+import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianDress extends Group {
-    constructor(parent, materials) {
+    constructor(parent) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
+            type: 'vanessa',
         };
+
+        let materials = this.getMaterials();
 
         this.name = 'pedestrian';
         this.speed = 0.05; // 0.03
@@ -147,6 +150,35 @@ class FemalePedestrianDress extends Group {
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
         // this.add(bbHelper);
+    }
+
+    getMaterials() {
+        switch(this.state.type) {
+            case 'vanessa':
+                let vanessaMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x3b2606,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x000000,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0xb48A78,
+                        flatShading: true
+                    }),
+                    dress: new MeshToonMaterial({
+                        color: 0x7015d1,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0xd8d1e0,
+                        flatShading: true
+                    })
+                };
+                return vanessaMaterials;
+        }
     }
 
     update(timeStamp) {

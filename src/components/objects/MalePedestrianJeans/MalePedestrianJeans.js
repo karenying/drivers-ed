@@ -1,16 +1,19 @@
 import * as THREE from 'three';
-import { Group, BoxGeometry,  Mesh} from "three";
+import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class MalePedestrianJeans extends Group {
-    constructor(parent, materials) {
+    constructor(parent) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
+            type: 'labib',
         };
+
+        let materials = this.getMaterials();
 
         this.name = 'pedestrian';
         this.speed = 0.07; // 0.03
@@ -127,6 +130,67 @@ class MalePedestrianJeans extends Group {
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
         // this.add(bbHelper);
+    }
+
+    getMaterials() {
+        switch(this.state.type) {
+            case 'labib':
+                let labibMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x291b06,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x000000,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0x573502,
+                        flatShading: true
+                    }),
+                    jeans: new MeshToonMaterial({
+                        color: 0x0d1459,
+                        flatShading: true
+                    }),
+                    shirt: new MeshToonMaterial({
+                        color: 0x245734,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x470722,
+                        flatShading: true
+                    })
+                };
+                return labibMaterials;
+            case 'max':
+                let maxMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x291b06,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x2e150f,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0xb56e50,
+                        flatShading: true
+                    }),
+                    jeans: new MeshToonMaterial({
+                        color: 0x635f61,
+                        flatShading: true
+                    }),
+                    shirt: new MeshToonMaterial({
+                        color: 0xd65e9a,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x000000,
+                        flatShading: true
+                    })
+                };
+                return maxMaterials;
+        }
     }
 
     update(timeStamp) {

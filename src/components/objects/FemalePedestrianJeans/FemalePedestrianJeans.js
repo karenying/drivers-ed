@@ -1,19 +1,22 @@
 import * as THREE from 'three';
-import { Group, BoxGeometry,  Mesh} from "three";
+import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianJeans extends Group {
-    constructor(parent, materials) {
+    constructor(parent) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
+            type: 'maria',
         };
 
         this.name = 'pedestrian';
-        this.speed = 0.05; // 0.03
+        this.speed = 0.05;
+
+        let materials = this.getMaterials();
 
         // Create bounding box
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
@@ -147,6 +150,39 @@ class FemalePedestrianJeans extends Group {
         // visualize bounding box
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
         // this.add(bbHelper);
+    }
+
+    getMaterials() {
+        switch(this.state.type) {
+            case 'maria':
+                let mariaMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x2d5432,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x4d3803,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0x997446,
+                        flatShading: true
+                    }),
+                    jeans: new MeshToonMaterial({
+                        color: 0x000000,
+                        flatShading: true
+                    }),
+                    shirt: new MeshToonMaterial({
+                        color: 0xd61a39,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x237066,
+                        flatShading: true
+                    })
+                };
+                return mariaMaterials;
+        }
     }
 
     update(timeStamp) {

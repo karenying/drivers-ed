@@ -166,33 +166,8 @@ class Washington extends Scene {
         this.collidableMeshList.push(fox);
 
         // Add chad
-        let chadMaterials = {
-            eye: new MeshToonMaterial({
-                color: 0x36699c,
-                flatShading: true,
-            }),
-            hair: new MeshToonMaterial({
-                color: 0xd1c569,
-                flatShading: true,
-            }),
-            skin: new MeshToonMaterial({
-                color: 0xb48a78,
-                flatShading: true,
-            }),
-            shorts: new MeshToonMaterial({
-                color: 0xed7490,
-                flatShading: true,
-            }),
-            shirt: new MeshToonMaterial({
-                color: 0x72afed,
-                flatShading: true,
-            }),
-            shoes: new MeshToonMaterial({
-                color: 0x3b2403,
-                flatShading: true,
-            }),
-        };
-        let chad = new MalePedestrianShorts(this, chadMaterials);
+        let chad = new MalePedestrianShorts(this);
+        chad.type = 'chad';
         chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -202,29 +177,8 @@ class Washington extends Scene {
         this.collidableMeshList.push(chad);
 
         // Add vanessa
-        let vanessaMaterials = {
-            eye: new MeshToonMaterial({
-                color: 0x3b2606,
-                flatShading: true
-            }),
-            hair: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true
-            }),
-            skin: new MeshToonMaterial({
-                color: 0xb48A78,
-                flatShading: true
-            }),
-            dress: new MeshToonMaterial({
-                color: 0x7015d1,
-                flatShading: true
-            }),
-            shoes: new MeshToonMaterial({
-                color: 0xd8d1e0,
-                flatShading: true
-            })
-        };
-        let vanessa = new FemalePedestrianDress(this, vanessaMaterials);
+        let vanessa = new FemalePedestrianDress(this);
+        vanessa.type = 'vanessa';
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -234,33 +188,8 @@ class Washington extends Scene {
         this.add(vanessa);
 
         // add labib
-        let labibMaterials = {
-            eye: new MeshToonMaterial({
-                color: 0x291b06,
-                flatShading: true
-            }),
-            hair: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true
-            }),
-            skin: new MeshToonMaterial({
-                color: 0x573502,
-                flatShading: true
-            }),
-            jeans: new MeshToonMaterial({
-                color: 0x0d1459,
-                flatShading: true
-            }),
-            shirt: new MeshToonMaterial({
-                color: 0x245734,
-                flatShading: true
-            }),
-            shoes: new MeshToonMaterial({
-                color: 0x470722,
-                flatShading: true
-            })
-        };
-        let labib= new MalePedestrianJeans(this, labibMaterials);
+        let labib= new MalePedestrianJeans(this);
+        labib.type = 'labib';
         labib.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -270,33 +199,8 @@ class Washington extends Scene {
         this.add(labib);
 
         // add maria
-        let mariaMaterials = {
-            eye: new MeshToonMaterial({
-                color: 0x2d5432,
-                flatShading: true
-            }),
-            hair: new MeshToonMaterial({
-                color: 0x4d3803,
-                flatShading: true
-            }),
-            skin: new MeshToonMaterial({
-                color: 0x997446,
-                flatShading: true
-            }),
-            jeans: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true
-            }),
-            shirt: new MeshToonMaterial({
-                color: 0xd61a39,
-                flatShading: true
-            }),
-            shoes: new MeshToonMaterial({
-                color: 0x237066,
-                flatShading: true
-            })
-        };
-        let maria = new FemalePedestrianJeans(this, mariaMaterials);
+        let maria = new FemalePedestrianJeans(this);
+        maria.type = 'maria';
         maria.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -305,33 +209,8 @@ class Washington extends Scene {
         this.collidableMeshList.push(maria);
         this.add(maria);
 
-        let maxMaterials = {
-            eye: new MeshToonMaterial({
-                color: 0x291b06,
-                flatShading: true
-            }),
-            hair: new MeshToonMaterial({
-                color: 0x2e150f,
-                flatShading: true
-            }),
-            skin: new MeshToonMaterial({
-                color: 0xb56e50,
-                flatShading: true
-            }),
-            jeans: new MeshToonMaterial({
-                color: 0x635f61,
-                flatShading: true
-            }),
-            shirt: new MeshToonMaterial({
-                color: 0xd65e9a,
-                flatShading: true
-            }),
-            shoes: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true
-            })
-        };
-        let max = new MalePedestrianJeans(this, maxMaterials);
+        let max = new MalePedestrianJeans(this);
+        max.type = 'max';
         max.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
