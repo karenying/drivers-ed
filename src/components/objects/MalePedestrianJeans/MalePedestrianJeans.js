@@ -3,14 +3,14 @@ import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class MalePedestrianJeans extends Group {
-    constructor(parent) {
+    constructor(parent, nameType) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
-            type: 'labib',
+            type: nameType,
         };
 
         let materials = this.getMaterials();
@@ -190,6 +190,34 @@ class MalePedestrianJeans extends Group {
                     })
                 };
                 return maxMaterials;
+            case 'matt':
+                let mattMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x022e18,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0xc72d08,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0xdbbd9e,
+                        flatShading: true
+                    }),
+                    jeans: new MeshToonMaterial({
+                        color: 0x0f1c15,
+                        flatShading: true
+                    }),
+                    shirt: new MeshToonMaterial({
+                        color: 0x157a64,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x9ea8a6,
+                        flatShading: true
+                    })
+                };
+            return mattMaterials;
         }
     }
 

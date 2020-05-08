@@ -166,8 +166,7 @@ class Washington extends Scene {
         this.collidableMeshList.push(fox);
 
         // Add chad
-        let chad = new MalePedestrianShorts(this);
-        chad.type = 'chad';
+        let chad = new MalePedestrianShorts(this, 'chad');
         chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -177,8 +176,7 @@ class Washington extends Scene {
         this.collidableMeshList.push(chad);
 
         // Add vanessa
-        let vanessa = new FemalePedestrianDress(this);
-        vanessa.type = 'vanessa';
+        let vanessa = new FemalePedestrianDress(this, 'vanessa');
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -188,8 +186,7 @@ class Washington extends Scene {
         this.add(vanessa);
 
         // add labib
-        let labib= new MalePedestrianJeans(this);
-        labib.type = 'labib';
+        let labib= new MalePedestrianJeans(this, 'matt');
         labib.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -199,8 +196,7 @@ class Washington extends Scene {
         this.add(labib);
 
         // add maria
-        let maria = new FemalePedestrianJeans(this);
-        maria.type = 'maria';
+        let maria = new FemalePedestrianJeans(this, 'maria');
         maria.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -208,9 +204,9 @@ class Washington extends Scene {
             );
         this.collidableMeshList.push(maria);
         this.add(maria);
-
-        let max = new MalePedestrianJeans(this);
-        max.type = 'max';
+        
+        // add max
+        let max = new MalePedestrianJeans(this, 'max');
         max.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
@@ -236,26 +232,26 @@ class Washington extends Scene {
 
         this.collidableCarList = [];
 
-        // Add other cars
-        var otherCar1 = new OtherCar(this, 0x3396ff);
-        otherCar1.position.set(
-          -1.5 + Math.random(),
-          0,
-          -(250 * Math.random())
-        );
-        otherCar1.rotation.set(0, Math.PI, 0);
-        this.add(otherCar1);
-        this.collidableCarList.push(otherCar1);
+        // // Add other cars
+        // var otherCar1 = new OtherCar(this, 0x3396ff);
+        // otherCar1.position.set(
+        //   -1.5 + Math.random(),
+        //   0,
+        //   -(250 * Math.random())
+        // );
+        // otherCar1.rotation.set(0, Math.PI, 0);
+        // this.add(otherCar1);
+        // this.collidableCarList.push(otherCar1);
 
-        var otherCar2 = new OtherCar(this, 0xffed16);
-        otherCar2.position.set(
-          -1.5 + Math.random(),
-          0,
-          -(250 * Math.random())
-        );
-        otherCar2.rotation.set(0, Math.PI, 0);
-        this.add(otherCar2);
-        this.collidableCarList.push(otherCar2);
+        // var otherCar2 = new OtherCar(this, 0xffed16);
+        // otherCar2.position.set(
+        //   -1.5 + Math.random(),
+        //   0,
+        //   -(250 * Math.random())
+        // );
+        // otherCar2.rotation.set(0, Math.PI, 0);
+        // this.add(otherCar2);
+        // this.collidableCarList.push(otherCar2);
     }
 
     addToUpdateList(obj) {

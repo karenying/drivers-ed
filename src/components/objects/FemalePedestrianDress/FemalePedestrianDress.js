@@ -3,14 +3,14 @@ import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianDress extends Group {
-    constructor(parent) {
+    constructor(parent, nameType) {
         super();
 
         // Init state
         this.state = {
             bob: true,
             walking: true,
-            type: 'vanessa',
+            type: nameType,
         };
 
         let materials = this.getMaterials();
@@ -178,6 +178,54 @@ class FemalePedestrianDress extends Group {
                     })
                 };
                 return vanessaMaterials;
+            case 'claire':
+                let claireMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x2c4a39,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x262625,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0xb48A78,
+                        flatShading: true
+                    }),
+                    dress: new MeshToonMaterial({
+                        color: 0x3c246b,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x91bdbd,
+                        flatShading: true
+                    })
+                };
+                return claireMaterials;
+            case 'tina':
+                let tinaMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x2c4a39,
+                        flatShading: true
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x241b08,
+                        flatShading: true
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0x573502,
+                        flatShading: true
+                    }),
+                    dress: new MeshToonMaterial({
+                        color: 0xc71a2b,
+                        flatShading: true
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0xf0a8af,
+                        flatShading: true
+                    })
+                };
+            return tinaMaterials;
         }
     }
 
