@@ -21,7 +21,8 @@ import {
     MalePedestrianJeans,
     FemalePedestrianDress,
     FemalePedestrianJeans,
-    Tree
+    Tree,
+    OtherCar
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -41,8 +42,8 @@ class Washington extends Scene {
 
         currColor = "#7ec0ee";
         this.gameSpeed = 0;
-        this.maxGameSpeed = 3;
-        this.minGameSpeed = 1;
+        this.maxGameSpeed = 0.5; // 3
+        this.minGameSpeed = 0.2; // 1
         this.accelerating = false;
         this.stopped = false;
 
@@ -153,7 +154,7 @@ class Washington extends Scene {
         const car = new Car(this);
         this.driver = car;
 
-        // PEDESTRIAN/FOX OBSTACLES
+        // OBSTACLES
         // Add fox
         let fox = new Fox(this);
         fox.position.set(
@@ -353,6 +354,29 @@ class Washington extends Scene {
             this.add(coin);
             this.collidableMeshList.push(coin);
         }
+
+        this.collidableCarList = [];
+
+        // Add other cars
+        var otherCar1 = new OtherCar(this, 0x3396ff);
+        otherCar1.position.set(
+          -1.5,
+          0,
+          -(250 * Math.random())
+        );
+        otherCar1.rotation.set(0, Math.PI, 0);
+        this.add(otherCar1);
+        this.collidableCarList.push(otherCar1);
+
+        var otherCar2 = new OtherCar(this, 0xffed16);
+        otherCar2.position.set(
+          -1.5,
+          0,
+          -(250 * Math.random())
+        );
+        otherCar2.rotation.set(0, Math.PI, 0);
+        this.add(otherCar2);
+        this.collidableCarList.push(otherCar2);
     }
 
     addToUpdateList(obj) {

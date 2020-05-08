@@ -71,7 +71,6 @@ class Coin extends Group {
     if (newZ > this.parent.camera.position.z) {
       newZ = -(this.parent.fog.far + 70 * Math.random());
       while (newZ > this.parent.camera.position.z - 50) {
-        console.log("hi")
         newZ = -(this.parent.fog.far + 70 * Math.random());
       }
     }
@@ -94,10 +93,10 @@ class Coin extends Group {
           .to({ y: this.position.y + 3 }, 200)
           .easing(TWEEN.Easing.Quadratic.Out);
       const fallDown = new TWEEN.Tween(this.position)
-          .to({ y: -1 }, 200)
+          .to({ y: -1 }, 300)
           .easing(TWEEN.Easing.Quadratic.In);
       const resetPos = new TWEEN.Tween(this.position)
-          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 0);
 
       // Reset position after jumping up and down
       jumpUp.onComplete(() => fallDown.start());

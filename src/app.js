@@ -98,7 +98,7 @@ function setupKeyControls() {
                     break;
                 // up
                 case 38:
-                    scene.accelerating = true;
+                    if (!stopped) scene.accelerating = true;
                     break;
                 // space bar (stop)
                 case 32:
@@ -290,39 +290,84 @@ endContainer.style.display = 'none';
 const onAnimationFrameHandler = (timeStamp) => {
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
+
+    // find driver collisions
+    var collisions = [];
     var collisionObj = scene.findCollisions(
         scene.driver,
         scene.collidableMeshList
     );
-    if (collisionObj !== undefined) {
-        if (collisionObj.name === 'coin') {
-            if (!collisionObj.collected) {
-                score += 1; // only collect object if not already collected
-                let dingClone = ding.cloneNode();
-                dingClone.play();
-            }
-            document.getElementById('score').innerHTML = 'Score: ' + score;
-            collisionObj.onCollision();
-        } else if (collisionObj.name === 'fox') {
-            if (!collisionObj.collected) {
-                lives -= 1;
-                heartDiv.removeChild(heartDiv.lastChild);
-            }
-            if (!gameOver) {
-                hit.play();
-            }
-            collisionObj.onCollision();
-        } else if (collisionObj.name === 'pedestrian') {
-            if (!collisionObj.collected) {
-                lives -= 1;
-                heartDiv.removeChild(heartDiv.lastChild);
-            }
-            if (!gameOver) {
-                hit.play();
-            }
-            collisionObj.onCollision();
-        }
+    collisions.push(collisionObj);
+
+    var collisionObj = scene.findCollisions(
+        scene.driver,
+        scene.collidableCarList
+    );
+    collisions.push(collisionObj);
+
+    for (const collisionObj of collisions) {
+      if (collisionObj !== undefined) {
+          if (collisionObj.name === 'coin') {
+              if (!collisionObj.collected) {
+                  score += 1; // only collect object if not already collected
+                  let dingClone = ding.cloneNode();
+                  dingClone.play();
+              }
+              document.getElementById('score').innerHTML = 'Score: ' + score;
+              collisionObj.onCollision();
+          } else if (collisionObj.name === 'fox') {
+              if (!collisionObj.collected) {
+                  lives -= 1;
+                  heartDiv.removeChild(heartDiv.lastChild);
+              }
+              if (!gameOver) {
+                  hit.play();
+              }
+              collisionObj.onCollision();
+          } else if (collisionObj.name === 'pedestrian') {
+              if (!collisionObj.collected) {
+                  lives -= 1;
+                  heartDiv.removeChild(heartDiv.lastChild);
+              }
+              if (!gameOver) {
+                  hit.play();
+              }
+              collisionObj.onCollision();
+          } else if (collisionObj.name === 'otherCar') {
+              if (!collisionObj.collected) {
+                  lives -= 1;
+                  heartDiv.removeChild(heartDiv.lastChild);
+              }
+              if (!gameOver) {
+                  hit.play();
+              }
+              collisionObj.onCollision();
+          }
+      }
     }
+
+    // find other car collisions
+    var otherCollisions = [];
+    for (const otherCar of scene.collidableCarList) {
+      var collisionObj = scene.findCollisions(
+          otherCar,
+          scene.collidableMeshList
+      );
+      otherCollisions.push(collisionObj);
+    }
+
+    for (const otherCar of scene.collidableCarList) {
+      var collisionObj = scene.findCollisions(
+          otherCar,
+          scene.collidableCarList
+      );
+      if (collisionObj !== otherCar) otherCollisions.push(collisionObj);
+    }
+
+    for (const collisionObj of otherCollisions) {
+      if (collisionObj !== undefined) collisionObj.onCollision();
+    }
+
     // game over if lives are 0
     if (lives <= 0) {
         if (!gameOver) {

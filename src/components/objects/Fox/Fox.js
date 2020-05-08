@@ -238,6 +238,7 @@ class Fox extends Group {
 
   onCollision() {
     if (!this.collected) {
+      this.collected = true;
       const spin = new TWEEN.Tween(this.rotation)
           .to({ y: this.rotation.y + 2 * Math.PI }, 200);
       const jumpUp = new TWEEN.Tween(this.position)
@@ -247,7 +248,7 @@ class Fox extends Group {
           .to({ y: -1 }, 300)
           .easing(TWEEN.Easing.Quadratic.In);
       const resetPos = new TWEEN.Tween(this.position)
-          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 10);
+          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 0);
 
       // Reset position after jumping up and down
       jumpUp.onComplete(() => fallDown.start());
@@ -258,7 +259,6 @@ class Fox extends Group {
       jumpUp.start();
       spin.start();
     }
-    this.collected = true;
   }
 }
 
