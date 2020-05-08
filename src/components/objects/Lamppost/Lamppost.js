@@ -11,7 +11,7 @@ import { Group,
 var Colors = {
   black: 0x000000,
   white: 0xffffff,
-  yellow: 0xf5cc00,
+  yellow: 0xffff00,
   lightYellow: 0xfae789,
 };
 
@@ -86,7 +86,7 @@ class Lamppost extends Group {
 
       // night mode
       // turns lights on
-      if (!lightsOn && this.parent.night) {
+      if (!lightsOn && this.parent.night == 2) {
         this.children[1].material.color.setHex( Colors.yellow );
         this.children[3].intensity = 0.05;
         this.children[3].decay = 2;
@@ -94,7 +94,7 @@ class Lamppost extends Group {
       }
 
       // turns lights off
-      if (lightsOn && !this.parent.night) {
+      if (lightsOn && this.parent.night !==2) {
         this.children[1].material.color.setHex( Colors.white );
         this.children[3].intensity = 0.0;
         this.state.lightsOn = false;

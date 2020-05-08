@@ -51,11 +51,15 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        this.night = false;
-        this.timeElapsed = -1;
-        this.threshold = 25;
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
+
+        // for night mode
+        this.night = 0;
+        // this.darken = true;
+        // this.first = true;
+        this.timeElapsed = -1;
+        this.threshold = 20;
 
         // Add road
         const positions = [
@@ -417,9 +421,9 @@ class Washington extends Scene {
 
     update(timeStamp) {
         const { startTime, updateList, pause, newGameStarted } = this.state;
+
         if (this.stopped) {
           this.gameSpeed = Math.max(0, this.gameSpeed - 0.25);
-          // return;
         }
 
         if (!newGameStarted) {
@@ -427,8 +431,7 @@ class Washington extends Scene {
             this.driver.bobble(timeStamp);
         }
 
-
-        if (!pause && newGameStarted){
+        if (!pause && newGameStarted) {
           // accelerate or decelerate if appropriate
           if (this.accelerating)
             this.gameSpeed = Math.min(this.maxGameSpeed, this.gameSpeed + 0.05);
@@ -448,29 +451,37 @@ class Washington extends Scene {
             this.state.startTime = Date.now() / 1000;
           } else {
             const currentTime = Date.now() / 1000;
-
             this.timeElapsed = currentTime - this.state.startTime;
+          }
 
-            console.log(this.timeElapsed/this.threshold);
-            // from day to night
-            let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
-            // from night to day
-            if (!this.night) {
-                newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
-            }
+          if (this.timeElapsed >= this.threshold) {
+            this.night = (this.night + 1) % 4;
+            this.state.startTime= Date.now() / 1000;
+            this.timeElapsed = 0;
+          }
+
+          if (this.night == 0) {
+            this.background = new Color(0x7ec0ee);
+            this.fog.color = new Color(0x7ec0ee);
+          } else if (this.night == 1) {
+            // dusk
+            let newColor = this.getGradientColor('#7ec0ee', '#11223d', this.timeElapsed/this.threshold);
             if (newColor !== currColor) {
                 currColor = newColor;
                 this.background = new Color(currColor);
                 this.fog.color = new Color(currColor);
             }
-          }
-
-          // toggle night mode
-          if (this.timeElapsed > this.threshold) {
-            this.night = !this.night;
-            this.timeElapsed = 0;
-            this.state.startTime = Date.now() / 1000;
-            this.threshold = 50;
+          } else if (this.night == 2) {
+            this.background = new Color(0x11223d);
+            this.fog.color = new Color(0x11223d);
+          } else if (this.night == 3) {
+            // daybreak
+            let newColor = this.getGradientColor('#11223d', '#7ec0ee', this.timeElapsed/this.threshold);
+            if (newColor !== currColor) {
+                currColor = newColor;
+                this.background = new Color(currColor);
+                this.fog.color = new Color(currColor);
+            }
           }
 
           for (const obj of updateList) {
