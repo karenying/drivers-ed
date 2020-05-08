@@ -12,6 +12,7 @@ class MalePedestrianShorts extends Group {
             walking: true,
             type: nameType,
             cluster: partOfCluster,
+            sidewalk: false,
         };
 
         let materials = this.getMaterials();
@@ -247,6 +248,34 @@ class MalePedestrianShorts extends Group {
                     }),
                 };
                 return jeffMaterials;
+            case 'dan':
+                let danMaterials = {
+                    eye: new MeshToonMaterial({
+                        color: 0x0d0a02,
+                        flatShading: true,
+                    }),
+                    hair: new MeshToonMaterial({
+                        color: 0x7d4714,
+                        flatShading: true,
+                    }),
+                    skin: new MeshToonMaterial({
+                        color: 0xbf7f43,
+                        flatShading: true,
+                    }),
+                    shorts: new MeshToonMaterial({
+                        color: 0x090459,
+                        flatShading: true,
+                    }),
+                    shirt: new MeshToonMaterial({
+                        color: 0x4f1121,
+                        flatShading: true,
+                    }),
+                    shoes: new MeshToonMaterial({
+                        color: 0x789476,
+                        flatShading: true,
+                    }),
+                };
+                return danMaterials;
         }
     }
 
@@ -278,35 +307,43 @@ class MalePedestrianShorts extends Group {
             this.children[4].rotation.x = pulseSingle(-40,20) * -1 * (Math.PI/180);
         }
 
-        // update positions (cross road and move towards car)
-        var newZ = this.position.z + this.parent.gameSpeed;
-        if (newZ > this.parent.camera.position.z) {
-            if (!this.state.cluster) {
+        if (this.state.sidewalk) {
+            var newZ = this.position.z + this.parent.gameSpeed + 0.25;
+            if (newZ > this.parent.camera.position.z) {
                 newZ = -(this.parent.fog.far + 70 * Math.random());
-            } else {
-                newZ = -1000;
             }
-        }
-        this.position.z = newZ;
-
-        if (!this.collected) {
-          var newX = this.position.x - this.speed;
-
-          // if pedestrian is done crossing road or no longer visible in scene
-          if (newX < -this.parent.edge) {
-            if (!this.state.cluster) {
-                newZ = -(this.parent.fog.far + 70 * Math.random());
-            } else {
-                newZ = -1000;
+            this.position.z = newZ;
+        } else {
+            // update positions (cross road and move towards car)
+            var newZ = this.position.z + this.parent.gameSpeed;
+            if (newZ > this.parent.camera.position.z) {
+                if (!this.state.cluster) {
+                    newZ = -(this.parent.fog.far + 70 * Math.random());
+                } else {
+                    newZ = -1000
+                }
             }
-              newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
-              this.resetParams();
-          }
-          this.position.x = newX;
-        }
+            this.position.z = newZ;
 
-        // Advance tween animations, if any exist
-        TWEEN.update();
+            if (!this.collected) {
+            var newX = this.position.x - this.speed;
+
+            // if pedestrian is done crossing road or no longer visible in scene
+            if (newX < -this.parent.edge) {
+                    if (!this.state.cluster) {
+                        newZ = -(this.parent.fog.far + 70 * Math.random());
+                    } else {
+                        newZ = -1000
+                    }
+                    newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
+                    this.resetParams();
+            }
+            this.position.x = newX;
+            }
+
+            // Advance tween animations, if any exist
+            TWEEN.update();
+        }
     }
 
     resetParams() {

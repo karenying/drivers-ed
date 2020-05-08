@@ -218,7 +218,7 @@ class MalePedestrianJeans extends Group {
                         flatShading: true
                     })
                 };
-            return mattMaterials;
+                return mattMaterials;
         }
     }
 

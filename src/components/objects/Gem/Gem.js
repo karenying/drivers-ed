@@ -38,7 +38,7 @@ class Gem extends Group {
   }
 
   init() {
-    debugger;
+    // debugger;
     this.scale.set(0.15, 0.15, 0.15);
     this.rotateX(3 * Math.PI / 2);
     // compute bounding box
