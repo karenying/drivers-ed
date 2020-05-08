@@ -1,6 +1,6 @@
 import { Group,
   Mesh,
-  MeshLambertMaterial,
+  MeshToonMaterial,
   MeshBasicMaterial,
   SphereGeometry,
   DoubleSide,
@@ -11,11 +11,11 @@ import { Group,
 var Colors = {
   black: 0x000000,
   white: 0xffffff,
-  yellow: 0xf5cc00,
+  yellow: 0xffff00,
   lightYellow: 0xfae789,
 };
 
-const postMat = new MeshLambertMaterial ({
+const postMat = new MeshToonMaterial ({
   color: Colors.black,
   flatShading: true,
 });
@@ -25,7 +25,7 @@ const bulbMat = new MeshBasicMaterial({
   flatShading: true,
 });
 
-const lampMat = new MeshLambertMaterial({
+const lampMat = new MeshToonMaterial({
   color: Colors.white,
   flatShading: true,
   transparent: true,
@@ -46,13 +46,8 @@ class Lamppost extends Group {
     super();
 
     this.state = {
-      night: parent.night,
       cameraPosition: parent.camera.position,
-      // gameSpeed: parent.gameSpeed,
-      timeElapsed: -1,
       lightsOn: false,
-      startTime: null,
-      threshold: 10,
     }
     this.init();
     this.name = 'lamppost';
@@ -81,21 +76,7 @@ class Lamppost extends Group {
   }
 
   update(timestamp) {
-      const { startTime, cameraPosition, lightsOn } = this.state;
-
-      // figures out time elapsed since beginning
-      if (startTime == null) {
-        this.state.startTime = Date.now() / 1000;
-      } else {
-        const currentTime = Date.now() / 1000;
-        this.state.timeElapsed = currentTime - this.state.startTime;
-      }
-
-      if (this.state.timeElapsed > this.state.threshold) {
-        this.state.night = !this.state.night;
-        this.state.startTime = Date.now() / 1000;
-        this.state.threshold = 20;
-      }
+      const { cameraPosition, lightsOn } = this.state;
 
       this.position.z += this.parent.gameSpeed;
 
@@ -105,15 +86,15 @@ class Lamppost extends Group {
 
       // night mode
       // turns lights on
-      if (!lightsOn && this.state.night) {
+      if (!lightsOn && this.parent.night == 2) {
         this.children[1].material.color.setHex( Colors.yellow );
-        this.children[3].intensity = 0.1;
+        this.children[3].intensity = 0.05;
         this.children[3].decay = 2;
         this.state.lightsOn = true;
       }
 
       // turns lights off
-      if (lightsOn && !this.state.night) {
+      if (lightsOn && this.parent.night !==2) {
         this.children[1].material.color.setHex( Colors.white );
         this.children[3].intensity = 0.0;
         this.state.lightsOn = false;

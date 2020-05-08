@@ -74,10 +74,7 @@ class Car extends Group {
     constructor(parent) {
         super();
         this.state = {
-          night: parent.night,
-          timeElapsed: -1,
           lightsOn: false,
-          startTime: null,
           lightsOn: false,
           threshold: 10,
           bobbing: true,
@@ -272,33 +269,19 @@ class Car extends Group {
     }
 
     update(timeStamp) {
-        const { lightsOn, startTime } = this.state;
-
-        // figures out time elapsed since beginning
-        if (startTime == null) {
-          this.state.startTime = Date.now() / 1000;
-        } else {
-          const currentTime = Date.now() / 1000;
-          this.state.timeElapsed = currentTime - this.state.startTime;
-        }
-
-        // toggle night mode
-        if (this.state.timeElapsed > this.state.threshold) {
-          this.state.night = !this.state.night;
-          this.state.startTime = Date.now() / 1000;
-          this.state.threshold = 20;
-        }
+        const { lightsOn } = this.state;
 
         // turns lights on
-        if (!lightsOn && this.state.night) {
+        if (!lightsOn && this.parent.night == 2) {
           let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 2.25;
+          beamer.intensity = 2;
           beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 2.25;
+          beamer.intensity = 2;
           this.state.lightsOn = true;
         }
+
         // turns lights off
-        if (lightsOn && !this.state.night) {
+        if (lightsOn && this.parent.night != 2) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.intensity = 0;
           beamer = this.getObjectByName("beamer2", true);
@@ -306,6 +289,14 @@ class Car extends Group {
           this.state.lightsOn = false;
         }
 
+        if (this.state.bobbing) {
+            // Bob car and exhaust back and forth
+            this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
+            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+        }
+    }
+
+    bobble(timeStamp) {
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);

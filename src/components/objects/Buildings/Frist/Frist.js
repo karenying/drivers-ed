@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
 
 function createWindow(x, y, z, materials) {
     var windowGeometry = new BoxGeometry(x, y, z);
@@ -35,23 +35,23 @@ class Frist extends Group {
         };
 
         var materials = {
-            brick: new MeshLambertMaterial({
+            brick: new MeshToonMaterial({
                 color: 0x401704,
                 flatShading: true,
             }),
-            stone: new MeshLambertMaterial({
+            stone: new MeshToonMaterial({
                 color: 0x5e5d5c,
                 flatShading: true,
             }),
-            window: new MeshLambertMaterial({
+            window: new MeshToonMaterial({
                 color: 0x9c9898,
                 flatShading: true,
             }),
-            door: new MeshLambertMaterial({
+            door: new MeshToonMaterial({
                 color: 0x4f2a04,
                 flatShading: true,
             }),
-            black: new MeshLambertMaterial({
+            black: new MeshToonMaterial({
                 color: 0x000000,
                 flatShading: true,
             }),

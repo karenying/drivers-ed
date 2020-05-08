@@ -11,23 +11,38 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
 import link from './writeup.html';
-import dingLink from './sounds/ding.wav';
-import loseLink from './sounds/lose.wav';
-import hitLink from './sounds/hit.wav';
+import dingLink from './assets/ding.wav';
+import loseLink from './assets/lose.wav';
+import hitLink from './assets/hit.wav';
+import goLink from './assets/go.wav';
+import countdownLink from './assets/countdown.wav';
+import heartLink from './assets/heart.png';
 
 // Add sounds
 const ding = new Audio(dingLink);
+ding.load();
 const lose = new Audio(loseLink);
 const hit = new Audio(hitLink);
+const go = new Audio(goLink);
+const countdown = new Audio(countdownLink);
 
 // Initialize core ThreeJS components
 const camera = new PerspectiveCamera();
 const scene = new Washington(camera);
 const renderer = new WebGLRenderer({ antialias: true /*alpha: true */ });
 
+// Set up controls
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.enablePan = false;
+// controls.minDistance = 4;
+// controls.maxDistance = 500;
+// controls.update();
+
 // game control variables
 let gameOver = false;
-let paused = true;
+let paused = false;
+let newGameStarted = false;
 
 // Add fog
 scene.fog = new Fog(new Color(0x7ec0ee), 1, 200);
@@ -44,16 +59,9 @@ document.body.style.margin = 0; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
-// Set up controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.enablePan = false;
-controls.minDistance = 4;
-controls.maxDistance = 5000;
-controls.update();
-
 // Pause the scene
 function pause() {
+    paused = true;
     scene.state.pause = true;
     return true;
 }
@@ -65,7 +73,12 @@ function setupKeyControls() {
     const car = scene.getObjectByName('car');
 
     function handleKeyDown(event) {
-        if (!gameOver) {
+        if (event.keyCode === 80 && !gameOver && newGameStarted) {
+            paused = !paused;
+            scene.state.pause = !scene.state.pause;
+        }
+
+        if (!gameOver && newGameStarted && !paused) {
             switch (event.keyCode) {
                 // left
                 case 37:
@@ -93,15 +106,12 @@ function setupKeyControls() {
                     if (scene.stopped) scene.stopped = false;
                     else scene.stopped = true;
                     break;
-                case 80:
-                    scene.state.pause = !scene.state.pause;
-                    break;
             }
         }
     }
 
     function handleKeyUp(event) {
-        if (!gameOver) {
+        if (!gameOver && newGameStarted && !paused) {
             switch (event.keyCode) {
                 // left
                 case 37:
@@ -146,13 +156,20 @@ beginContentDescription.innerHTML =
     "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
     '<br />' +
     '<br />' +
-    'Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins.';
+    "Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins. Hit 3 obstacles and you're kicked out of the class!";
 beginContentText.appendChild(beginContentDescription);
 
 let beginContentButton = document.createElement('div');
 beginContentButton.id = 'begin-button';
 beginContentButton.innerHTML = 'BEGIN';
 beginContent.appendChild(beginContentButton);
+
+// Set up countdown
+var countDownDiv = document.createElement('div');
+countDownDiv.id = 'countdown';
+document.body.appendChild(countDownDiv);
+let countDownNumber = document.createElement('h1');
+countDownDiv.appendChild(countDownNumber);
 
 // Set up writeup link
 let writeupContainer = document.createElement('div');
@@ -168,7 +185,25 @@ writeupLink.href = link;
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
     // writeupContainer.style.display = 'none';
-    scene.state.pause = false;
+    countDownDiv.style.display = 'flex';
+    let timeleft = 3;
+    let countDownInterval = setInterval(function () {
+        if (timeleft < 0) {
+            countDownDiv.style.display = 'none';
+            clearInterval(countDownInterval);
+            countDownNumber.innerText = '';
+            countDownDiv.style.display = 'none';
+        } else if (timeleft == 0) {
+            countDownNumber.innerText = 'Go!';
+            go.play();
+            scene.state.newGameStarted = true;
+            newGameStarted = true;
+        } else {
+            countDownNumber.innerText = timeleft;
+            countdown.play();
+        }
+        timeleft -= 1;
+    }, 1000);
 };
 
 // Set up score
@@ -184,13 +219,26 @@ var lives = 3;
 
 var lifeDiv = document.createElement('div');
 lifeDiv.id = 'lives';
-lifeDiv.innerHTML = 'Lives: ' + lives;
+lifeDiv.innerHTML = 'Lives: ';
+
 document.body.appendChild(lifeDiv);
 
 // Set special items reporter
 var itemDiv = document.createElement('div');
 itemDiv.id = 'item';
 document.body.appendChild(itemDiv);
+
+// Set up skulls
+let heartDiv = document.createElement('div');
+heartDiv.id = 'heart';
+
+for (let i = 0; i < lives; i++) {
+    let heartImg = document.createElement('img');
+    heartImg.src = heartLink;
+    heartDiv.appendChild(heartImg);
+}
+
+document.body.appendChild(heartDiv);
 
 // Set up outro screen
 let endContainer = document.createElement('div');
@@ -226,16 +274,21 @@ endContent.appendChild(endContentButton);
 endContentButton.onclick = function () {
     endContainer.style.display = 'none';
     scene.state.pause = false;
+    paused = false;
     score = 0;
     lives = 3;
     gameOver = false;
+    for (let i = 0; i < lives; i++) {
+        let heartImg = document.createElement('img');
+        heartImg.src = heartLink;
+        heartDiv.appendChild(heartImg);
+    }
 };
 
 endContainer.style.display = 'none';
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
-    // controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     var collisionObj = scene.findCollisions(
@@ -243,25 +296,31 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.collidableMeshList
     );
     if (collisionObj !== undefined) {
-        // console.log(collisionObj.name);
         if (collisionObj.name === 'coin') {
-            if (!collisionObj.collected) score += 1; // only collect object if not already collected
-            ding.play();
+            if (!collisionObj.collected) {
+                score += 1; // only collect object if not already collected
+                let dingClone = ding.cloneNode();
+                dingClone.play();
+            }
             document.getElementById('score').innerHTML = 'Score: ' + score;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'fox') {
-            if (!collisionObj.collected) lives -= 1;
+            if (!collisionObj.collected) {
+                lives -= 1;
+                heartDiv.removeChild(heartDiv.lastChild);
+            }
             if (!gameOver) {
                 hit.play();
             }
-            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         } else if (collisionObj.name === 'pedestrian') {
-            if (!collisionObj.collected) lives -= 1;
+            if (!collisionObj.collected) {
+                lives -= 1;
+                heartDiv.removeChild(heartDiv.lastChild);
+            }
             if (!gameOver) {
                 hit.play();
             }
-            document.getElementById('lives').innerHTML = 'Lives: ' + lives;
             collisionObj.onCollision();
         }
     }
@@ -275,7 +334,6 @@ const onAnimationFrameHandler = (timeStamp) => {
         endContentScore.innerText = score;
     }
     document.getElementById('score').innerHTML = 'Score: ' + score;
-    document.getElementById('lives').innerHTML = 'Lives: ' + lives;
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

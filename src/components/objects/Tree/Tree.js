@@ -30,14 +30,18 @@ function createCylinder(x, y, z, s, color, dx, dy, dz) {
 }
 
 class Tree extends Group {
-  constructor() {
+  constructor(parent) {
     super(parent);
 
     this.state = {
+      cameraPosition: parent.camera.position,
       type: 0,
+      offset: 290,
     }
 
+    parent.addToUpdateList(this);
     this.name = 'tree';
+    this.scale.set(1.25, 1.25, 1.25);
   }
 
   create() {
@@ -71,6 +75,14 @@ class Tree extends Group {
     }
   }
 
+  update() {
+    const { cameraPosition, offset } = this.state;
+    this.position.z += this.parent.gameSpeed;
+
+    if (this.position.z > cameraPosition.z) {
+        this.position.z -= offset;
+    }
+  }
 }
 
 export default Tree;

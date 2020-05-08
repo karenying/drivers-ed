@@ -1,53 +1,49 @@
-import { Group, SpotLight, AmbientLight, HemisphereLight } from 'three';
+import { Group, Color, SpotLight, AmbientLight, HemisphereLight } from 'three';
+
+const skyBlue = new Color(0x7ec0ee);
+const nightBlue = new Color(0x11223d);
+
+const ambiDay = 1.3;
+const ambiNight = 0.5;
+const hemiDay = 2;
+const hemiNight = 0.5;
 
 class BasicLights extends Group {
-    constructor(parent, ...args) {
-        // Invoke parent Group() constructor with our args
-        super(...args);
-        this.state = {
-          ambiChange: 0.005,
-          hemiChange: 0.005,
-          timeElapsed: -1,
-          startTime: null,
-        }
-
-        const ambi = new AmbientLight(0x404040, 1.3);
-        const hemi = new HemisphereLight(0xffffe0, 0x080820, 2);
-        this.add(ambi, hemi);
-
-        // night mode values
-        parent.addToUpdateList(this);
-    }
-
-    update(timeStamp) {
-      const { startTime } = this.state;
-      // figures out time elapsed since beginning
-      if (startTime == null) {
-        this.state.startTime = Date.now() / 1000;
-      } else {
-        const currentTime = Date.now() / 1000;
-        this.state.timeElapsed = currentTime - this.state.startTime;
+  constructor(parent, ...args) {
+      // Invoke parent Group() constructor with our args
+      super(...args);
+      this.state = {
+        ambiChange: 0.002,
+        hemiChange: 0.002,
       }
 
-      if (this.state.timeElapsed > 20) {
-        this.state.ambiChange = -this.state.ambiChange;
-        this.state.hemiChange = -this.state.hemiChange;
-        this.state.startTime = Date.now() / 1000;
-      }
+      const ambi = new AmbientLight(0x404040, 1.3);
+      const hemi = new HemisphereLight(0xffffe0, 0x080820, 2);
+      this.add(ambi, hemi);
 
+      // night mode values
+      parent.addToUpdateList(this);
+  }
 
-      // edit lights
-      this.children[0].intensity -= this.state.ambiChange;
-      this.children[0].intensity = Math.max(0.2, this.children[0].intensity);
-      this.children[0].intensity = Math.min(1.3, this.children[0].intensity);
+  interpolate(start, end, percent) {
+    return (start * (1 - percent)) + (end * percent);
+  }
 
-      this.children[1].intensity -= this.state.hemiChange;
-      this.children[1].intensity = Math.max(0.15, this.children[1].intensity);
-      this.children[1].intensity = Math.min(2, this.children[1].intensity);
-      // const ambi = new AmbientLight(0x404040, 0.2);
-      // const hemi = new HemisphereLight(0x404040, 0x080820, 0.15);
-      // this.add(ambi, hemi);
+  update(timeStamp) {
+    if (this.parent.night == 1) {
+      let newAmbi = this.interpolate(ambiDay, ambiNight, this.parent.timeElapsed/this.parent.threshold);
+      let newHemi = this.interpolate(ambiDay, hemiNight, this.parent.timeElapsed/this.parent.threshold);
+
+      this.children[0].intensity = newAmbi;
+      this.children[1].intensity = newHemi;
+    } else if (this.parent.night == 3) {
+      let newAmbi = this.interpolate(ambiNight, ambiDay, this.parent.timeElapsed/this.parent.threshold);
+      let newHemi = this.interpolate(ambiNight, hemiDay, this.parent.timeElapsed/this.parent.threshold);
+
+      this.children[0].intensity = newAmbi;
+      this.children[1].intensity = newHemi;
     }
+  }
 }
 
 export default BasicLights;
