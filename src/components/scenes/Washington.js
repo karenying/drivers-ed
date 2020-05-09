@@ -324,16 +324,16 @@ class Washington extends Scene {
         this.add(otherCar1);
         this.collidableCarList.push(otherCar1);
 
-        var otherCar2 = new OtherCar(this, 0xffed16);
-        otherCar2.position.set(
-          -1.5 + Math.random(),
-          0,
-          -(250 * Math.random(1))
-        );
-        otherCar2.rotation.set(0, Math.PI, 0);
-        this.add(otherCar2);
-        this.collidableCarList.push(otherCar2);
-
+        // var otherCar2 = new OtherCar(this, 0xffed16);
+        // otherCar2.position.set(
+        //   -1.5 + Math.random(),
+        //   0,
+        //   -(250 * Math.random(1))
+        // );
+        // otherCar2.rotation.set(0, Math.PI, 0);
+        // this.add(otherCar2);
+        // this.collidableCarList.push(otherCar2);
+        //
         // var otherCar3 = new OtherCar(this, 0x000000);
         // otherCar3.position.set(
         //   -1.5 + Math.random(),
