@@ -340,7 +340,7 @@ const onAnimationFrameHandler = (timeStamp) => {
             }
             collisionObj.onCollision();
           } else if (collisionObj.name === 'fox') {
-              if (!(scene.invinsible || collisionObj.collected)) {
+              if (!(scene.invincible || collisionObj.collected)) {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
