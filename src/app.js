@@ -297,19 +297,9 @@ let pausedContentDescription = document.createElement('p');
 pausedContentDescription.innerHTML = 'Press the p key to unpause!';
 pausedContentText.appendChild(pausedContentDescription);
 
-// End game and reset
+// End game and reset by refreshing
 endContentButton.onclick = function () {
-    endContainer.style.display = 'none';
-    scene.state.pause = false;
-    paused = false;
-    score = 0;
-    lives = 3;
-    gameOver = false;
-    for (let i = 0; i < lives; i++) {
-        let heartImg = document.createElement('img');
-        heartImg.src = heartLink;
-        heartDiv.appendChild(heartImg);
-    }
+    window.location.reload();
 };
 
 endContainer.style.display = 'none';
