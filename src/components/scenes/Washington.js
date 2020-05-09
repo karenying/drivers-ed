@@ -324,7 +324,7 @@ class Washington extends Scene {
         coffee.position.set(
             2 * car.maxPos * Math.random() - 2.5,
             1,
-            -(250 * Math.random())
+            -(300 * Math.random() + 300)
         );
         this.add(coffee);
 

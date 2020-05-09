@@ -50,11 +50,11 @@ class Coffee extends Group {
     this.position.y =  0.5 + Math.abs(Math.sin(timeStamp / 110) / 18);
 
     var newZ = this.position.z + this.parent.gameSpeed;
+    var newX =  2 * this.parent.driver.maxPos * Math.random() - 2.5;
     if (newZ > this.parent.camera.position.z) {
-      newZ = -(this.parent.fog.far + 70 * Math.random());
-      while (newZ > this.parent.camera.position.z - 50) {
-        newZ = -(this.parent.fog.far + 70 * Math.random());
-      }
+      newZ = -(300 * Math.random() + 700);
+      console.log(newZ);
+      this.position.x = newX;
     }
     this.position.z = newZ;
 

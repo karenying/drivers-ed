@@ -68,11 +68,13 @@ class Coin extends Group {
     this.rotation.y += 0.1;
 
     var newZ = this.position.z + this.parent.gameSpeed;
+    var newX =  2 * this.parent.driver.maxPos * Math.random() - 2.5;
     if (newZ > this.parent.camera.position.z) {
       newZ = -(this.parent.fog.far + 70 * Math.random());
       while (newZ > this.parent.camera.position.z - 50) {
         newZ = -(this.parent.fog.far + 70 * Math.random());
       }
+      this.position.x = newX;
     }
     this.position.z = newZ;
 
