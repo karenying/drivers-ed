@@ -23,7 +23,7 @@ import {
     FemalePedestrianJeans,
     Tree,
     OtherCar,
-    Gem,
+    Coffee,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -52,6 +52,8 @@ class Washington extends Scene {
         this.background = new Color(0x7ec0ee);
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
+
+        this.invincible = false;
 
         // for night mode
         this.night = 0;
@@ -299,17 +301,15 @@ class Washington extends Scene {
             this.collidableMeshList.push(coin);
         }
 
-        for (let i = 0; i < 1; i++) {
-            var gem = new Gem(this);
-            gem.position.set(
-                2 * car.maxPos * Math.random() - 2.5,
-                0,
-                -(250 * Math.random())
-            );
-            this.add(gem);
-            this.collidableMeshList.push(gem);
-        }
-        this.add(gem);
+        var coffee = new Coffee(this);
+        coffee.position.set(
+            2 * car.maxPos * Math.random() - 2.5,
+            1,
+            -(250 * Math.random())
+        );
+        this.add(coffee);
+
+        this.collidableMeshList.push(coffee);
 
         this.collidableCarList = [];
 

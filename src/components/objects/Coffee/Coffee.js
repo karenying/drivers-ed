@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import MODEL from './Gem.glb';
+import MODEL from './Coffee.glb';
 
 import { Group,
   Mesh,
@@ -16,14 +16,14 @@ var Colors = {
   darkyellow: 0xff8617,
 };
 
-class Gem extends Group {
+class Coffee extends Group {
 
   constructor(parent) {
     super();
 
     const loader = new GLTFLoader();
 
-    this.name = 'gem';
+    this.name = 'coffee';
     loader.load(MODEL, (gltf) => {
         this.add(gltf.scene);
     });
@@ -33,28 +33,20 @@ class Gem extends Group {
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
     this.collected = false;
-
     this.init();
   }
 
   init() {
-    // debugger;
-    this.scale.set(0.15, 0.15, 0.15);
-    this.rotateX(3 * Math.PI / 2);
-    // compute bounding box
-    for (const mesh of this.children) {
-      var box = new THREE.Box3();
-      box.setFromObject(mesh);
-      this.bb.union(box);
-    }
-
-    // visualize bounding box
+    this.bb = new THREE.Box3(
+      new THREE.Vector3(this.position.x - 0.5, this.position.y - 0.5, this.position.z - 0.5),
+      new THREE.Vector3(this.position.x + 0.5, this.position.y + 0.5, this.position.z + 0.5)
+    );
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
     this.add(bbHelper);
   }
 
   update(timeStamp) {
-    this.position.y =  0.5 + Math.abs(Math.sin(timeStamp / 80) / 18);
+    this.position.y =  0.5 + Math.abs(Math.sin(timeStamp / 110) / 18);
 
     var newZ = this.position.z + this.parent.gameSpeed;
     if (newZ > this.parent.camera.position.z) {
@@ -100,4 +92,4 @@ class Gem extends Group {
 
 }
 
-export default Gem;
+export default Coffee;

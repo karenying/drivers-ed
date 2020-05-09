@@ -341,6 +341,13 @@ const onAnimationFrameHandler = (timeStamp) => {
               }
               document.getElementById('score').innerHTML = 'Score: ' + score;
               collisionObj.onCollision();
+          } else if (collisionObj.name === 'coffee') {
+            if (!collisionObj.collected) {
+                scene.invincible = true;
+                let dingClone = ding.cloneNode();
+                dingClone.play();
+            }
+            collisionObj.onCollision();
           } else if (collisionObj.name === 'fox') {
               if (!collisionObj.collected) {
                   lives -= 1;
