@@ -25,6 +25,7 @@ import {
     OtherCar,
     Coffee,
     Crosswalk,
+    Sun
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -97,6 +98,10 @@ class Washington extends Scene {
             -190,
             -240,
         ];
+
+        let sun = new Sun();
+        this.add(sun);
+        sun.position.set(0, 5, -30);
 
         for (let i = 0; i < 3; i++) {
             const road = new Road(this);
