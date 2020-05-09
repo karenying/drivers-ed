@@ -61,7 +61,7 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        this.edge = 7;
+        this.edge = 15;
         this.collidableMeshList = []; // List of collidable meshes
 
         this.invincible = false;
@@ -258,7 +258,7 @@ class Washington extends Scene {
         this.currCrosswalkPos = crosswalkZPositions[Math.floor(Math.random() * 8)];
         crosswalk.position.z = this.currCrosswalkPos;
         crosswalk.position.y = 0.1;
-        
+
         let crosswalkWidth = 8;
         let tom = new MalePedestrianShorts(this, 'tom', true);
         tom.position.set(
@@ -343,16 +343,16 @@ class Washington extends Scene {
         this.add(otherCar1);
         this.collidableCarList.push(otherCar1);
 
-        // var otherCar2 = new OtherCar(this, 0xffed16);
-        // otherCar2.position.set(
-        //   -1.5 + Math.random(),
-        //   0,
-        //   -(250 * Math.random(1))
-        // );
-        // otherCar2.rotation.set(0, Math.PI, 0);
-        // this.add(otherCar2);
-        // this.collidableCarList.push(otherCar2);
-        //
+        var otherCar2 = new OtherCar(this, 0xffed16);
+        otherCar2.position.set(
+          -1.5 + Math.random(),
+          0,
+          -(250 * Math.random(1))
+        );
+        otherCar2.rotation.set(0, Math.PI, 0);
+        this.add(otherCar2);
+        this.collidableCarList.push(otherCar2);
+        
         // var otherCar3 = new OtherCar(this, 0x000000);
         // otherCar3.position.set(
         //   -1.5 + Math.random(),
