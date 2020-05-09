@@ -14,3 +14,4 @@ export * from './OvalStatue';
 export * from './Sidewalk';
 export * from './OtherCar';
 export * from './Coffee';
+export * from './Crosswalk';

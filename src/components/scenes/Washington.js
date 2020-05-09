@@ -24,6 +24,7 @@ import {
     Tree,
     OtherCar,
     Coffee,
+    Crosswalk,
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -241,50 +242,52 @@ class Washington extends Scene {
         this.add(max);
 
         // add cluster of students
-         let tom = new MalePedestrianShorts(this, 'tom', true);
-         tom.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-         );
-         let jeff = new MalePedestrianShorts(this, 'jeff', true);
-         jeff.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-         );
-         let claire = new FemalePedestrianDress(this, 'claire', true);
-         claire.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-             );
-         let tina = new FemalePedestrianDress(this, 'tina', true);
-         tina.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-             );
-         let matt = new MalePedestrianJeans(this, 'matt', true);
-         matt.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-             );
-         let kaitlyn = new FemalePedestrianJeans(this, 'kaitlyn', true);
-         kaitlyn.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-             );
-         let brittney = new FemalePedestrianJeans(this, 'brittney', true);
-         brittney.position.set(
-             2 * Math.random() * this.edge - this.edge / 2,
-             0.5,
-             -1000
-             );
-         this.collidableMeshList.push(tom, jeff, claire, tina, matt, kaitlyn, brittney);
-         this.add(tom, jeff, claire, tina, matt, kaitlyn, brittney);
+        let crosswalk = new Crosswalk(this);
+        this.add(crosswalk);
+        let tom = new MalePedestrianShorts(this, 'tom', true);
+        tom.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+        );
+        let jeff = new MalePedestrianShorts(this, 'jeff', true);
+        jeff.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+        );
+        let claire = new FemalePedestrianDress(this, 'claire', true);
+        claire.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+            );
+        let tina = new FemalePedestrianDress(this, 'tina', true);
+        tina.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+            );
+        let matt = new MalePedestrianJeans(this, 'matt', true);
+        matt.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+            );
+        let kaitlyn = new FemalePedestrianJeans(this, 'kaitlyn', true);
+        kaitlyn.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+            );
+        let brittney = new FemalePedestrianJeans(this, 'brittney', true);
+        brittney.position.set(
+            2 * Math.random() * this.edge - this.edge / 2,
+            0.5,
+            -1000
+            );
+        this.collidableMeshList.push(tom, jeff, claire, tina, matt, kaitlyn, brittney);
+        this.add(tom, jeff, claire, tina, matt, kaitlyn, brittney);
 
         const lights = new BasicLights(this);
         this.add(lights, car);
