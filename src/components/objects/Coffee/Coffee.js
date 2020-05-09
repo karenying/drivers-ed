@@ -53,7 +53,6 @@ class Coffee extends Group {
     var newX =  2 * this.parent.driver.maxPos * Math.random() - 2.5;
     if (newZ > this.parent.camera.position.z) {
       newZ = -(300 * Math.random() + 700);
-      console.log(newZ);
       this.position.x = newX;
     }
     this.position.z = newZ;
@@ -78,7 +77,7 @@ class Coffee extends Group {
           .to({ y: -1 }, 300)
           .easing(TWEEN.Easing.Quadratic.In);
       const resetPos = new TWEEN.Tween(this.position)
-          .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 0);
+          .to({ z: -(300 * Math.random() + 700) }, 0);
 
       // Reset position after jumping up and down
       jumpUp.onComplete(() => fallDown.start());
