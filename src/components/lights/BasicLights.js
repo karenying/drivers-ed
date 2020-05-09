@@ -3,9 +3,9 @@ import { Group, Color, SpotLight, AmbientLight, HemisphereLight } from 'three';
 const skyBlue = new Color(0x7ec0ee);
 const nightBlue = new Color(0x11223d);
 
-const ambiDay = 1.3;
+const ambiDay = 1.2;
 const ambiNight = 0.5;
-const hemiDay = 2;
+const hemiDay = 1.5;
 const hemiNight = 0.5;
 
 class BasicLights extends Group {
@@ -17,8 +17,8 @@ class BasicLights extends Group {
         hemiChange: 0.002,
       }
 
-      const ambi = new AmbientLight(0x404040, 1.3);
-      const hemi = new HemisphereLight(0xffffe0, 0x080820, 2);
+      const ambi = new AmbientLight(0x404040, 1.2);
+      const hemi = new HemisphereLight(0xffffe0, 0x080820, 1.5);
       this.add(ambi, hemi);
 
       // night mode values

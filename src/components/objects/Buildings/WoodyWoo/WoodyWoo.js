@@ -27,7 +27,7 @@ class WoodyWoo extends Group {
                 flatShading: true,
             }),
             pillar: new MeshToonMaterial({
-                color: 0x9c988c,
+                color: 0x7a776e,
                 flatShading: true,
             }),
         };
