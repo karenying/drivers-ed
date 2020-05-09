@@ -296,7 +296,7 @@ class FemalePedestrianDress extends Group {
                 if (!this.state.cluster) {
                     newZ = -(this.parent.fog.far + 70 * Math.random());
                 } else {
-                    newZ = -1000
+                    newZ = -1 * (8 * Math.random() + (Math.abs(-1020) - 0.5 * 8))
                 }
             }
             this.position.z = newZ;
@@ -309,7 +309,7 @@ class FemalePedestrianDress extends Group {
                     if (!this.state.cluster) {
                         newZ = -(this.parent.fog.far + 70 * Math.random());
                     } else {
-                        newZ = -1000
+                        newZ = -1 * (8 * Math.random() + (Math.abs(-1020) - 0.5 * 8))
                     }
                     newX = Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2;
                     this.resetParams();

@@ -244,48 +244,52 @@ class Washington extends Scene {
         // add cluster of students
         let crosswalk = new Crosswalk(this);
         this.add(crosswalk);
+        crosswalk.position.z = -1020;
+        crosswalk.position.y = 0.1;
+        
+        let crosswalkWidth = 8;
         let tom = new MalePedestrianShorts(this, 'tom', true);
         tom.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let jeff = new MalePedestrianShorts(this, 'jeff', true);
         jeff.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let claire = new FemalePedestrianDress(this, 'claire', true);
         claire.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
-            );
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
+        );
         let tina = new FemalePedestrianDress(this, 'tina', true);
         tina.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
-            );
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
+          );
         let matt = new MalePedestrianJeans(this, 'matt', true);
         matt.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
-            );
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
+        );
         let kaitlyn = new FemalePedestrianJeans(this, 'kaitlyn', true);
         kaitlyn.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
-            );
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
+        );
         let brittney = new FemalePedestrianJeans(this, 'brittney', true);
         brittney.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
             0.5,
-            -1000
-            );
+            -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
+        );
         this.collidableMeshList.push(tom, jeff, claire, tina, matt, kaitlyn, brittney);
         this.add(tom, jeff, claire, tina, matt, kaitlyn, brittney);
 
