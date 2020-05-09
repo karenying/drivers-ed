@@ -30,6 +30,17 @@ import { BasicLights } from 'lights';
 import * as THREE from 'three';
 
 let currColor = "#7ec0ee";
+// crosswalkPositions
+const crosswalkZPositions = [
+  -420,
+  -520,
+  -620,
+  -720,
+  -820,
+  -920,
+  -1020,
+  -1120
+];
 
 class Washington extends Scene {
     constructor(camera) {
@@ -42,7 +53,6 @@ class Washington extends Scene {
             newGameStarted: false,
         };
 
-        currColor = "#7ec0ee";
         this.gameSpeed = 0;
         this.maxGameSpeed = 2.75; // 3
         this.minGameSpeed = 0.75; // 1
@@ -243,8 +253,10 @@ class Washington extends Scene {
 
         // add cluster of students
         let crosswalk = new Crosswalk(this);
+        this.crosswalkObject = crosswalk;
         this.add(crosswalk);
-        crosswalk.position.z = -1020;
+        this.currCrosswalkPos = crosswalkZPositions[Math.floor(Math.random() * 8)];
+        crosswalk.position.z = this.currCrosswalkPos;
         crosswalk.position.y = 0.1;
         
         let crosswalkWidth = 8;

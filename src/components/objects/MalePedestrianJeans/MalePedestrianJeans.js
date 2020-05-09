@@ -256,7 +256,7 @@ class MalePedestrianJeans extends Group {
             if (!this.state.cluster) {
                 newZ = -(this.parent.fog.far + 70 * Math.random());
             } else {
-                newZ = -1 * (8 * Math.random() + (Math.abs(-1020) - 0.5 * 8))
+                newZ = -1 * (8 * Math.random() + (Math.abs(this.parent.currCrosswalkPos) - 0.5 * 8))
             }
         }
         this.position.z = newZ;
@@ -269,7 +269,7 @@ class MalePedestrianJeans extends Group {
             if (!this.state.cluster) {
                 newZ = -(this.parent.fog.far + 70 * Math.random());
             } else {
-                newZ = -1 * (8 * Math.random() + (Math.abs(-1020) - 0.5 * 8))
+                newZ = -1 * (8 * Math.random() + (Math.abs(this.parent.currCrosswalkPos) - 0.5 * 8))
             }
               newX = -1 * (Math.floor(Math.random() * this.parent.edge) + this.parent.edge / 2);
               this.resetParams();
