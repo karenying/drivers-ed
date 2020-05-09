@@ -13,4 +13,4 @@ export * from './FemalePedestrianJeans';
 export * from './OvalStatue';
 export * from './Sidewalk';
 export * from './OtherCar';
-export * from './Gem';
+export * from './Coffee';
