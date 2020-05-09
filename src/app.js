@@ -350,7 +350,7 @@ const onAnimationFrameHandler = (timeStamp) => {
             }
             collisionObj.onCollision();
           } else if (collisionObj.name === 'fox') {
-              if (!collisionObj.collected) {
+              if (!(scene.invinsible || collisionObj.collected)) {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
@@ -359,7 +359,7 @@ const onAnimationFrameHandler = (timeStamp) => {
               }
               collisionObj.onCollision();
           } else if (collisionObj.name === 'pedestrian') {
-              if (!collisionObj.collected) {
+              if (!(scene.invincible || collisionObj.collected)) {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
@@ -368,7 +368,7 @@ const onAnimationFrameHandler = (timeStamp) => {
               }
               collisionObj.onCollision();
           } else if (collisionObj.name === 'otherCar') {
-              if (!collisionObj.collected) {
+              if (!(scene.invincible || collisionObj.collected)) {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
@@ -380,14 +380,19 @@ const onAnimationFrameHandler = (timeStamp) => {
       }
     }
 
-    // find other car collisions
-    var otherCollisions = [];
+    // find other car collisions and stop cars
     for (const otherCar of scene.collidableCarList) {
       var collisionObj = scene.findCollisions(
           otherCar,
           scene.collidableMeshList
       );
-      otherCollisions.push(collisionObj);
+      if (collisionObj !== undefined && collisionObj !== otherCar) {
+        if (collisionObj.name === 'fox' || collisionObj.name === 'pedestrian') {
+          otherCar.state.idle = true;
+        }
+      } else {
+        otherCar.state.idle = false;
+      }
     }
 
     for (const otherCar of scene.collidableCarList) {
@@ -395,11 +400,11 @@ const onAnimationFrameHandler = (timeStamp) => {
           otherCar,
           scene.collidableCarList
       );
-      if (collisionObj !== otherCar) otherCollisions.push(collisionObj);
-    }
-
-    for (const collisionObj of otherCollisions) {
-      if (collisionObj !== undefined) collisionObj.onCollision();
+      if (collisionObj !== otherCar && collisionObj !== undefined) {
+        otherCar.idle = true;
+      } else {
+        otherCar.idle = false;
+      }
     }
 
     // game over if lives are 0

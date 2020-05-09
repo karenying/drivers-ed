@@ -78,21 +78,18 @@ class OtherCar extends Group {
         super();
         this.state = {
           lightsOn: false,
-          lightsOn: false,
           threshold: 10,
           bobbing: true,
+          idle: false
         }
-        
+
         this.bodyColor = bodyColor;
-        
+
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
 
         // this.init();
         this.name = 'otherCar';
-        this.bb = bb;
-        this.rightProb = 0.1;
-        this.leftProb = 0.1;
         this.lightTarget = new THREE.Object3D();
         this.lightTarget.position.z = -5;
         this.lightTarget.position.y = 1;
@@ -280,7 +277,7 @@ class OtherCar extends Group {
     }
 
     update(timeStamp) {
-        const { lightsOn } = this.state;
+        const { lightsOn, idle } = this.state;
 
         // turns lights on
         if (!lightsOn && this.parent.night == 2) {
@@ -299,7 +296,7 @@ class OtherCar extends Group {
           beamer.intensity = 0;
           this.state.lightsOn = false;
         }
-        
+
         if (lightsOn) {
           let beamer = this.getObjectByName("beamer1", true);
           beamer.target.updateMatrixWorld();
@@ -312,15 +309,17 @@ class OtherCar extends Group {
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
             this.children[7].rotation.z = Math.sin(timeStamp / 200);
         }
-        
-        var newZ = this.position.z + (1 + Math.random()) * Math.max(this.parent.gameSpeed, 0.5);
-        if (newZ > this.parent.camera.position.z) {
-          newZ = -(this.parent.fog.far + 70 * Math.random());
-          while (newZ > this.parent.camera.position.z - 50) {
+
+        if (!idle) {
+          var newZ = this.position.z + (1 + Math.random()) * Math.max(this.parent.gameSpeed, 0.5);
+          if (newZ > this.parent.camera.position.z) {
             newZ = -(this.parent.fog.far + 70 * Math.random());
+            while (newZ > this.parent.camera.position.z - 50) {
+              newZ = -(this.parent.fog.far + 70 * Math.random());
+            }
           }
+          this.position.z = newZ;
         }
-        this.position.z = newZ;
 
         // Advance tween animations, if any exist
         TWEEN.update();
@@ -333,7 +332,7 @@ class OtherCar extends Group {
             this.children[18].rotation.z = Math.sin(timeStamp / 200);
         }
     }
-    
+
     resetParams() {
       this.collected = false;
       this.position.y = 0;

@@ -29,6 +29,7 @@ class Coffee extends Group {
     });
 
     parent.addToUpdateList(this);
+    
     // Create bounding box
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
@@ -69,7 +70,7 @@ class Coffee extends Group {
     if (!this.collected) {
       this.collected = true;
       const spin = new TWEEN.Tween(this.rotation)
-          .to({ y: this.rotation.y + 2 * Math.PI }, 200);
+          .to({ x: this.rotation.x + 2 * Math.PI }, 200);
       const jumpUp = new TWEEN.Tween(this.position)
           .to({ y: this.position.y + 3 }, 200)
           .easing(TWEEN.Easing.Quadratic.Out);
