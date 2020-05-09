@@ -16,3 +16,4 @@ export * from './OtherCar';
 export * from './Coffee';
 export * from './Crosswalk';
 export * from './Sun';
+export * from './Moon';

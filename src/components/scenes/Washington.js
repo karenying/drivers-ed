@@ -25,7 +25,8 @@ import {
     OtherCar,
     Coffee,
     Crosswalk,
-    Sun
+    Sun,
+    Moon
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -99,9 +100,16 @@ class Washington extends Scene {
             -240,
         ];
 
-        let sun = new Sun();
+        let sun = new Sun(this);
+        let theta = Math.PI/4;
+        sun.position.set(30 * Math.cos(theta), 30 * Math.sin(theta), -80);
+        sun.scale.set(0.01, 0.01, 0.01);
         this.add(sun);
-        sun.position.set(0, 5, -30);
+
+        let moon = new Moon(this);
+        moon.scale.set(0.4, 0.4, 0.4);
+        this.add(moon);
+        moon.position.set(30, 0, -80);
 
         for (let i = 0; i < 3; i++) {
             const road = new Road(this);
