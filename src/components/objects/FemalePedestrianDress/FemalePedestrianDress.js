@@ -319,6 +319,7 @@ class FemalePedestrianDress extends Group {
 
             // Advance tween animations, if any exist
             TWEEN.update();
+            console.log(this.collected);
         }
     }
 
@@ -339,7 +340,7 @@ class FemalePedestrianDress extends Group {
             .to({ y: -1 }, 300)
             .easing(TWEEN.Easing.Quadratic.In);
         const resetPos = new TWEEN.Tween(this.position)
-            .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 0);
+            .to({ z: -(this.parent.fog.far + 50 * Math.random()) }, 100);
 
         // Reset position after jumping up and down
         jumpUp.onComplete(() => fallDown.start());
@@ -349,7 +350,8 @@ class FemalePedestrianDress extends Group {
         // Start animation
         jumpUp.start();
         spin.start();
-      }    }
+      }
+    }
 }
 
 export default FemalePedestrianDress;
