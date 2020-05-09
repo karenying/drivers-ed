@@ -53,6 +53,8 @@ class Washington extends Scene {
         this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
 
+        this.invincible = false;
+
         // for night mode
         this.night = 0;
         this.timeElapsed = -1;
@@ -302,12 +304,13 @@ class Washington extends Scene {
         var coffee = new Coffee(this);
         coffee.position.set(
             2 * car.maxPos * Math.random() - 2.5,
-            0,
+            1,
             -(250 * Math.random())
         );
         this.add(coffee);
+
         this.collidableMeshList.push(coffee);
-        
+
         this.collidableCarList = [];
 
         // // Add other cars

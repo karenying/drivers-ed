@@ -33,22 +33,16 @@ class Coffee extends Group {
     var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
     this.bb = bb;
     this.collected = false;
-
     this.init();
   }
 
   init() {
-    // debugger;
-    // compute bounding box
-    for (const mesh of this.children) {
-      var box = new THREE.Box3();
-      box.setFromObject(mesh);
-      this.bb.union(box);
-    }
-
-    // visualize bounding box
+    this.bb = new THREE.Box3(
+      new THREE.Vector3(this.position.x - 0.5, this.position.y - 0.5, this.position.z - 0.5),
+      new THREE.Vector3(this.position.x + 0.5, this.position.y + 0.5, this.position.z + 0.5)
+    );
     var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-    this.add(bbHelper);
+    // this.add(bbHelper);
   }
 
   update(timeStamp) {

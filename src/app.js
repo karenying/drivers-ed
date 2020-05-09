@@ -15,6 +15,7 @@ import dingLink from './assets/ding.wav';
 import loseLink from './assets/lose.wav';
 import hitLink from './assets/hit.wav';
 import goLink from './assets/go.wav';
+import levelLink from './assets/level.wav';
 import countdownLink from './assets/countdown.wav';
 import heartLink from './assets/heart.png';
 
@@ -24,6 +25,7 @@ ding.load();
 const lose = new Audio(loseLink);
 const hit = new Audio(hitLink);
 const go = new Audio(goLink);
+const level = new Audio(levelLink);
 const countdown = new Audio(countdownLink);
 
 // Initialize core ThreeJS components
@@ -341,6 +343,12 @@ const onAnimationFrameHandler = (timeStamp) => {
               }
               document.getElementById('score').innerHTML = 'Score: ' + score;
               collisionObj.onCollision();
+          } else if (collisionObj.name === 'coffee') {
+            if (!collisionObj.collected) {
+                scene.invincible = true;
+                level.play();
+            }
+            collisionObj.onCollision();
           } else if (collisionObj.name === 'fox') {
               if (!collisionObj.collected) {
                   lives -= 1;

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import holographicImg from './holographic.jpg';
 import {
     Group,
     Mesh,
@@ -7,6 +8,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CircleGeometry,
+    TextureLoader,
     SpotLight,
     CylinderGeometry,
     AxesHelper,
@@ -70,6 +72,18 @@ function createWindshield(x, y, z, dx, dy, dz) {
     return mesh;
 }
 
+const loader = new TextureLoader();
+const holographicTexture = loader.load(holographicImg);
+
+const holographicMat = new MeshToonMaterial({
+  color: Colors.gray,
+  map: holographicTexture,
+});
+
+const redMat = new MeshToonMaterial({
+  color: Colors.red,
+});
+
 class Car extends Group {
     constructor(parent) {
         super();
@@ -77,17 +91,18 @@ class Car extends Group {
           lightsOn: false,
           lightsOn: false,
           threshold: 10,
+          changeRed: false,
+          changeH: true,
           bobbing: true,
         }
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
-
+        this.timer = null;
         this.init();
         this.name = 'car';
         this.bb = bb;
         this.maxPos = 2.5;
-
         this.init();
 
         // Add self to parent's update list
@@ -96,13 +111,11 @@ class Car extends Group {
 
     init() {
         let body = new BoxGeometry(2.5, 0.5, 4);
-        let bodyMat = new MeshToonMaterial({
-            color: Colors.red,
-        });
-        let carBody = new Mesh(body, bodyMat);
+        let carBody = new Mesh(body, redMat);
         carBody.castShadow = true;
         carBody.receiveShadow = true;
         carBody.position.set(0, 1, 0);
+        carBody.name = 'carbody';
         this.add(carBody);
 
         // // creates the top of the car
@@ -118,11 +131,12 @@ class Car extends Group {
             color: Colors.red,
             flatShading: true,
         });
-        let carTop = new Mesh(top, topMat);
+        let carTop = new Mesh(top, redMat);
         carTop.scale.set(2.5, 2, 2.5);
         carTop.castShadow = true;
         carTop.receiveShadow = true;
         carTop.position.set(0, 2, 0);
+        carTop.name = 'cartop';
         this.add(carTop);
 
         let windshield = createWindshield(2, 1.4, 3, 0, 2.2, 0);
@@ -294,6 +308,29 @@ class Car extends Group {
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
             this.children[18].rotation.z = Math.sin(timeStamp / 200);
         }
+
+        let currTime = Date.now() / 1000;
+
+        if (this.timer !== null && (currTime - this.timer > 7)) {
+          this.parent.invincible = false;
+          this.state.changeH = true;
+          this.timer = null;
+        }
+
+        if (this.parent.invincible && this.state.changeH)  {
+          this.children[0].material = holographicMat;
+          this.children[1].material = holographicMat;
+          this.state.changeH = false;
+          this.state.changeRed = true;
+          this.timer = Date.now() / 1000;
+        }
+
+        if (!this.parent.invincible && this.state.changeRed) {
+          this.children[0].material = redMat;
+          this.children[1].material = redMat;
+          this.state.changeRed = false;
+        }
+
     }
 
     bobble(timeStamp) {
