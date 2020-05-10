@@ -25,6 +25,7 @@ import {
     OtherCar,
     Coffee,
     Crosswalk,
+    Bus
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -61,7 +62,7 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        this.edge = 15;
+        this.edge = 12;
         this.collidableMeshList = []; // List of collidable meshes
 
         this.invincible = false;
@@ -337,41 +338,35 @@ class Washington extends Scene {
         otherCar1.position.set(
           -1.5 + Math.random(),
           0,
-          -(250 * Math.random(0))
+          -(250 * Math.random())
         );
         otherCar1.rotation.set(0, Math.PI, 0);
         this.add(otherCar1);
         this.collidableCarList.push(otherCar1);
+        this.collidableMeshList.push(otherCar1);
 
         var otherCar2 = new OtherCar(this, 0xffed16);
         otherCar2.position.set(
           -1.5 + Math.random(),
           0,
-          -(250 * Math.random(1))
+          -(250 * Math.random())
         );
         otherCar2.rotation.set(0, Math.PI, 0);
         this.add(otherCar2);
         this.collidableCarList.push(otherCar2);
-        
-        // var otherCar3 = new OtherCar(this, 0x000000);
-        // otherCar3.position.set(
-        //   -1.5 + Math.random(),
-        //   0,
-        //   -(250 * Math.random(2))
-        // );
-        // otherCar3.rotation.set(0, Math.PI, 0);
-        // this.add(otherCar3);
-        // this.collidableCarList.push(otherCar3);
-        //
-        // var otherCar4 = new OtherCar(this, 0xffffff);
-        // otherCar4.position.set(
-        //   -1.5 + Math.random(),
-        //   0,
-        //   -(250 * Math.random(3))
-        // );
-        // otherCar4.rotation.set(0, Math.PI, 0);
-        // this.add(otherCar4);
-        // this.collidableCarList.push(otherCar4);
+        this.collidableMeshList.push(otherCar2);
+
+        // Add a bus
+        var bus = new Bus(this);
+        bus.position.set(
+          -1.5 + Math.random(),
+          0,
+          -(250 * Math.random())
+        );
+        bus.scale.set(0.18, 0.18, 0.18);
+        this.add(bus);
+        this.collidableCarList.push(bus);
+        this.collidableMeshList.push(bus);
     }
 
     addToUpdateList(obj) {
@@ -387,6 +382,19 @@ class Washington extends Scene {
                 .copy(mesh.bb)
                 .applyMatrix4(mesh.matrixWorld);
             if (thisBB.intersectsBox(thatBB)) return mesh;
+        }
+        return undefined;
+    }
+
+    findOtherCollisions(obj, collidableMeshList) {
+        var thisFBB = new THREE.Box3()
+            .copy(obj.fbb)
+            .applyMatrix4(obj.matrixWorld);
+        for (const mesh of collidableMeshList) {
+            var thatBB = new THREE.Box3()
+                .copy(mesh.bb)
+                .applyMatrix4(mesh.matrixWorld);
+            if (thisFBB.intersectsBox(thatBB)) return mesh;
         }
         return undefined;
     }

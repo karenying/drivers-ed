@@ -362,7 +362,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                 hit.play();
               }
               collisionObj.onCollision();
-          } else if (collisionObj.name === 'otherCar') {
+          } else if (collisionObj.name === 'otherCar' || collisionObj.name === 'bus') {
               if (!(scene.invincible || collisionObj.collected)) {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
@@ -379,29 +379,22 @@ const onAnimationFrameHandler = (timeStamp) => {
 
     // find other car collisions and stop cars
     for (const otherCar of scene.collidableCarList) {
-      var collisionObj = scene.findCollisions(
+      var collisionObj = scene.findOtherCollisions(
           otherCar,
           scene.collidableMeshList
       );
+
+      var setIdle = false;
       if (collisionObj !== undefined && collisionObj !== otherCar) {
         if (collisionObj.name === 'fox' || collisionObj.name === 'pedestrian') {
-          otherCar.state.idle = true;
+          setIdle = true;
         }
-      } else {
-        otherCar.state.idle = false;
+        else if (collisionObj.name === 'otherCar' || collisionObj.name == 'bus') {
+          if (otherCar.position.z < collisionObj.position.z) setIdle = true;
+          else collisionObj.idle = true;
+        }
       }
-    }
-
-    for (const otherCar of scene.collidableCarList) {
-      var collisionObj = scene.findCollisions(
-          otherCar,
-          scene.collidableCarList
-      );
-      if (collisionObj !== otherCar && collisionObj !== undefined) {
-        otherCar.idle = true;
-      } else {
-        otherCar.idle = false;
-      }
+      otherCar.idle = setIdle;
     }
 
     // game over if lives are 0

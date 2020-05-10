@@ -15,3 +15,4 @@ export * from './Sidewalk';
 export * from './OtherCar';
 export * from './Coffee';
 export * from './Crosswalk';
+export * from './Bus';
