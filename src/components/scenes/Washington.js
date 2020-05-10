@@ -25,13 +25,10 @@ import {
     OtherCar,
     Coffee,
     Crosswalk,
-<<<<<<< HEAD
-=======
     Sun,
     Moon,
     Cloud,
     Star,
->>>>>>> c8a60866be0282c3be6c6136d7295dd5d53f2f45
     Bus
 } from 'objects';
 import { BasicLights } from 'lights';
@@ -69,7 +66,7 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        this.edge = 12;
+        this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
         this.collidableCarList = []; // List of non-driver vehicles
 

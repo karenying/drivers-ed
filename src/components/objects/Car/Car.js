@@ -13,6 +13,9 @@ import {
     CylinderGeometry,
     AxesHelper,
 } from 'three';
+import leveldownLink from '../../../assets/leveldown.wav';
+
+const leveldown = new Audio(leveldownLink);
 
 var Colors = {
     red: 0xcf4f48,
@@ -321,10 +324,29 @@ class Car extends Group {
 
         let currTime = Date.now() / 1000;
 
-        if (this.timer !== null && (currTime - this.timer > 7)) {
-          this.parent.invincible = false;
-          this.state.changeH = true;
-          this.timer = null;
+        if (this.timer !== null) {
+            if ((currTime - this.timer < 6.25) && (currTime - this.timer) >= 6) {
+                this.children[0].material = redMat;
+                this.children[1].material = redMat;
+            }
+            else if ((currTime - this.timer < 6.5) && (currTime - this.timer) >= 6.25) {
+                this.children[0].material = holographicMat;
+                this.children[1].material = holographicMat;
+            }
+            else if ((currTime - this.timer < 6.75) && (currTime - this.timer) >= 6.5) {
+                this.children[0].material = redMat;
+                this.children[1].material = redMat;
+            }
+            else if ((currTime - this.timer <= 7) && (currTime - this.timer) >= 6.75) {
+                this.children[0].material = holographicMat;
+                this.children[1].material = holographicMat;
+            }
+            else if (currTime - this.timer > 7) {
+                this.parent.invincible = false;
+                this.state.changeH = true;
+                this.timer = null;
+                leveldown.play();
+            }
         }
 
         if (this.parent.invincible && this.state.changeH)  {
