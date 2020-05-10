@@ -13,7 +13,7 @@ class MalePedestrianShorts extends Group {
 
         const geo = new Geometry();
 
-        let chadColors = {
+        let colors = {
             eye: 0x36699c,
             hair: 0xd1c569,
             skin: 0xb48a78,
@@ -24,42 +24,42 @@ class MalePedestrianShorts extends Group {
 
         // head
         const headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
-        headGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        headGeometry.faces.forEach(f => f.color.set(colors.skin));
         geo.merge(headGeometry);
 
         var leftEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        leftEyeGeometry.faces.forEach(f => f.color.set(chadColors.eye));
+        leftEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
         leftEyeGeometry.translate(-0.4, 0.25, 0.4);
         geo.merge(leftEyeGeometry);
 
         var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        rightEyeGeometry.faces.forEach(f => f.color.set(chadColors.eye));
+        rightEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
         rightEyeGeometry.translate(0.4, 0.25, 0.4);
         geo.merge(rightEyeGeometry);
 
         var leftEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        leftEarGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        leftEarGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftEarGeometry.translate(-0.85, 0, 0);
         geo.merge(leftEarGeometry)
 
         var rightEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        rightEarGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        rightEarGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightEarGeometry.translate(0.85, 0, 0);
         geo.merge(rightEarGeometry)
 
         var hairGeometry = new BoxGeometry(1.7, 0.5, 1);
-        hairGeometry.faces.forEach(f => f.color.set(chadColors.hair));
+        hairGeometry.faces.forEach(f => f.color.set(colors.hair));
         hairGeometry.translate(0, 0.9, 0);
         geo.merge(hairGeometry)
 
         var noseGeometry = new BoxGeometry(0.25, 0.5, 0.25);
-        noseGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        noseGeometry.faces.forEach(f => f.color.set(colors.skin));
         noseGeometry.rotateX(-20 * (Math.PI/180));
         noseGeometry.translate(0, 0, 0.4);
         geo.merge(noseGeometry)
 
         var shirtGeometry = new BoxGeometry(1.75, 2, 1);
-        shirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        shirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
         shirtGeometry.translate(0, -1.75, 0);
         geo.merge(shirtGeometry)
 
@@ -67,41 +67,41 @@ class MalePedestrianShorts extends Group {
         const geoLeftArm = new Geometry();
 
         var leftArmGeometry = new BoxGeometry(0.45, 2, 0.5);
-        leftArmGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        leftArmGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftArmGeometry.translate(0, -1, 0);
         geoLeftArm.merge(leftArmGeometry);
 
         var leftShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        leftShirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        leftShirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
         geoLeftArm.merge(leftShirtGeometry)
 
         // right arm
         const geoRightArm = new Geometry();
 
         var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
-        rightArmGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        rightArmGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightArmGeometry.translate(0, -1, 0);
         geoRightArm.merge(rightArmGeometry);
 
         var rightShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        rightShirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        rightShirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
         geoRightArm.merge(rightShirtGeometry)
 
         // left leg
         const geoLeftLeg = new Geometry();
 
         var leftLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        leftLegGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        leftLegGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftLegGeometry.translate(0, -1, 0);
         geoLeftLeg.merge(leftLegGeometry);
 
         var leftShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        leftShortsGeometry.faces.forEach(f => f.color.set(chadColors.shorts));
+        leftShortsGeometry.faces.forEach(f => f.color.set(colors.shorts));
         leftShortsGeometry.translate(0, -0.5, 0);
         geoLeftLeg.merge(leftShortsGeometry);
 
         var leftShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        leftShoeGeometry.faces.forEach(f => f.color.set(chadColors.shoes));
+        leftShoeGeometry.faces.forEach(f => f.color.set(colors.shoes));
         leftShoeGeometry.translate(0, -2.5, 0.25);
         geoLeftLeg.merge(leftShoeGeometry);
 
@@ -109,21 +109,20 @@ class MalePedestrianShorts extends Group {
         const geoRightLeg = new Geometry();
 
         var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        rightLegGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        rightLegGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightLegGeometry.translate(0, -1, 0);
         geoRightLeg.merge(leftLegGeometry);
 
         var rightShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        rightShortsGeometry.faces.forEach(f => f.color.set(chadColors.shorts));
+        rightShortsGeometry.faces.forEach(f => f.color.set(colors.shorts));
         rightShortsGeometry.translate(0, -0.5, 0);
         geoRightLeg.merge(rightShortsGeometry);
 
         var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        rightShoeGeometry.faces.forEach(f => f.color.set(chadColors.shoes));
+        rightShoeGeometry.faces.forEach(f => f.color.set(colors.shoes));
         rightShoeGeometry.translate(0, -2.5, 0.25);
         geoRightLeg.merge(rightShoeGeometry);
 
-        // this.add(head, leftArm, rightArm, leftLeg, rightLeg);
         const headMesh = new Mesh(
             geo,
             new MeshToonMaterial({
