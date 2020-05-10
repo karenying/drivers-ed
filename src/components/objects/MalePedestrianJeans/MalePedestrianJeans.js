@@ -40,21 +40,19 @@ class MalePedestrianJeans extends Group {
         geo.merge(headGeometry);
 
         var leftEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
+        var rightEyeGeometry = leftEyeGeometry.clone();
         leftEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
         leftEyeGeometry.translate(-0.4, 0.25, 0.4);
         geo.merge(leftEyeGeometry);
-
-        var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
         rightEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
         rightEyeGeometry.translate(0.4, 0.25, 0.4);
         geo.merge(rightEyeGeometry);
 
         var leftEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
+        var rightEarGeometry = leftEarGeometry.clone();
         leftEarGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftEarGeometry.translate(-0.85, 0, 0);
         geo.merge(leftEarGeometry)
-
-        var rightEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
         rightEarGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightEarGeometry.translate(0.85, 0, 0);
         geo.merge(rightEarGeometry)
@@ -83,11 +81,7 @@ class MalePedestrianJeans extends Group {
         geoLeftArm.merge(leftArmGeometry);
 
         // right arm
-        const geoRightArm = new Geometry();
-        var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
-        rightArmGeometry.faces.forEach(f => f.color.set(colors.skin));
-        rightArmGeometry.translate(0, -1, 0);
-        geoRightArm.merge(rightArmGeometry);
+        const geoRightArm = geoLeftArm.clone();
 
         // left leg
         const geoLeftLeg = new Geometry();
@@ -103,17 +97,7 @@ class MalePedestrianJeans extends Group {
         geoLeftLeg.merge(leftShoeGeometry);
 
         // right leg
-        const geoRightLeg = new Geometry();
-
-        var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        rightLegGeometry.faces.forEach(f => f.color.set(colors.jeans));
-        rightLegGeometry.translate(0, -1, 0);
-        geoRightLeg.merge(leftLegGeometry);
-
-        var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        rightShoeGeometry.faces.forEach(f => f.color.set(colors.shoes));
-        rightShoeGeometry.translate(0, -2.5, 0.25);
-        geoRightLeg.merge(rightShoeGeometry);
+        const geoRightLeg = geoLeftLeg.clone();
 
         const headMesh = new Mesh(
             new BufferGeometry().fromGeometry(geo),
