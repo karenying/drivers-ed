@@ -4,6 +4,7 @@ import {
     MeshStandardMaterial,
     Mesh,
     DoubleSide,
+    BufferGeometry
 } from 'three';
 
 class Crosswalk extends Group {
@@ -22,7 +23,8 @@ class Crosswalk extends Group {
         });
 
         // center crosswalk stripe to cover yellow road stripe
-        const stripeGeometry = new PlaneGeometry(0.3, 8);
+        const stripeGeometry = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.3, 8));
         let centerStripe = new Mesh(stripeGeometry, stripeMaterial);
         centerStripe.rotation.x = Math.PI / 2;
         this.add(centerStripe);
@@ -46,7 +48,8 @@ class Crosswalk extends Group {
         }
 
         // horizontal stripes
-        const hozStripeGeometry = new PlaneGeometry(0.5, 5);
+        const hozStripeGeometry = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.5, 5));
         let hoz1 = new Mesh(hozStripeGeometry, stripeMaterial);
         centerStripe.add(hoz1);
         hoz1.position.set(0, -4, 0.001);

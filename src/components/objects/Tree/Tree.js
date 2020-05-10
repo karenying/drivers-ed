@@ -7,6 +7,7 @@ import {
     DoubleSide,
     SphereGeometry,
     BoxGeometry,
+    BufferGeometry
 } from 'three';
 
 var Colors = {
@@ -17,7 +18,7 @@ var Colors = {
 };
 
 function createCylinder(x, y, z, s, color, dx, dy, dz) {
-  let geo = new CylinderGeometry(x, y, z, s);
+  let geo = new BufferGeometry().fromGeometry(new CylinderGeometry(x, y, z, s));
   let mat = new MeshToonMaterial({
     color: color,
     flatShading: true,
