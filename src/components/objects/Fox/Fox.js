@@ -4,6 +4,8 @@ import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 import {
     Group,
     Mesh,
+    Geometry,
+    VertexColors,
     CircleGeometry,
     MeshToonMaterial,
     CylinderGeometry,
@@ -19,21 +21,25 @@ var Colors = {
 
 };
 
+const orangeMat = new MeshToonMaterial({
+  color: Colors.russet,
+  flatShading: true,
+});
+
+const mat = new MeshToonMaterial({
+  vertexColors: VertexColors,
+  flatShading: true,
+});
+
 function makeBox(x, y, z, modify, color, dx, dy, dz) {
   let geo = new BoxGeometry(x, y, z);
   if (modify){
     geo.vertices[4].y -= 0.2;
     geo.vertices[5].y -= 0.2;
   }
-  let mat = new MeshToonMaterial({
-    color: color,
-    flatShading: true,
-  });
-  let mesh = new Mesh(geo, mat);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.position.set(dx, dy, dz);
-  return mesh;
+  geo.faces.forEach(f => f.color.set(color));
+  geo.translate(dx, dy, dz);
+  return geo;
 };
 
 function makeLeg(x, y, z, color, dx, dy, dz) {
@@ -75,101 +81,73 @@ class Fox extends Group {
   }
 
   init() {
-    let body = makeBox(1.98, 0.6, 0.7, true, Colors.russet, 0, 0, 0);
-    let whiteBody = makeBox(1.5, 0.15, 0.72, false,Colors.white, 0, -0.22, 0);
-    body.add(whiteBody);
+    const bodyGeo = new Geometry();
+    const rBodyGeo = makeBox(1.98, 0.6, 0.7, true, Colors.russet, 0, 0, 0);
+    bodyGeo.merge(rBodyGeo);
+    const wBodyGeo = makeBox(1.5, 0.15, 0.72, false,Colors.white, 0, -0.22, 0);
+    bodyGeo.merge(wBodyGeo);
     let tail = makeLeg(0.1, 0.2, 0.65, Colors.russet, -1.2, -0.2, 0);
     tail.geometry.rotateZ(Math.PI / 1.5);
+    tail.geometry.translate(-1.2, -0.2, 0);
+    tail.geometry.faces.forEach(f => f.color.set(Colors.russet));
+    bodyGeo.merge(tail.geometry);
+    let body = new Mesh(bodyGeo, mat);
     this.add(body);
-    this.add(tail);
 
     // creates legs
     let legOne = makeLeg(0.1, 0.05, 0.65, Colors.russet, 0.8, -0.5, 0.25);
     this.add(legOne);
-
     let legTwo = makeLeg(0.1, 0.05, 0.65, Colors.russet, -0.8, -0.5, 0.25);
     this.add(legTwo);
-
     let legThree = makeLeg(0.1, 0.05, 0.65, Colors.russet, 0.8, -0.5, -0.25);
     this.add(legThree);
-
     let legFour= makeLeg(0.1, 0.05, 0.65, Colors.russet, -0.8, -0.5, -0.25);
     this.add(legFour);
 
+    const faceGeo = new Geometry();
     // creates fox face
-    let faceGeo = new BoxGeometry(0.5, 0.7, 0.7);
-    faceGeo.vertices[1].y -= 0.2;
-    faceGeo.vertices[0].y -= 0.2;
-    faceGeo.vertices[7].y -= 0.1;
-    faceGeo.vertices[6].y -= 0.1;
-    let orangeMat = new MeshToonMaterial({
-      color: Colors.russet,
-      flatShading: true,
-    });
-    let face = new Mesh(faceGeo, orangeMat);
-    face.position.set(1, 0.5, 0);
-    face.name = "face";
+    const headGeo = new BoxGeometry(0.5, 0.7, 0.7);
+    headGeo.vertices[1].y -= 0.2;
+    headGeo.vertices[0].y -= 0.2;
+    headGeo.vertices[7].y -= 0.1;
+    headGeo.vertices[6].y -= 0.1;
+    headGeo.faces.forEach(f => f.color.set(Colors.russet));
+    headGeo.translate(1, 0.5, 0);
+    faceGeo.merge(headGeo);
 
-    // create snout on face
-    let snoutMesh = new CylinderGeometry(0.05, 0.25, 0.4, 4);
-    snoutMesh.rotateZ(3 * Math.PI/2);
-    snoutMesh.rotateX(Math.PI / 4);
-    let snout = new Mesh(snoutMesh, orangeMat);
-    snout.name = "snout";
-    snout.position.set(0.4, -0.1, 0);
+    const snoutGeo = new CylinderGeometry(0.05, 0.25, 0.4, 4);
+    snoutGeo.rotateZ(3 * Math.PI/2);
+    snoutGeo.rotateX(Math.PI / 4);
+    snoutGeo.faces.forEach(f => f.color.set(Colors.russet));
+    snoutGeo.translate(1.4, 0.4, 0);
+    faceGeo.merge(snoutGeo);
 
-    let noseMesh = new SphereGeometry(0.05, 4);
-    let noseMat = new MeshToonMaterial({
-      color: Colors.black,
-      flatShading: true,
-    });
-    let nose = new Mesh(noseMesh, noseMat);
-    nose.position.set(0.2, 0, 0);
-    nose.name = "nose";
-    snout.add(nose);
-    face.add(snout);
+    const noseGeo = new SphereGeometry(0.05, 4);
+    noseGeo.faces.forEach(f => f.color.set(Colors.black));
+    noseGeo.translate(1.1, 0.6, 0);
+    faceGeo.merge(noseGeo);
 
-    // make ears
-    let earGeo = new CylinderGeometry(0, 0.15, 0.4, 4);
-    earGeo.rotateY(Math.PI / 4);
-    let rightEar = new Mesh(earGeo, orangeMat);
-    let leftEar = new Mesh(earGeo, orangeMat);
-    rightEar.position.set(-0.1, 0.4, 0.2);
-    leftEar.position.set(-0.1, 0.4, -0.2)
-    rightEar.name = "right ear";
-    leftEar.name = "left ear";
-    face.add(rightEar, leftEar);
+    const earGeoR = new CylinderGeometry(0, 0.15, 0.4, 4);
+    const earGeoL = new CylinderGeometry(0, 0.15, 0.4, 4);
+    earGeoR.rotateY(Math.PI / 4);
+    earGeoL.rotateY(Math.PI / 4);
+    earGeoR.faces.forEach(f => f.color.set(Colors.russet));
+    earGeoL.faces.forEach(f => f.color.set(Colors.russet));
+    earGeoR.translate(0.9, 0.9, 0.2);
+    earGeoL.translate(0.9, 0.9, -0.2)
+    faceGeo.merge(earGeoR);
+    faceGeo.merge(earGeoL);
 
-    // make eyes
-    let eyeMesh = new SphereGeometry(0.05, 8);
-    let eyeMat = new MeshToonMaterial({
-      color: Colors.black,
-      flatShading: true,
-    });
-    let eyeRight = new Mesh(eyeMesh, eyeMat);
-    eyeRight.position.set(0.25, 0, -0.35);
-    eyeRight.name = "right eye";
+    const eyeGeoR = new SphereGeometry(0.05, 8);
+    const eyeGeoL = new SphereGeometry(0.05, 8);
+    eyeGeoR.faces.forEach(f => f.color.set(0x000000));
+    eyeGeoL.faces.forEach(f => f.color.set(0x000000))
+    eyeGeoR.translate(1.25, 0.5, -0.35);
+    eyeGeoL.translate(1.25, 0.5, 0.35);
+    faceGeo.merge(eyeGeoR);
+    faceGeo.merge(eyeGeoL);
 
-    let eyeLeft = new Mesh(eyeMesh, eyeMat);
-    eyeLeft.position.set(0.25, 0, 0.35);
-    eyeLeft.name = "left eye";
-
-    let eyeHighlightMesh = new CircleGeometry(0.015, 8);
-    eyeHighlightMesh.vertices[1] =+ 0.2;
-    let eyeHighlightMat = new MeshToonMaterial({
-      color: Colors.white,
-      side: DoubleSide,
-    });
-
-    let eyeRightHighlight = new Mesh(eyeHighlightMesh, eyeHighlightMat);
-    eyeRightHighlight.position.set(0, 0, -0.05);
-    eyeRight.add(eyeRightHighlight);
-
-    let eyeLeftHighlight = new Mesh(eyeHighlightMesh, eyeHighlightMat);
-    eyeLeftHighlight.position.set(0, 0, 0.05);
-    eyeLeft.add(eyeLeftHighlight);
-
-    face.add(eyeRight, eyeLeft);
+    const face = new Mesh(faceGeo, mat);
 
     this.add(face);
 
@@ -197,17 +175,17 @@ class Fox extends Group {
       if (bob) {
         // Bob back and forth
         this.rotation.x = 0.1 * Math.sin(timeStamp / 200);
-        this.children[1].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
+        this.children[0].rotation.x = pulseSingle(-5, 5) * (Math.PI/180);
       }
       if (walking) {
         // front left leg
-        this.children[2].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
+        this.children[1].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // back left leg
-        this.children[3].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
+        this.children[2].rotation.z = pulseSingle(-25,25) * -1 * (Math.PI/180);
         // front right leg
-        this.children[4].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
+        this.children[3].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
         // back right leg
-        this.children[5].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
+        this.children[4].rotation.z = pulseSingle(-25,25) * (Math.PI/180);
       }
 
       // if fox is done crossing road or no longer visible in scene
