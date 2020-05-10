@@ -5,6 +5,7 @@ import {
     PlaneGeometry,
     BoxGeometry,
     DoubleSide,
+    BufferGeometry
 } from 'three';
 
 var Colors = {
@@ -92,12 +93,15 @@ class McCosh extends Group {
     }
 
     init() {
-        let buildingGeo = new BoxGeometry(10, 3, 3);
+        let buildingGeo = new BufferGeometry().fromGeometry(
+          new BoxGeometry(10, 3, 3));
         let building = makeMesh(buildingGeo, stone2Mat, 0, 0, 0);
-        let topGeo = new BoxGeometry(10, 0.5, 3);
+        let topGeo = new BufferGeometry().fromGeometry(
+          new BoxGeometry(10, 0.5, 3));
         let top = makeMesh(topGeo, stoneMat, 0, 1.75, 0);
 
-        let turretGeo = new BoxGeometry(0.5, 0.5, 0.5);
+        let turretGeo = new BufferGeometry().fromGeometry(
+          new BoxGeometry(0.5, 0.5, 0.5));
         let turret = makeMesh(turretGeo, stoneMat, 4.75, 0.5, -1.25);
         let turret2 = makeMesh(turretGeo, stoneMat, 0, 0, 2.5);
         turret.add(turret2);
@@ -114,12 +118,16 @@ class McCosh extends Group {
         building.add(top);
 
         // window
-        let windowFrameGeo = new PlaneGeometry(0.5, 1, 0.01);
-        let smallWindowGeo = new PlaneGeometry(0.5, 0.5, 0.01);
+        let windowFrameGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.5, 1, 0.01));
+        let smallWindowGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.5, 0.5, 0.01));
         let windows = makeMesh(windowFrameGeo, windowMat, 4, 0.75, -1.51);
         let smallWindow = makeMesh(smallWindowGeo, windowMat, 0, -1.25, 0);
-        let windowPaneGeo = new PlaneGeometry(0.15, 0.4, 0.01);
-        let smallPaneGeo = new PlaneGeometry(0.15, 0.15, 0.01);
+        let windowPaneGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.15, 0.4, 0.01));
+        let smallPaneGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.15, 0.15, 0.01));
         makeWindow(0.1, 0.225, windowPaneGeo, cementMat, windows);
         makeWindow(0.1, 0.1, smallPaneGeo, cementMat, smallWindow);
         windows.add(smallWindow);
@@ -134,10 +142,12 @@ class McCosh extends Group {
             x += 1;
         }
 
-        let bigWindowGeo = new PlaneGeometry(1, 2, 0.01);
+        let bigWindowGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(1, 2, 0.01));
         let bigWindow1 = makeMesh(bigWindowGeo, windowMat, 5.01, 0, 0);
         let bigWindow2 = makeMesh(bigWindowGeo, windowMat, -5.01, 0, 0);
-        let bigPaneGeo = new PlaneGeometry(0.4, 0.9, 0.01);
+        let bigPaneGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.4, 0.9, 0.01));
         makeWindow(0.25, 0.5, bigPaneGeo, cementMat, bigWindow1);
         makeWindow(0.25, 0.5, bigPaneGeo, cementMat, bigWindow2);
         bigWindow1.rotateY((3 * Math.PI) / 2);

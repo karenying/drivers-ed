@@ -7,6 +7,7 @@ import {
     CircleGeometry,
     DoubleSide,
     CylinderGeometry,
+    BufferGeometry
 } from 'three';
 
 var Colors = {
@@ -130,25 +131,25 @@ class Cap extends Group {
     init() {
         // Cap and Gown Club
         // shapes
-        let buildingGeo = new BoxGeometry(7, 3, 3);
+        let buildingGeo = new BufferGeometry().fromGeometry(new BoxGeometry(7, 3, 3));
         let building = makeMesh(buildingGeo, buildingMat, 0, 0, 0);
 
         // make door
-        let doorFrameGeo = new BoxGeometry(1.25, 1.5, 0.1);
+        let doorFrameGeo = new BufferGeometry().fromGeometry(new BoxGeometry(1.25, 1.5, 0.1));
         let doorFrame = makeMesh(doorFrameGeo, cementMat, 0, -0.75, -1.51);
-        let doorGeo = new PlaneGeometry(0.75, 0.7, 0.01);
-        let doorTopGeo = new CircleGeometry(0.375, 32);
+        let doorGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.75, 0.7, 0.01));
+        let doorTopGeo = new BufferGeometry().fromGeometry(new CircleGeometry(0.375, 32));
         let doorTop = makeMesh(doorTopGeo, woodMat, 0, 0.3, 0);
         let door = makeMesh(doorGeo, woodMat, 0, -0.4, -0.06);
         door.add(doorTop);
         doorFrame.add(door);
 
         // windows
-        let topWindowFrameGeo = new PlaneGeometry(0.6, 0.8, 0.01);
+        let topWindowFrameGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.6, 0.8, 0.01));
         let topWindow = makeMesh(topWindowFrameGeo, cementMat, 0, 0.6, -1.51);
 
         // front door window
-        let windowPaneGeo = new PlaneGeometry(0.25, 0.35, 0.01);
+        let windowPaneGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.25, 0.35, 0.01));
         makeWindow(0.15, 0.2, windowPaneGeo, windowMat, topWindow);
 
         let shift = 1.2;
@@ -178,9 +179,9 @@ class Cap extends Group {
         // side windows
         let sideWindow1 = makeMesh(topWindowFrameGeo, cementMat, 2.5, 1, -3.01);
         makeWindow(0.15, 0.2, windowPaneGeo, windowMat, sideWindow1);
-        let largeWindowGeo = new PlaneGeometry(1.2, 1.2, 0.01);
+        let largeWindowGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(1.2, 1.2, 0.01));
         let sideWindow2 = makeMesh(largeWindowGeo, cementMat, 2.5, -0.5, -3.01);
-        let squareWindowGeo = new PlaneGeometry(0.5, 0.5, 0.01);
+        let squareWindowGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.5, 0.5, 0.01));
         makeWindow(0.27, 0.27, squareWindowGeo, windowMat, sideWindow2);
         building.add(doorFrame, topWindow, sideWindow1, sideWindow2);
 
@@ -188,7 +189,8 @@ class Cap extends Group {
         let roof1Geo = new BoxGeometry(7, 1, 3);
         //adjust roof verts
         makeRoof(roof1Geo, 1, 1);
-        let chimney1Geo = new CylinderGeometry(0.3, 0.3, 2, 4);
+        roof1Geo = new BufferGeometry().fromGeometry(roof1Geo);
+        let chimney1Geo = new BufferGeometry().fromGeometry(new CylinderGeometry(0.3, 0.3, 2, 4));
         chimney1Geo.rotateY(Math.PI / 4);
         let chimney1 = makeMesh(chimney1Geo, buildingMat, 1.5, -0.5, -1.3);
         let roof1 = makeMesh(roof1Geo, roofMat, 0, 2, 0);
@@ -196,19 +198,21 @@ class Cap extends Group {
         building.add(roof1);
 
         // make left annex building
-        let annexGeo = new BoxGeometry(2, 3, 2);
+        let annexGeo = new BufferGeometry().fromGeometry(new BoxGeometry(2, 3, 2));
         let annex = makeMesh(annexGeo, buildingMat, 2.5, 0, -2);
         let annexRoofGeo = new BoxGeometry(2, 1, 2);
         // fix annex roof geo
         makeTriangleRoof(annexRoofGeo, 1);
         annexRoofGeo.vertices[0].z += 0.5;
         annexRoofGeo.vertices[2].z -= 0.5;
+        annexRoofGeo = new BufferGeometry().fromGeometry(annexRoofGeo);
         let annexRoof = makeMesh(annexRoofGeo, roofMat, 0, 2, 0);
         let annexRoof2Geo = new BoxGeometry(2, 1, 0.001);
         annexRoof2Geo.vertices[0].x -= 1;
         annexRoof2Geo.vertices[1].x -= 1;
         annexRoof2Geo.vertices[5].x += 1;
         annexRoof2Geo.vertices[4].x += 1;
+        annexRoof2Geo = new BufferGeometry().fromGeometry(annexRoof2Geo);
         let annexRoof2 = makeMesh(annexRoof2Geo, buildingMat, 0, -0.01, -1.0);
         annexRoof.add(annexRoof2);
         annex.add(annexRoof);

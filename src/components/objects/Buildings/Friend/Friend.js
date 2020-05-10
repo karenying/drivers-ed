@@ -1,7 +1,7 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
 
 function createBox(x, y, z, materials) {
-    var boxGeometry = new BoxGeometry(x, y, z);
+    var boxGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
     var box = new Mesh(boxGeometry, materials);
     return box;
 }

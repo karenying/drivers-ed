@@ -34,21 +34,22 @@ class Bus extends Group {
         }
         this.idle = false;
         this.parent = parent;
-        this.speed = 0.25;
-        
+        this.speed = 0.5;
+
         const loader = new GLTFLoader();
 
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
         });
-        
+
         // Create bounding box
         this.idle = false;
         this.collected = false;
-        
+
         this.name = 'bus';
         this.lightTarget = new THREE.Object3D();
-        this.lightTarget.position.z = -5;
+        this.lightTarget.position.x = 0;
+        this.lightTarget.position.z = 10;
         this.lightTarget.position.y = 1;
         this.add(this.lightTarget);
 
@@ -59,53 +60,34 @@ class Bus extends Group {
     }
 
     init() {
-      // creates headlights
-      let headLightGeo = new CircleGeometry(0.15, 32);
-      let headLightMaterial = new MeshToonMaterial({
-          color: Colors.darkyellow,
-          side: DoubleSide,
-      });
-      let headLightOne = new Mesh(headLightGeo, headLightMaterial);
-      let headLightTwo = new Mesh(headLightGeo, headLightMaterial);
-      this.add(headLightOne);
-      headLightOne.position.set(1, 0, 2.01);
-      this.add(headLightTwo);
-      headLightTwo.position.set(-1, 0, 2.01);
 
-      let frontHeadLight1 = new Mesh(headLightGeo, headLightMaterial);
-      let frontHeadLight2 = new Mesh(headLightGeo, headLightMaterial);
-      this.add(frontHeadLight1);
-      frontHeadLight1.position.set(1, 0, -2.01);
-      this.add(frontHeadLight2);
-      frontHeadLight2.position.set(-1, 0, -2.01);
-      
       // create night mode headlights
       let beamerOne = new SpotLight(0xffffff, 0);
-      beamerOne.position.set(2, 1, 4);
-      beamerOne.angle = 0.15;
+      beamerOne.position.set(5, 1, 12);
+      beamerOne.angle = 0.5;
       beamerOne.distance = 30;
       beamerOne.name = "beamer1";
       let beamerTwo= new SpotLight(0xffffff, 0);
-      beamerTwo.position.set(-2, 1, 4);
-      beamerTwo.angle = 0.15;
+      beamerTwo.position.set(-5, 1, 12);
+      beamerTwo.angle = 0.5;
       beamerTwo.distance = 30;
       beamerTwo.name = "beamer2";
       beamerOne.target = this.lightTarget;
       beamerTwo.target = this.lightTarget;
       this.add(beamerOne, beamerTwo);
-      
+
       this.bb = new THREE.Box3(
         new THREE.Vector3(-5, -10, -15),
         new THREE.Vector3(5, 10, 15)
       );
       var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-      
+
       this.fbb = new THREE.Box3(
-        new THREE.Vector3(-5, -10, -15),
+        new THREE.Vector3(-5, -10, 15),
         new THREE.Vector3(5, 10, 17)
       );
       var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
-      // this.add(fbbHelper);
+      // this.add(bbHelper);
     }
 
     update(timeStamp) {
@@ -148,7 +130,7 @@ class Bus extends Group {
           if (this.parent.stopped) var newZ = this.position.z + this.speed;
           else var newZ = this.position.z + this.parent.gameSpeed + this.speed;
         }
-        
+
         if (newZ > this.parent.camera.position.z) {
           newZ = -(this.parent.fog.far + 70 * Math.random());
           while (newZ > this.parent.camera.position.z - 50) {
@@ -170,7 +152,7 @@ class Bus extends Group {
 
     resetParams() {
       this.collected = false;
-      this.position.y = 0;
+      this.position.y = 0.5;
     }
 
     onCollision() {

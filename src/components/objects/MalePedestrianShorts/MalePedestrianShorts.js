@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
-import { Group, BoxGeometry,  Mesh, MeshToonMaterial} from "three";
+import { Group, 
+    BoxGeometry, 
+    Mesh, 
+    MeshToonMaterial, 
+    Geometry, 
+    VertexColors,
+    BufferGeometry} from "three";
 
 class MalePedestrianShorts extends Group {
     constructor(parent, nameType, partOfCluster) {
@@ -15,7 +21,7 @@ class MalePedestrianShorts extends Group {
             sidewalk: false,
         };
 
-        let materials = this.getMaterials();
+        let colors = this.getColors();
 
         this.name = 'pedestrian';
         this.speed = 0.03; // 0.03
@@ -28,124 +34,148 @@ class MalePedestrianShorts extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
 
+        const geo = new Geometry();
         // head
-        var headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
-        var head = new Mesh(headGeometry, materials.skin);
-        head.name = "head"
-        head.position.set(0, 4, 0);
+        const headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
+        headGeometry.faces.forEach(f => f.color.set(colors.skin));
+        geo.merge(headGeometry);
 
         var leftEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        var leftEye = new Mesh(leftEyeGeometry, materials.eye);
-        leftEye.name = "left eye";
-        head.add(leftEye);
-        leftEye.position.set(-0.4, 0.25, 0.4);
+        leftEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
+        leftEyeGeometry.translate(-0.4, 0.25, 0.4);
+        geo.merge(leftEyeGeometry);
 
         var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        var rightEye = new Mesh(rightEyeGeometry, materials.eye);
-        rightEye.name = "right eye";
-        head.add(rightEye);
-        rightEye.position.set(0.4, 0.25, 0.4);
+        rightEyeGeometry.faces.forEach(f => f.color.set(colors.eye));
+        rightEyeGeometry.translate(0.4, 0.25, 0.4);
+        geo.merge(rightEyeGeometry);
 
         var leftEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        var leftEar = new Mesh(leftEarGeometry, materials.skin);
-        leftEar.name = "left ear";
-        head.add(leftEar);
-        leftEar.position.set(-0.85, 0, 0);
+        leftEarGeometry.faces.forEach(f => f.color.set(colors.skin));
+        leftEarGeometry.translate(-0.85, 0, 0);
+        geo.merge(leftEarGeometry)
 
         var rightEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        var rightEar = new Mesh(rightEarGeometry, materials.skin);
-        rightEar.name = "right ear";
-        head.add(rightEar);
-        rightEar.position.set(0.85, 0, 0);
+        rightEarGeometry.faces.forEach(f => f.color.set(colors.skin));
+        rightEarGeometry.translate(0.85, 0, 0);
+        geo.merge(rightEarGeometry)
 
         var hairGeometry = new BoxGeometry(1.7, 0.5, 1);
-        var hair = new Mesh(hairGeometry, materials.hair);
-        hair.name = "hair";
-        head.add(hair);
-        hair.position.set(0, 0.9, 0);
+        hairGeometry.faces.forEach(f => f.color.set(colors.hair));
+        hairGeometry.translate(0, 0.9, 0);
+        geo.merge(hairGeometry)
 
         var noseGeometry = new BoxGeometry(0.25, 0.5, 0.25);
-        var nose = new Mesh(noseGeometry, materials.skin);
-        nose.name = "nose";
-        head.add(nose);
-        nose.position.set(0, 0, 0.4);
-        nose.rotation.x = -20 * (Math.PI/180);
+        noseGeometry.faces.forEach(f => f.color.set(colors.skin));
+        noseGeometry.rotateX(-20 * (Math.PI/180));
+        noseGeometry.translate(0, 0, 0.4);
+        geo.merge(noseGeometry)
 
         var shirtGeometry = new BoxGeometry(1.75, 2, 1);
-        var shirt = new Mesh(shirtGeometry, materials.shirt);
-        head.add(shirt)
-        shirt.name = "shirt";
-        shirt.position.set(0, -1.75, 0);
+        shirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
+        shirtGeometry.translate(0, -1.75, 0);
+        geo.merge(shirtGeometry)
 
         // left arm
+        const geoLeftArm = new Geometry();
+
         var leftArmGeometry = new BoxGeometry(0.45, 2, 0.5);
+        leftArmGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftArmGeometry.translate(0, -1, 0);
-        var leftArm = new Mesh(leftArmGeometry, materials.skin);
-        leftArm.name = "left arm";
-        leftArm.position.set(-1.15, 3, 0);
+        geoLeftArm.merge(leftArmGeometry);
 
         var leftShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        leftShirtGeometry.translate(0, -1, 0);
-        var leftShirt = new Mesh(leftShirtGeometry, materials.shirt);
-        leftShirt.name = "left shirt";
-        leftArm.add(leftShirt);
-        leftShirt.position.set(0, 0.75, 0);
+        leftShirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
+        geoLeftArm.merge(leftShirtGeometry)
 
         // right arm
+        const geoRightArm = new Geometry();
+
         var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
+        rightArmGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightArmGeometry.translate(0, -1, 0);
-        var rightArm = new Mesh(rightArmGeometry, materials.skin);
-        rightArm.name = "right arm";
-        rightArm.position.set(1.15, 3, 0);
+        geoRightArm.merge(rightArmGeometry);
 
         var rightShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        rightShirtGeometry.translate(0, -1, 0);
-        var rightShirt = new Mesh(rightShirtGeometry, materials.shirt);
-        rightShirt.name = "right shirt";
-        rightArm.add(rightShirt);
-        rightShirt.position.set(0, 0.75, 0);
+        rightShirtGeometry.faces.forEach(f => f.color.set(colors.shirt));
+        geoRightArm.merge(rightShirtGeometry)
 
         // left leg
+        const geoLeftLeg = new Geometry();
+
         var leftLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
+        leftLegGeometry.faces.forEach(f => f.color.set(colors.skin));
         leftLegGeometry.translate(0, -1, 0);
-        var leftLeg = new Mesh(leftLegGeometry, materials.skin);
-        leftLeg.name = "left leg";
-        leftLeg.position.set(-0.5, 1.25, 0);
+        geoLeftLeg.merge(leftLegGeometry);
 
         var leftShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        leftShortsGeometry.translate(0, -1, 0);
-        var leftShorts = new Mesh(leftShortsGeometry, materials.shorts);
-        leftShorts.name = "left shorts";
-        leftLeg.add(leftShorts);
-        leftShorts.position.set(0, 0.75, 0);
+        leftShortsGeometry.faces.forEach(f => f.color.set(colors.shorts));
+        leftShortsGeometry.translate(0, -0.5, 0);
+        geoLeftLeg.merge(leftShortsGeometry);
 
         var leftShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        var leftShoe = new Mesh(leftShoeGeometry, materials.shoes);
-        leftShoe.name = "left shoe";
-        leftLeg.add(leftShoe);
-        leftShoe.position.set(0, -2.5, 0.15);
+        leftShoeGeometry.faces.forEach(f => f.color.set(colors.shoes));
+        leftShoeGeometry.translate(0, -2.5, 0.25);
+        geoLeftLeg.merge(leftShoeGeometry);
 
         // right leg
+        const geoRightLeg = new Geometry();
+
         var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
+        rightLegGeometry.faces.forEach(f => f.color.set(colors.skin));
         rightLegGeometry.translate(0, -1, 0);
-        var rightLeg = new Mesh(rightLegGeometry, materials.skin);
-        rightLeg.name = "right leg";
-        rightLeg.position.set(0.5, 1.25, 0);
+        geoRightLeg.merge(leftLegGeometry);
 
         var rightShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        rightShortsGeometry.translate(0, -1, 0);
-        var rightShorts = new Mesh(rightShortsGeometry, materials.shorts);
-        rightShorts.name = "right shorts";
-        rightLeg.add(rightShorts);
-        rightShorts.position.set(0, 0.75, 0);
+        rightShortsGeometry.faces.forEach(f => f.color.set(colors.shorts));
+        rightShortsGeometry.translate(0, -0.5, 0);
+        geoRightLeg.merge(rightShortsGeometry);
 
         var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        var rightShoe = new Mesh(rightShoeGeometry, materials.shoes);
-        rightShoe.name = "right shoe";
-        rightLeg.add(rightShoe);
-        rightShoe.position.set(0, -2.5, 0.15)
+        rightShoeGeometry.faces.forEach(f => f.color.set(colors.shoes));
+        rightShoeGeometry.translate(0, -2.5, 0.25);
+        geoRightLeg.merge(rightShoeGeometry);
 
-        this.add(head, leftArm, rightArm, leftLeg, rightLeg);
+        const headMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+
+        const leftArmMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geoLeftArm),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        leftArmMesh.position.set(-1.15, -1, 0);
+
+        const rightArmMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geoRightArm),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        rightArmMesh.position.set(1.15, -1, 0);
+
+        const leftLegMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geoLeftLeg),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        leftLegMesh.position.set(-0.5, -2.5, 0);
+
+        const rightLegMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geoRightLeg),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        rightLegMesh.position.set(0.5, -2.5, 0);
+
+        this.add(headMesh, leftArmMesh, rightArmMesh, leftLegMesh, rightLegMesh)
 
         this.scale.set(0.25, 0.25, 0.25);
         this.rotation.y = -1 * (Math.PI/2);
@@ -162,120 +192,48 @@ class MalePedestrianShorts extends Group {
         // this.add(bbHelper);
     }
 
-    getMaterials() {
+    getColors() {
         switch(this.state.type) {
             case 'chad':
-                let chadMaterials = {
-                    eye: new MeshToonMaterial({
-                        color: 0x36699c,
-                        flatShading: true,
-                    }),
-                    hair: new MeshToonMaterial({
-                        color: 0xd1c569,
-                        flatShading: true,
-                    }),
-                    skin: new MeshToonMaterial({
-                        color: 0xb48a78,
-                        flatShading: true,
-                    }),
-                    shorts: new MeshToonMaterial({
-                        color: 0xed7490,
-                        flatShading: true,
-                    }),
-                    shirt: new MeshToonMaterial({
-                        color: 0x72afed,
-                        flatShading: true,
-                    }),
-                    shoes: new MeshToonMaterial({
-                        color: 0x3b2403,
-                        flatShading: true,
-                    }),
+                let chadColors = {
+                    eye: 0x36699c,
+                    hair: 0xd1c569,
+                    skin: 0xb48a78,
+                    shorts: 0xed7490,
+                    shirt: 0x72afed,
+                    shoes: 0x3b2403,
                 };
-                return chadMaterials;
+                return chadColors;
             case 'tom':
-                let tomMaterials = {
-                    eye: new MeshToonMaterial({
-                        color: 0x0d0a02,
-                        flatShading: true,
-                    }),
-                    hair: new MeshToonMaterial({
-                        color: 0x332601,
-                        flatShading: true,
-                    }),
-                    skin: new MeshToonMaterial({
-                        color: 0x7a5528,
-                        flatShading: true,
-                    }),
-                    shorts: new MeshToonMaterial({
-                        color: 0x1e0787,
-                        flatShading: true,
-                    }),
-                    shirt: new MeshToonMaterial({
-                        color: 0xcdcbd4,
-                        flatShading: true,
-                    }),
-                    shoes: new MeshToonMaterial({
-                        color: 0x692d36,
-                        flatShading: true,
-                    }),
+                let tomColors = {
+                    eye: 0x0d0a02,
+                    hair: 0x332601,
+                    skin: 0x7a5528,
+                    shorts: 0x1e0787,
+                    shirt: 0xcdcbd4,
+                    shoes: 0x692d36,
                 };
-                return tomMaterials;
+                return tomColors;
             case 'jeff':
-                let jeffMaterials = {
-                    eye: new MeshToonMaterial({
-                        color: 0x0d0a02,
-                        flatShading: true,
-                    }),
-                    hair: new MeshToonMaterial({
-                        color: 0x000000,
-                        flatShading: true,
-                    }),
-                    skin: new MeshToonMaterial({
-                        color: 0xa1824d,
-                        flatShading: true,
-                    }),
-                    shorts: new MeshToonMaterial({
-                        color: 0x2c7fa3,
-                        flatShading: true,
-                    }),
-                    shirt: new MeshToonMaterial({
-                        color: 0x38543c,
-                        flatShading: true,
-                    }),
-                    shoes: new MeshToonMaterial({
-                        color: 0x8b8f8b,
-                        flatShading: true,
-                    }),
+                let jeffColors = {
+                    eye: 0x0d0a02,
+                    hair: 0x000000,
+                    skin: 0xa1824d,
+                    shorts: 0x2c7fa3,
+                    shirt: 0x38543c,
+                    shoes: 0x8b8f8b,
                 };
-                return jeffMaterials;
+                return jeffColors;
             case 'dan':
-                let danMaterials = {
-                    eye: new MeshToonMaterial({
-                        color: 0x0d0a02,
-                        flatShading: true,
-                    }),
-                    hair: new MeshToonMaterial({
-                        color: 0x7d4714,
-                        flatShading: true,
-                    }),
-                    skin: new MeshToonMaterial({
-                        color: 0xbf7f43,
-                        flatShading: true,
-                    }),
-                    shorts: new MeshToonMaterial({
-                        color: 0x090459,
-                        flatShading: true,
-                    }),
-                    shirt: new MeshToonMaterial({
-                        color: 0x4f1121,
-                        flatShading: true,
-                    }),
-                    shoes: new MeshToonMaterial({
-                        color: 0x789476,
-                        flatShading: true,
-                    }),
+                let danColors = {
+                    eye: 0x0d0a02,
+                    hair: 0x7d4714,
+                    skin: 0xbf7f43,
+                    shorts: 0x090459,
+                    shirt: 0x4f1121,
+                    shoes: 0x789476,
                 };
-                return danMaterials;
+                return danColors;
         }
     }
 
@@ -347,7 +305,7 @@ class MalePedestrianShorts extends Group {
     }
 
     resetParams() {
-      this.position.y = 0.5;
+      this.position.y = 1.4;
       this.collected = false;
     }
 

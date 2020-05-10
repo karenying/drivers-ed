@@ -4,6 +4,8 @@ import {
     MeshStandardMaterial,
     Mesh,
     DoubleSide,
+    Geometry,
+    BufferGeometry
 } from 'three';
 
 class Sidewalk extends Group {
@@ -16,41 +18,85 @@ class Sidewalk extends Group {
             pause: false,
         };
 
-        const planeGeometry = new PlaneGeometry(3, 100);
-        const planeMaterial = new MeshStandardMaterial({
-            color: 0x3d3c3c,
-            side: DoubleSide,
-        });
+        const geoSidewalk = new Geometry();
 
-        let plane = new Mesh(planeGeometry, planeMaterial);
-        plane.rotation.x = Math.PI / 2;
+        const leftGeometry = new PlaneGeometry(3, 350);
+        leftGeometry.rotateX(Math.PI / 2);
+        leftGeometry.translate(-4, 0, 0);
+        geoSidewalk.merge(leftGeometry);
 
-        const stripeGeometry = new PlaneGeometry(0.1, 3);
-        const stripeMaterial = new MeshStandardMaterial({
-            color: 0x1f1f1f,
-            side: DoubleSide,
-        });
+        const rightGeometry = new PlaneGeometry(3, 350);
+        rightGeometry.rotateX(Math.PI / 2);
+        rightGeometry.translate(4, 0, 0);
+        geoSidewalk.merge(rightGeometry);
+
+        const sidewalkMesh = new Mesh(
+            new BufferGeometry().fromGeometry(geoSidewalk),
+            new  MeshStandardMaterial({
+                color: 0x3d3c3c,
+                side: DoubleSide,
+            })
+        )
+        this.add(sidewalkMesh);
+
+        const geo = new Geometry();
 
         let offset = 0;
-        for (let i = 0; i < 6; i++) {
-            let stripe = new Mesh(stripeGeometry, stripeMaterial);
-            stripe.rotation.x = Math.PI / 2;
-            stripe.rotation.z = Math.PI / 2;
+        for (let i = 0; i < 15; i++) {
+            const leftStripeGeometry = new PlaneGeometry(0.1, 3);
+            leftStripeGeometry.rotateX(Math.PI / 2);
+            leftStripeGeometry.rotateY(Math.PI / 2);
+            leftStripeGeometry.translate(4, 0.01, 30 - offset);
 
-            stripe.position.set(0, 0.01, -30 + offset)
-            this.add(stripe);
+            const rightStripeGeometry = new PlaneGeometry(0.1, 3);
+            rightStripeGeometry.rotateX(Math.PI / 2);
+            rightStripeGeometry.rotateY(Math.PI / 2);
+            rightStripeGeometry.translate(-4, 0.01, 30 - offset);
+
+            geo.merge(leftStripeGeometry);
+            geo.merge(rightStripeGeometry);
             offset += 15;
         }
-        this.add(plane);
+
+        const stripeMesh1 = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new  MeshStandardMaterial({
+                color: 0x1f1f1f,
+                side: DoubleSide,
+            })
+        )
+        const stripeMesh2 = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new  MeshStandardMaterial({
+                color: 0x1f1f1f,
+                side: DoubleSide,
+            })
+        )
+        stripeMesh2.position.set(0, 0, -195);
+
+        this.add(
+            stripeMesh1,
+            stripeMesh2
+        );
+
         parent.addToUpdateList(this);
     }
 
     update() {
         const { cameraPosition, pause } = this.state;
-        this.position.z += this.parent.gameSpeed;
+        this.children[1].position.z += this.parent.gameSpeed;
+        this.children[2].position.z += this.parent.gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 270;
+        if (this.children[1].position.z == cameraPosition.z) {
+            console.log(this.children[1].position.z)
+        }
+
+        if (this.children[1].position.z > cameraPosition.z) {
+            this.children[1].position.z -= 30;
+        }
+
+        if (this.children[2].position.z > cameraPosition.z) {
+            this.children[2].position.z -= 30;
         }
     }
 }

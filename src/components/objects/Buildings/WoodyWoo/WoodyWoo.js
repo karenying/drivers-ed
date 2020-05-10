@@ -1,13 +1,15 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
 
 function createPillar(x, y, z, materials) {
-    var pillarGeometry = new BoxGeometry(x, y, z);
+    var pillarGeometry = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x, y, z));
     var pillar = new Mesh(pillarGeometry, materials.pillar);
     return pillar;
 }
 
 function createBox(x, y, z, materials) {
-    var boxGeometry = new BoxGeometry(x, y, z);
+    var boxGeometry = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x, y, z));
     var box = new Mesh(boxGeometry, materials.stone);
     return box;
 }
