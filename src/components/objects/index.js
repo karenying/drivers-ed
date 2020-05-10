@@ -17,3 +17,6 @@ export * from './Coffee';
 export * from './Crosswalk';
 export * from './Sun';
 export * from './Moon';
+export * from './Cloud';
+export * from './Star';
+

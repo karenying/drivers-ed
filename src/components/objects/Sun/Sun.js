@@ -47,7 +47,7 @@ class Sun extends Group {
         // dawn
         else if (this.parent.night == 3) {
              // from 0 to pi/2
-             let theta = this.interpolate(-Math.PI/4, Math.PI/4,this.parent.timeElapsed/this.parent.threshold);
+             let theta = this.interpolate(-Math.PI/4, Math.PI/4, this.parent.timeElapsed/this.parent.threshold);
              let newYPos = 30 * Math.sin(theta);
              this.position.y =  newYPos;
              let newXPos = 30 * Math.cos(theta);            
@@ -55,7 +55,7 @@ class Sun extends Group {
         } 
         // dusk
         else if (this.parent.night == 1) {
-            let theta = this.interpolate(3 * Math.PI / 4, 5 * Math.PI/4,this.parent.timeElapsed/this.parent.threshold);
+            let theta = this.interpolate(3 * Math.PI / 4, 5 * Math.PI/4, this.parent.timeElapsed/this.parent.threshold);
             let newYPos = 30 * Math.sin(theta);
             this.position.y =  newYPos;
             let newXPos = 30 * Math.cos(theta);            
