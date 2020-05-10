@@ -191,7 +191,7 @@ writeupLink.href = link;
 // Begin game
 beginContentButton.onclick = function () {
     beginContainer.style.display = 'none';
-    // writeupContainer.style.display = 'none';
+    writeupContainer.style.display = 'none';
     countDownDiv.style.display = 'flex';
     let timeleft = 3;
     let countDownInterval = setInterval(function () {
@@ -325,76 +325,82 @@ const onAnimationFrameHandler = (timeStamp) => {
     collisions.push(collisionObj);
 
     for (const collisionObj of collisions) {
-      if (collisionObj !== undefined) {
-          if (collisionObj.name === 'coin') {
-              if (!collisionObj.collected) {
-                  score += 1; // only collect object if not already collected
-                  let dingClone = ding.cloneNode();
-                  dingClone.play();
-              }
-              document.getElementById('score').innerHTML = 'Score: ' + score;
-              collisionObj.onCollision();
-          } else if (collisionObj.name === 'coffee') {
-            if (!collisionObj.collected) {
-                scene.invincible = true;
-                level.play();
+        if (collisionObj !== undefined) {
+            if (collisionObj.name === 'coin') {
+                if (!collisionObj.collected) {
+                    score += 1; // only collect object if not already collected
+                    let dingClone = ding.cloneNode();
+                    dingClone.play();
+                }
+                document.getElementById('score').innerHTML = 'Score: ' + score;
+                collisionObj.onCollision();
+            } else if (collisionObj.name === 'coffee') {
+                if (!collisionObj.collected) {
+                    scene.invincible = true;
+                    level.play();
+                }
+                collisionObj.onCollision();
+            } else if (collisionObj.name === 'fox') {
+                if (!(scene.invincible || collisionObj.collected)) {
+                    lives -= 1;
+                    heartDiv.removeChild(heartDiv.lastChild);
+                }
+                if (!gameOver && !scene.invincible) {
+                    let hitClone = hit.cloneNode();
+                    hitClone.play();
+                    hit.play();
+                }
+                collisionObj.onCollision();
+            } else if (collisionObj.name === 'pedestrian') {
+                if (!(scene.invincible || collisionObj.collected)) {
+                    lives -= 1;
+                    heartDiv.removeChild(heartDiv.lastChild);
+                }
+                if (!gameOver && !scene.invincible) {
+                    let hitClone = hit.cloneNode();
+                    hitClone.play();
+                    hit.play();
+                }
+                collisionObj.onCollision();
+            } else if (collisionObj.name === 'otherCar') {
+                if (!(scene.invincible || collisionObj.collected)) {
+                    lives -= 1;
+                    heartDiv.removeChild(heartDiv.lastChild);
+                }
+                if (!gameOver && !scene.invincible) {
+                    let hitClone = hit.cloneNode();
+                    hitClone.play();
+                    hit.play();
+                }
+                collisionObj.onCollision();
             }
-            collisionObj.onCollision();
-          } else if (collisionObj.name === 'fox') {
-              if (!(scene.invincible || collisionObj.collected)) {
-                  lives -= 1;
-                  heartDiv.removeChild(heartDiv.lastChild);
-              }
-              if (!gameOver && !scene.invincible) {
-                let hitClone = hit.cloneNode();
-                hitClone.play();
-                hit.play();
-              }
-              collisionObj.onCollision();
-          } else if (collisionObj.name === 'pedestrian') {
-              if (!(scene.invincible || collisionObj.collected)) {
-                  lives -= 1;
-                  heartDiv.removeChild(heartDiv.lastChild);
-              }
-              if (!gameOver && !scene.invincible) {
-                let hitClone = hit.cloneNode();
-                hitClone.play();
-                hit.play();
-              }
-              collisionObj.onCollision();
-          } else if (collisionObj.name === 'otherCar') {
-              if (!(scene.invincible || collisionObj.collected)) {
-                  lives -= 1;
-                  heartDiv.removeChild(heartDiv.lastChild);
-              }
-              if (!gameOver && !scene.invincible) {
-                let hitClone = hit.cloneNode();
-                hitClone.play();
-                hit.play();
-              }
-              collisionObj.onCollision();
-          }
-      }
+        }
     }
 
     // find other car collisions and stop cars
     for (const otherCar of scene.collidableCarList) {
-      var collisionObj = scene.findOtherCollisions(
-          otherCar,
-          scene.collidableMeshList
-      );
+        var collisionObj = scene.findOtherCollisions(
+            otherCar,
+            scene.collidableMeshList
+        );
 
-      var setIdle = false;
-      if (collisionObj !== undefined && collisionObj !== otherCar) {
-        if (collisionObj.name === 'fox' || collisionObj.name === 'pedestrian') {
-          setIdle = true;
+        var setIdle = false;
+        if (collisionObj !== undefined && collisionObj !== otherCar) {
+            if (
+                collisionObj.name === 'fox' ||
+                collisionObj.name === 'pedestrian'
+            ) {
+                setIdle = true;
+            } else if (
+                collisionObj.name === 'otherCar' ||
+                collisionObj.name == 'bus'
+            ) {
+                if (otherCar.position.z < collisionObj.position.z)
+                    setIdle = true;
+                else collisionObj.idle = true;
+            }
         }
-        else if (collisionObj.name === 'otherCar' || collisionObj.name == 'bus') {
-          if (otherCar.position.z < collisionObj.position.z) setIdle = true;
-          else collisionObj.idle = true;
-        }
-      }
-      otherCar.idle = setIdle;
+        otherCar.idle = setIdle;
     }
 
     // game over if lives are 0
