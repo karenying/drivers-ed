@@ -48,7 +48,8 @@ class Bus extends Group {
 
         this.name = 'bus';
         this.lightTarget = new THREE.Object3D();
-        this.lightTarget.position.z = -5;
+        this.lightTarget.position.x = 0;
+        this.lightTarget.position.z = 10;
         this.lightTarget.position.y = 1;
         this.add(this.lightTarget);
 
@@ -81,13 +82,13 @@ class Bus extends Group {
 
       // create night mode headlights
       let beamerOne = new SpotLight(0xffffff, 0);
-      beamerOne.position.set(5, 1, -20);
-      beamerOne.angle = 1;
+      beamerOne.position.set(5, 1, 12);
+      beamerOne.angle = 0.5;
       beamerOne.distance = 30;
       beamerOne.name = "beamer1";
       let beamerTwo= new SpotLight(0xffffff, 0);
-      beamerTwo.position.set(-5, 1, -20);
-      beamerTwo.angle = 1;
+      beamerTwo.position.set(-5, 1, 12);
+      beamerTwo.angle = 0.5;
       beamerTwo.distance = 30;
       beamerTwo.name = "beamer2";
       beamerOne.target = this.lightTarget;
@@ -101,7 +102,7 @@ class Bus extends Group {
       var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
 
       this.fbb = new THREE.Box3(
-        new THREE.Vector3(-5, -10, -15),
+        new THREE.Vector3(-5, -10, 14),
         new THREE.Vector3(5, 10, 17)
       );
       var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
