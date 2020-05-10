@@ -83,63 +83,63 @@ class SeedScene extends Scene {
         // const chad = new MalePedestrianShorts(this, chadMaterials);
         // chad.position.set(5, 0, 0);
 
-        var labibMaterials = {
-            eye: new MeshLambertMaterial({
-                color: 0x291b06,
-                flatShading: true
-            }),
-            hair: new MeshLambertMaterial({
-                color: 0x000000,
-                flatShading: true
-            }),
-            skin: new MeshLambertMaterial({
-                color: 0x573502,
-                flatShading: true
-            }),
-            jeans: new MeshLambertMaterial({
-                color: 0x0d1459,
-                flatShading: true
-            }),
-            shirt: new MeshLambertMaterial({
-                color: 0x245734,
-                flatShading: true
-            }),
-            shoes: new MeshLambertMaterial({
-                color: 0x470722,
-                flatShading: true
-            })
-        };
-        const labib= new MalePedestrianJeans(this, labibMaterials);
-        labib.position.set(-5, 0, 0);
-
-        // var mariaMaterials = {
+        // var labibMaterials = {
         //     eye: new MeshLambertMaterial({
-        //         color: 0x2d5432,
+        //         color: 0x291b06,
         //         flatShading: true
         //     }),
         //     hair: new MeshLambertMaterial({
-        //         color: 0x4d3803,
-        //         flatShading: true
-        //     }),
-        //     skin: new MeshLambertMaterial({
-        //         color: 0x997446,
-        //         flatShading: true
-        //     }),
-        //     jeans: new MeshLambertMaterial({
         //         color: 0x000000,
         //         flatShading: true
         //     }),
+        //     skin: new MeshLambertMaterial({
+        //         color: 0x573502,
+        //         flatShading: true
+        //     }),
+        //     jeans: new MeshLambertMaterial({
+        //         color: 0x0d1459,
+        //         flatShading: true
+        //     }),
         //     shirt: new MeshLambertMaterial({
-        //         color: 0xd61a39,
+        //         color: 0x245734,
         //         flatShading: true
         //     }),
         //     shoes: new MeshLambertMaterial({
-        //         color: 0x237066,
+        //         color: 0x470722,
         //         flatShading: true
         //     })
         // };
-        // const maria = new FemalePedestrianJeans(this, mariaMaterials);
-        // maria.position.set(5, 0, 5);
+        // const labib= new MalePedestrianJeans(this, labibMaterials);
+        // labib.position.set(-5, 0, 0);
+
+        var mariaMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x2d5432,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x4d3803,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0x997446,
+                flatShading: true
+            }),
+            jeans: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0xd61a39,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x237066,
+                flatShading: true
+            })
+        };
+        const maria = new FemalePedestrianJeans(this, mariaMaterials);
+        maria.position.set(5, 0, 5);
 
         // var maxMaterials = {
         //     eye: new MeshLambertMaterial({
@@ -227,7 +227,7 @@ class SeedScene extends Scene {
         var ovalStatue = new OvalStatue();
         ovalStatue.position.set(0, 19, 0);
 
-        this.add(labib, lights);
+        this.add(maria, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
