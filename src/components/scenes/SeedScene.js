@@ -54,34 +54,34 @@ class SeedScene extends Scene {
         const masha = new FemalePedestrianDress(this, mashaMaterials);
         masha.position.set(0, 0, 0);
 
-        // var chadMaterials = {
-        //     eye: new MeshLambertMaterial({
-        //         color: 0x36699c,
-        //         flatShading: true
-        //     }),
-        //     hair: new MeshLambertMaterial({
-        //         color: 0xd1c569,
-        //         flatShading: true
-        //     }),
-        //     skin: new MeshLambertMaterial({
-        //         color: 0xb48A78,
-        //         flatShading: true
-        //     }),
-        //     shorts: new MeshLambertMaterial({
-        //         color: 0xed7490,
-        //         flatShading: true
-        //     }),
-        //     shirt: new MeshLambertMaterial({
-        //         color: 0x72afed,
-        //         flatShading: true
-        //     }),
-        //     shoes: new MeshLambertMaterial({
-        //         color: 0x3b2403,
-        //         flatShading: true
-        //     })
-        // };
-        // const chad = new MalePedestrianShorts(this, chadMaterials);
-        // chad.position.set(5, 0, 0);
+        var chadMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x36699c,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0xd1c569,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            shorts: new MeshLambertMaterial({
+                color: 0xed7490,
+                flatShading: true
+            }),
+            shirt: new MeshLambertMaterial({
+                color: 0x72afed,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0x3b2403,
+                flatShading: true
+            })
+        };
+        const chad = new MalePedestrianShorts(this, chadMaterials);
+        chad.position.set(5, 0, 0);
 
         // var labibMaterials = {
         //     eye: new MeshLambertMaterial({
@@ -227,7 +227,7 @@ class SeedScene extends Scene {
         var ovalStatue = new OvalStatue();
         ovalStatue.position.set(0, 19, 0);
 
-        this.add(masha, lights);
+        this.add(chad, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
