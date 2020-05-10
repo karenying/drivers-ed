@@ -319,7 +319,6 @@ class FemalePedestrianDress extends Group {
 
             // Advance tween animations, if any exist
             TWEEN.update();
-            console.log(this.collected);
         }
     }
 
