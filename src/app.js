@@ -362,7 +362,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                     hit.play();
                 }
                 collisionObj.onCollision();
-            } else if (collisionObj.name === 'otherCar') {
+            } else if (collisionObj.name === 'otherCar' || collisionObj.name == 'bus') {
                 if (!(scene.invincible || collisionObj.collected)) {
                     lives -= 1;
                     heartDiv.removeChild(heartDiv.lastChild);

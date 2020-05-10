@@ -87,7 +87,7 @@ class Bus extends Group {
         new THREE.Vector3(5, 10, 17)
       );
       var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
-      // this.add(fbbHelper);
+      // this.add(bbHelper);
     }
 
     update(timeStamp) {
