@@ -30,8 +30,8 @@ class Cloud extends Group {
         this.rotation.z = 0.01 * Math.sin(timeStamp / 200);
 
         this.position.x -= 0.2;
-        if (this.position.x < -120) {
-            this.position.x = 120;
+        if (this.position.x < -140) {
+            this.position.x = 140;
         }
 
         // night
