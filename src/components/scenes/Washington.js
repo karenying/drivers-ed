@@ -37,14 +37,14 @@ import * as THREE from 'three';
 let currColor = "#7ec0ee";
 // crosswalkPositions
 const crosswalkZPositions = [
-  -420,
-  -520,
-  -620,
-  -720,
-  -820,
-  -920,
-  -1020,
-  -1120
+  -430,
+  -530,
+  -630,
+  -730,
+  -830,
+  -930,
+  -1030,
+  -1130
 ];
 
 class Washington extends Scene {
@@ -304,7 +304,7 @@ class Washington extends Scene {
         this.add(lights, car);
 
         // Add some coins
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 8; i++) {
             var coin = new Coin(this);
             coin.position.set(
                 2 * car.maxPos * Math.random() - 2.5,
