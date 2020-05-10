@@ -83,7 +83,7 @@ class Bus extends Group {
       var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
 
       this.fbb = new THREE.Box3(
-        new THREE.Vector3(-5, -10, 14),
+        new THREE.Vector3(-5, -10, 15),
         new THREE.Vector3(5, 10, 17)
       );
       var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
