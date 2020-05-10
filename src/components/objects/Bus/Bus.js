@@ -34,7 +34,7 @@ class Bus extends Group {
         }
         this.idle = false;
         this.parent = parent;
-        this.speed = 0.25;
+        this.speed = 0.5;
 
         const loader = new GLTFLoader();
 

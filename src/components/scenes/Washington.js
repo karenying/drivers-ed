@@ -405,6 +405,7 @@ class Washington extends Scene {
             .copy(obj.bb)
             .applyMatrix4(obj.matrixWorld);
         for (const mesh of collidableMeshList) {
+            if (mesh.position.z < 1) continue;
             var thatBB = new THREE.Box3()
                 .copy(mesh.bb)
                 .applyMatrix4(mesh.matrixWorld);
