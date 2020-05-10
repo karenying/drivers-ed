@@ -94,7 +94,7 @@ class MalePedestrianJeans extends Group {
         const geoRightLeg = new Geometry();
 
         var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
-        rightLegGeometry.faces.forEach(f => f.color.set(colors.skin));
+        rightLegGeometry.faces.forEach(f => f.color.set(colors.jeans));
         rightLegGeometry.translate(0, -1, 0);
         geoRightLeg.merge(leftLegGeometry);
 

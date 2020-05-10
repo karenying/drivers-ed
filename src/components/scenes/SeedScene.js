@@ -28,31 +28,31 @@ class SeedScene extends Scene {
         this.background = new Color(0xa7ccd1);
         this.fog = new Fog(0xa7ccd1, 80, 500);
 
-        // // Add meshes to scene
-        // var mashaMaterials = {
-        //     eye: new MeshLambertMaterial({
-        //         color: 0x3b2606,
-        //         flatShading: true
-        //     }),
-        //     hair: new MeshLambertMaterial({
-        //         color: 0x000000,
-        //         flatShading: true
-        //     }),
-        //     skin: new MeshLambertMaterial({
-        //         color: 0xb48A78,
-        //         flatShading: true
-        //     }),
-        //     dress: new MeshLambertMaterial({
-        //         color: 0x7015d1,
-        //         flatShading: true
-        //     }),
-        //     shoes: new MeshLambertMaterial({
-        //         color: 0xd8d1e0,
-        //         flatShading: true
-        //     })
-        // };
-        // const masha = new FemalePedestrianDress(this, mashaMaterials);
-        // masha.position.set(0, 0, 0);
+        // Add meshes to scene
+        var mashaMaterials = {
+            eye: new MeshLambertMaterial({
+                color: 0x3b2606,
+                flatShading: true
+            }),
+            hair: new MeshLambertMaterial({
+                color: 0x000000,
+                flatShading: true
+            }),
+            skin: new MeshLambertMaterial({
+                color: 0xb48A78,
+                flatShading: true
+            }),
+            dress: new MeshLambertMaterial({
+                color: 0x7015d1,
+                flatShading: true
+            }),
+            shoes: new MeshLambertMaterial({
+                color: 0xd8d1e0,
+                flatShading: true
+            })
+        };
+        const masha = new FemalePedestrianDress(this, mashaMaterials);
+        masha.position.set(0, 0, 0);
 
         // var chadMaterials = {
         //     eye: new MeshLambertMaterial({
@@ -112,34 +112,34 @@ class SeedScene extends Scene {
         // const labib= new MalePedestrianJeans(this, labibMaterials);
         // labib.position.set(-5, 0, 0);
 
-        var mariaMaterials = {
-            eye: new MeshLambertMaterial({
-                color: 0x2d5432,
-                flatShading: true
-            }),
-            hair: new MeshLambertMaterial({
-                color: 0x4d3803,
-                flatShading: true
-            }),
-            skin: new MeshLambertMaterial({
-                color: 0x997446,
-                flatShading: true
-            }),
-            jeans: new MeshLambertMaterial({
-                color: 0x000000,
-                flatShading: true
-            }),
-            shirt: new MeshLambertMaterial({
-                color: 0xd61a39,
-                flatShading: true
-            }),
-            shoes: new MeshLambertMaterial({
-                color: 0x237066,
-                flatShading: true
-            })
-        };
-        const maria = new FemalePedestrianJeans(this, mariaMaterials);
-        maria.position.set(5, 0, 5);
+        // var mariaMaterials = {
+        //     eye: new MeshLambertMaterial({
+        //         color: 0x2d5432,
+        //         flatShading: true
+        //     }),
+        //     hair: new MeshLambertMaterial({
+        //         color: 0x4d3803,
+        //         flatShading: true
+        //     }),
+        //     skin: new MeshLambertMaterial({
+        //         color: 0x997446,
+        //         flatShading: true
+        //     }),
+        //     jeans: new MeshLambertMaterial({
+        //         color: 0x000000,
+        //         flatShading: true
+        //     }),
+        //     shirt: new MeshLambertMaterial({
+        //         color: 0xd61a39,
+        //         flatShading: true
+        //     }),
+        //     shoes: new MeshLambertMaterial({
+        //         color: 0x237066,
+        //         flatShading: true
+        //     })
+        // };
+        // const maria = new FemalePedestrianJeans(this, mariaMaterials);
+        // maria.position.set(5, 0, 5);
 
         // var maxMaterials = {
         //     eye: new MeshLambertMaterial({
@@ -227,7 +227,7 @@ class SeedScene extends Scene {
         var ovalStatue = new OvalStatue();
         ovalStatue.position.set(0, 19, 0);
 
-        this.add(maria, lights);
+        this.add(masha, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 
