@@ -55,7 +55,7 @@ class Grass extends Group {
           side: DoubleSide,
         });
         // Create a geometry with N segments.
-        const planeGeometry = new PlaneGeometry(350, 350, 350, 35);
+        const planeGeometry = new PlaneGeometry(100, 500, 100, 25);
         planeGeometry.vertices.map(function (vertex) {
           vertex.x += -.5 + Math.random() / 2;
           vertex.y += -.5 + Math.random() / 2;

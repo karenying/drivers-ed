@@ -102,13 +102,8 @@ class Washington extends Scene {
 
         const road = new Road(this);
         const sidewalk = new Sidewalk(this);
-        this.add(road, sidewalk);
-
-        for (let i = 0; i < 2; i++) {
-            const grass = new Grass(this);
-            grass.position.set(0, 0, positions[i]);
-            this.add(grass);
-        }
+        const grass = new Grass(this);
+        this.add(road, sidewalk, grass);
 
         // add some pedestrians walking down the sidewalk
         let abigail = new FemalePedestrianDress(this, 'abigail', false);
