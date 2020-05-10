@@ -24,6 +24,7 @@ const ding = new Audio(dingLink);
 ding.load();
 const lose = new Audio(loseLink);
 const hit = new Audio(hitLink);
+hit.load();
 const go = new Audio(goLink);
 const level = new Audio(levelLink);
 const countdown = new Audio(countdownLink);
@@ -345,7 +346,9 @@ const onAnimationFrameHandler = (timeStamp) => {
                   heartDiv.removeChild(heartDiv.lastChild);
               }
               if (!gameOver && !scene.invincible) {
-                  hit.play();
+                let hitClone = hit.cloneNode();
+                hitClone.play();
+                hit.play();
               }
               collisionObj.onCollision();
           } else if (collisionObj.name === 'pedestrian') {
@@ -354,7 +357,9 @@ const onAnimationFrameHandler = (timeStamp) => {
                   heartDiv.removeChild(heartDiv.lastChild);
               }
               if (!gameOver && !scene.invincible) {
-                  hit.play();
+                let hitClone = hit.cloneNode();
+                hitClone.play();
+                hit.play();
               }
               collisionObj.onCollision();
           } else if (collisionObj.name === 'otherCar') {
@@ -363,7 +368,9 @@ const onAnimationFrameHandler = (timeStamp) => {
                   heartDiv.removeChild(heartDiv.lastChild);
               }
               if (!gameOver && !scene.invincible) {
-                  hit.play();
+                let hitClone = hit.cloneNode();
+                hitClone.play();
+                hit.play();
               }
               collisionObj.onCollision();
           }

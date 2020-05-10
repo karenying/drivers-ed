@@ -203,9 +203,12 @@ class OtherCar extends Group {
             color: Colors.yellow,
             side: DoubleSide,
         });
-        let license = new Mesh(licenseGeo, licenseMaterial);
-        carBody.add(license);
-        license.position.set(0, 0, 2.01)
+        let backLicense = new Mesh(licenseGeo, licenseMaterial);
+        let frontLicense = new Mesh(licenseGeo, licenseMaterial);
+        carBody.add(backLicense);
+        carBody.add(frontLicense);
+        backLicense.position.set(0, 0, 2.01)
+        frontLicense.position.set(0, 0, -2.01)
 
         // creates headlights
         let headLightGeo = new CircleGeometry(0.15, 32);
@@ -219,6 +222,13 @@ class OtherCar extends Group {
         headLightOne.position.set(1, 0, 2.01);
         carBody.add(headLightTwo);
         headLightTwo.position.set(-1, 0, 2.01);
+
+        let frontHeadLight1 = new Mesh(headLightGeo, headLightMaterial);
+        let frontHeadLight2 = new Mesh(headLightGeo, headLightMaterial);
+        carBody.add(frontHeadLight1);
+        frontHeadLight1.position.set(1, 0, -2.01);
+        carBody.add(frontHeadLight2);
+        frontHeadLight2.position.set(-1, 0, -2.01);
 
         // create exhaust pipe
         let pipe = createCylinderTwo(

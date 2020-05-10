@@ -65,7 +65,7 @@ class Crosswalk extends Group {
         this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z) {
-            this.position.z = -1020;
+            this.position.z = this.parent.currCrosswalkPos;
         }
     }
 }
