@@ -1,4 +1,4 @@
-import { Group, BoxGeometry,  Mesh} from "three";
+import { Group, BoxGeometry,  Mesh, MeshToonMaterial, Geometry, VertexColors} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class MalePedestrianShorts extends Group {
@@ -11,124 +11,160 @@ class MalePedestrianShorts extends Group {
             walking: true,
         };
 
+        const geo = new Geometry();
+
+        let chadColors = {
+            eye: 0x36699c,
+            hair: 0xd1c569,
+            skin: 0xb48a78,
+            shorts: 0xed7490,
+            shirt: 0x72afed,
+            shoes: 0x3b2403,
+        };
+
         // head
-        var headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
-        var head = new Mesh(headGeometry, materials.skin);
-        head.name = "head"
-        head.position.set(0, 4, 0);
+        const headGeometry = new BoxGeometry(1.5, 1.5, 0.75);
+        headGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        geo.merge(headGeometry);
 
         var leftEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        var leftEye = new Mesh(leftEyeGeometry, materials.eye);
-        leftEye.name = "left eye";
-        head.add(leftEye);
-        leftEye.position.set(-0.4, 0.25, 0.4);
+        leftEyeGeometry.faces.forEach(f => f.color.set(chadColors.eye));
+        leftEyeGeometry.translate(-0.4, 0.25, 0.4);
+        geo.merge(leftEyeGeometry);
 
         var rightEyeGeometry = new BoxGeometry(0.1, 0.1, 0.1);
-        var rightEye = new Mesh(rightEyeGeometry, materials.eye);
-        rightEye.name = "right eye";
-        head.add(rightEye);
-        rightEye.position.set(0.4, 0.25, 0.4);
+        rightEyeGeometry.faces.forEach(f => f.color.set(chadColors.eye));
+        rightEyeGeometry.translate(0.4, 0.25, 0.4);
+        geo.merge(rightEyeGeometry);
 
         var leftEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        var leftEar = new Mesh(leftEarGeometry, materials.skin);
-        leftEar.name = "left ear";
-        head.add(leftEar);
-        leftEar.position.set(-0.85, 0, 0);
+        leftEarGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        leftEarGeometry.translate(-0.85, 0, 0);
+        geo.merge(leftEarGeometry)
 
         var rightEarGeometry = new BoxGeometry(0.2, 0.5, 0.25);
-        var rightEar = new Mesh(rightEarGeometry, materials.skin);
-        rightEar.name = "right ear";
-        head.add(rightEar);
-        rightEar.position.set(0.85, 0, 0);
+        rightEarGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        rightEarGeometry.translate(0.85, 0, 0);
+        geo.merge(rightEarGeometry)
 
         var hairGeometry = new BoxGeometry(1.7, 0.5, 1);
-        var hair = new Mesh(hairGeometry, materials.hair);
-        hair.name = "hair";
-        head.add(hair);
-        hair.position.set(0, 0.9, 0);
+        hairGeometry.faces.forEach(f => f.color.set(chadColors.hair));
+        hairGeometry.translate(0, 0.9, 0);
+        geo.merge(hairGeometry)
 
         var noseGeometry = new BoxGeometry(0.25, 0.5, 0.25);
-        var nose = new Mesh(noseGeometry, materials.skin);
-        nose.name = "nose";
-        head.add(nose);
-        nose.position.set(0, 0, 0.4);
-        nose.rotation.x = -20 * (Math.PI/180);
+        noseGeometry.faces.forEach(f => f.color.set(chadColors.skin));
+        noseGeometry.rotateX(-20 * (Math.PI/180));
+        noseGeometry.translate(0, 0, 0.4);
+        geo.merge(noseGeometry)
 
         var shirtGeometry = new BoxGeometry(1.75, 2, 1);
-        var shirt = new Mesh(shirtGeometry, materials.shirt);
-        head.add(shirt)
-        shirt.name = "shirt";
-        shirt.position.set(0, -1.75, 0);
+        shirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        shirtGeometry.translate(0, -1.75, 0);
+        geo.merge(shirtGeometry)
 
         // left arm
+        const geoLeftArm = new Geometry();
+
         var leftArmGeometry = new BoxGeometry(0.45, 2, 0.5);
+        leftArmGeometry.faces.forEach(f => f.color.set(chadColors.skin));
         leftArmGeometry.translate(0, -1, 0);
-        var leftArm = new Mesh(leftArmGeometry, materials.skin);
-        leftArm.name = "left arm";
-        leftArm.position.set(-1.15, 3, 0);
+        geoLeftArm.merge(leftArmGeometry);
 
         var leftShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        leftShirtGeometry.translate(0, -1, 0);
-        var leftShirt = new Mesh(leftShirtGeometry, materials.shirt);
-        leftShirt.name = "left shirt";
-        leftArm.add(leftShirt);
-        leftShirt.position.set(0, 0.75, 0);
+        leftShirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        geoLeftArm.merge(leftShirtGeometry)
 
         // right arm
+        const geoRightArm = new Geometry();
+
         var rightArmGeometry = new BoxGeometry(0.45, 2, 0.5);
+        rightArmGeometry.faces.forEach(f => f.color.set(chadColors.skin));
         rightArmGeometry.translate(0, -1, 0);
-        var rightArm = new Mesh(rightArmGeometry, materials.skin);
-        rightArm.name = "right arm";
-        rightArm.position.set(1.15, 3, 0);
+        geoRightArm.merge(rightArmGeometry);
 
         var rightShirtGeometry = new BoxGeometry(0.65, 0.75, 0.65);
-        rightShirtGeometry.translate(0, -1, 0);
-        var rightShirt = new Mesh(rightShirtGeometry, materials.shirt);
-        rightShirt.name = "right shirt";
-        rightArm.add(rightShirt);
-        rightShirt.position.set(0, 0.75, 0);
+        rightShirtGeometry.faces.forEach(f => f.color.set(chadColors.shirt));
+        geoRightArm.merge(rightShirtGeometry)
 
         // left leg
+        const geoLeftLeg = new Geometry();
+
         var leftLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
+        leftLegGeometry.faces.forEach(f => f.color.set(chadColors.skin));
         leftLegGeometry.translate(0, -1, 0);
-        var leftLeg = new Mesh(leftLegGeometry, materials.skin);
-        leftLeg.name = "left leg";
-        leftLeg.position.set(-0.5, 1.25, 0);
+        geoLeftLeg.merge(leftLegGeometry);
 
         var leftShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        leftShortsGeometry.translate(0, -1, 0);
-        var leftShorts = new Mesh(leftShortsGeometry, materials.shorts);
-        leftShorts.name = "left shorts";
-        leftLeg.add(leftShorts);
-        leftShorts.position.set(0, 0.75, 0);
+        leftShortsGeometry.faces.forEach(f => f.color.set(chadColors.shorts));
+        leftShortsGeometry.translate(0, -0.5, 0);
+        geoLeftLeg.merge(leftShortsGeometry);
 
         var leftShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        var leftShoe = new Mesh(leftShoeGeometry, materials.shoes);
-        leftShoe.name = "left shoe";
-        leftLeg.add(leftShoe);
-        leftShoe.position.set(0, -2.5, 0.15);
+        leftShoeGeometry.faces.forEach(f => f.color.set(chadColors.shoes));
+        leftShoeGeometry.translate(0, -2.5, 0.25);
+        geoLeftLeg.merge(leftShoeGeometry);
 
         // right leg
+        const geoRightLeg = new Geometry();
+
         var rightLegGeometry = new BoxGeometry(0.6, 2.75, 0.55);
+        rightLegGeometry.faces.forEach(f => f.color.set(chadColors.skin));
         rightLegGeometry.translate(0, -1, 0);
-        var rightLeg = new Mesh(rightLegGeometry, materials.skin);
-        rightLeg.name = "right leg";
-        rightLeg.position.set(0.5, 1.25, 0);
+        geoRightLeg.merge(leftLegGeometry);
 
         var rightShortsGeometry = new BoxGeometry(0.7, 1.25, 0.65);
-        rightShortsGeometry.translate(0, -1, 0);
-        var rightShorts = new Mesh(rightShortsGeometry, materials.shorts);
-        rightShorts.name = "right shorts";
-        rightLeg.add(rightShorts);
-        rightShorts.position.set(0, 0.75, 0);
+        rightShortsGeometry.faces.forEach(f => f.color.set(chadColors.shorts));
+        rightShortsGeometry.translate(0, -0.5, 0);
+        geoRightLeg.merge(rightShortsGeometry);
 
         var rightShoeGeometry = new BoxGeometry(0.75, 0.5, 1.25);
-        var rightShoe = new Mesh(rightShoeGeometry, materials.shoes);
-        rightShoe.name = "right shoe";
-        rightLeg.add(rightShoe);
-        rightShoe.position.set(0, -2.5, 0.15)
+        rightShoeGeometry.faces.forEach(f => f.color.set(chadColors.shoes));
+        rightShoeGeometry.translate(0, -2.5, 0.25);
+        geoRightLeg.merge(rightShoeGeometry);
 
-        this.add(head, leftArm, rightArm, leftLeg, rightLeg);
+        // this.add(head, leftArm, rightArm, leftLeg, rightLeg);
+        const headMesh = new Mesh(
+            geo,
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+
+        const leftArmMesh = new Mesh(
+            geoLeftArm,
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        leftArmMesh.position.set(-1.15, -1, 0);
+
+        const rightArmMesh = new Mesh(
+            geoRightArm,
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        rightArmMesh.position.set(1.15, -1, 0);
+
+        const leftLegMesh = new Mesh(
+            geoLeftLeg,
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        leftLegMesh.position.set(-0.5, -2.5, 0);
+
+        const rightLegMesh = new Mesh(
+            geoRightLeg,
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+        rightLegMesh.position.set(0.5, -2.5, 0);
+
+        this.add(headMesh, leftArmMesh, rightArmMesh, leftLegMesh, rightLegMesh)
+
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
