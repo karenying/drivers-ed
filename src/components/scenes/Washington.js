@@ -87,10 +87,7 @@ class Washington extends Scene {
         // lampPositions
         const lampPositions = [
             0,
-            -40,
-            -80,
-            -120,
-            -160,
+            -100,
             -200,
         ];
 
@@ -140,11 +137,11 @@ class Washington extends Scene {
         this.collidableMeshList.push(dan);
 
         // add lamppost
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 3; i++) {
           const lamppostLeft = new Lamppost(this);
           const lamppostRight = new Lamppost(this);
           lamppostLeft.position.set(-5.6, 1.5, lampPositions[i]);
-          lamppostRight.position.set(5.6, 1.5, lampPositions[i] + 20);
+          lamppostRight.position.set(5.6, 1.5, lampPositions[i] + 50);
           this.add(lamppostLeft, lamppostRight);
         }
 
