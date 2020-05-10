@@ -78,8 +78,8 @@ class Grass extends Group {
         const { cameraPosition } = this.state;
         this.position.z += this.parent.gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 180;
+        if (this.position.z > cameraPosition.z + 40) {
+            this.position.z -= 300;
         }
     }
 }
