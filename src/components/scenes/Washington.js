@@ -119,7 +119,7 @@ class Washington extends Scene {
 
         let dan = new MalePedestrianShorts(this, 'dan', false);
         dan.rotation.y = 0;
-        dan.state.sidewalk = true;
+        dan.state.sidewalk = true;``
         dan.position.set(
             -4,
             1.4,
