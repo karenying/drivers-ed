@@ -7,7 +7,8 @@ import { Group,
   PointLight,
   SpotLight,
   Color,
-  CylinderGeometry } from 'three';
+  CylinderGeometry,
+  BufferGeometry } from 'three';
 
 var Colors = {
   black: 0x000000,
@@ -57,14 +58,14 @@ class Lamppost extends Group {
   }
 
   init() {
-    let postGeo = new CylinderGeometry(0.05, 0.1, 2, 8);
+    let postGeo = new BufferGeometry().fromGeometry(new CylinderGeometry(0.05, 0.1, 2, 8));
     let post = makeMesh(postGeo, postMat, 0, 0, 0);
 
-    let bulbGeo = new SphereGeometry(0.15, 8, 6);
+    let bulbGeo = new BufferGeometry().fromGeometry(new SphereGeometry(0.15, 8, 6));
     let bulb = makeMesh(bulbGeo, bulbMat, 0, 0.7, 0);
     this.add(post, bulb);
 
-    let lampGeo = new SphereGeometry(0.25, 8, 6);
+    let lampGeo = new BufferGeometry().fromGeometry(new SphereGeometry(0.25, 8, 6));
     let lamp = makeMesh(lampGeo, lampMat, 0, 0.7, 0);
     this.add(lamp);
 
