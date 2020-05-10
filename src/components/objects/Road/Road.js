@@ -5,7 +5,7 @@ import {
     Mesh,
     DoubleSide,
     Geometry,
-    VertexColors
+    BufferGeometry
 } from 'three';
 
 class Road extends Group {
@@ -25,7 +25,7 @@ class Road extends Group {
             side: DoubleSide,
         });
 
-        let plane = new Mesh(planeGeometry, planeMaterial);
+        let plane = new Mesh(new BufferGeometry().fromGeometry(planeGeometry), planeMaterial);
         plane.rotation.x = Math.PI / 2;
         this.add(plane);
 
@@ -41,7 +41,7 @@ class Road extends Group {
         }
 
         const stripeMesh1 = new Mesh(
-            geo,
+            new BufferGeometry().fromGeometry(geo),
             new  MeshStandardMaterial({
                 color: 0xfad201,
                 side: DoubleSide,
@@ -49,7 +49,7 @@ class Road extends Group {
         )
 
         const stripeMesh2 = new Mesh(
-            geo,
+            new BufferGeometry().fromGeometry(geo),
             new  MeshStandardMaterial({
                 color: 0xfad201,
                 side: DoubleSide,

@@ -5,6 +5,7 @@ import {
     Mesh,
     DoubleSide,
     Geometry,
+    BufferGeometry
 } from 'three';
 
 class Sidewalk extends Group {
@@ -30,7 +31,7 @@ class Sidewalk extends Group {
         geoSidewalk.merge(rightGeometry);
 
         const sidewalkMesh = new Mesh(
-            geoSidewalk,
+            new BufferGeometry().fromGeometry(geoSidewalk),
             new  MeshStandardMaterial({
                 color: 0x3d3c3c,
                 side: DoubleSide,
@@ -58,14 +59,14 @@ class Sidewalk extends Group {
         }
 
         const stripeMesh1 = new Mesh(
-            geo,
+            new BufferGeometry().fromGeometry(geo),
             new  MeshStandardMaterial({
                 color: 0x1f1f1f,
                 side: DoubleSide,
             })
         )
         const stripeMesh2 = new Mesh(
-            geo,
+            new BufferGeometry().fromGeometry(geo),
             new  MeshStandardMaterial({
                 color: 0x1f1f1f,
                 side: DoubleSide,

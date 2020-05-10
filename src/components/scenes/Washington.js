@@ -392,61 +392,8 @@ class Washington extends Scene {
         cloud7.scale.set(2, 2, 2)
         this.add(cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7);
 
-        // add some stars to the sky
-        let starPosition = -50;
-        let star1 = new Star(this);
-        star1.position.set(0, 10, starPosition);
-        let star2 = new Star(this);
-        star2.position.set(-10, 25, starPosition);
-        let star3 = new Star(this);
-        star3.position.set(-20, 15, starPosition);
-        let star4 = new Star(this);
-        star4.position.set(-13, 17, starPosition);
-        let star5 = new Star(this);
-        star5.position.set(-25, 20, starPosition);
-        let star6 = new Star(this);
-        star6.position.set(-30, 13, starPosition);
-        let star7 = new Star(this);
-        star7.position.set(-5, 14, starPosition);
-        let star8 = new Star(this);
-        star8.position.set(2, 23, starPosition);
-        let star9 = new Star(this);
-        star9.position.set(10, 25, starPosition);
-        let star10 = new Star(this);
-        star10.position.set(20, 15, starPosition);
-        let star11 = new Star(this);
-        star11.position.set(13, 17, starPosition);
-        let star12 = new Star(this);
-        star12.position.set(25, 20, starPosition);
-        let star13 = new Star(this);
-        star13.position.set(30, 13, starPosition);
-        let star14 = new Star(this);
-        star14.position.set(5, 14, starPosition);
-        let star15 = new Star(this);
-        star15.position.set(7, 23, starPosition);
-        let star16 = new Star(this);
-        star16.position.set(-35, 20, starPosition);
-        let star17 = new Star(this);
-        star17.position.set(-40, 13, starPosition);
-        let star18 = new Star(this);
-        star18.position.set(-45, 14, starPosition);
-        let star19 = new Star(this);
-        star19.position.set(-33, 23, starPosition);
-        let star20 = new Star(this);
-        star20.position.set(35, 20, starPosition);
-        let star21 = new Star(this);
-        star21.position.set(40, 13, starPosition);
-        let star22 = new Star(this);
-        star22.position.set(45, 14, starPosition);
-        let star23 = new Star(this);
-        star23.position.set(33, 23, starPosition);
-        let star24 = new Star(this);
-        star24.position.set(35, 25, starPosition);
-
-        this.add(star1, star2, star3, star4, star5, star6, star7, star8,
-          star9, star10, star11, star12, star13, star14, star15,
-          star16, star17, star18, star19, star20, star21, star22, star23,
-          star24);
+        let stars = new Star(this);
+        this.add(stars);
     }
 
     addToUpdateList(obj) {

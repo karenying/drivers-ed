@@ -1,5 +1,11 @@
 import * as THREE from 'three';
-import { Group, BoxGeometry,  Mesh, MeshToonMaterial, Geometry, VertexColors} from "three";
+import { Group, 
+    BoxGeometry, 
+    Mesh, 
+    MeshToonMaterial, 
+    Geometry, 
+    VertexColors,
+    BufferGeometry} from "three";
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 class FemalePedestrianJeans extends Group {
@@ -125,14 +131,14 @@ class FemalePedestrianJeans extends Group {
         geoRightLeg.merge(rightShoeGeometry);
 
         const headMesh = new Mesh(
-            geo,
+            new BufferGeometry().fromGeometry(geo),
             new MeshToonMaterial({
                 vertexColors: VertexColors,
             })
         )
 
         const leftArmMesh = new Mesh(
-            geoLeftArm,
+            new BufferGeometry().fromGeometry(geoLeftArm),
             new MeshToonMaterial({
                 vertexColors: VertexColors,
             })
@@ -140,7 +146,7 @@ class FemalePedestrianJeans extends Group {
         leftArmMesh.position.set(-1.15, -1, 0);
 
         const rightArmMesh = new Mesh(
-            geoRightArm,
+            new BufferGeometry().fromGeometry(geoRightArm),
             new MeshToonMaterial({
                 vertexColors: VertexColors,
             })
@@ -148,7 +154,7 @@ class FemalePedestrianJeans extends Group {
         rightArmMesh.position.set(1.15, -1, 0);
 
         const leftLegMesh = new Mesh(
-            geoLeftLeg,
+            new BufferGeometry().fromGeometry(geoLeftLeg),
             new MeshToonMaterial({
                 vertexColors: VertexColors,
             })
@@ -156,7 +162,7 @@ class FemalePedestrianJeans extends Group {
         leftLegMesh.position.set(-0.5, -2.5, 0);
 
         const rightLegMesh = new Mesh(
-            geoRightLeg,
+            new BufferGeometry().fromGeometry(geoRightLeg),
             new MeshToonMaterial({
                 vertexColors: VertexColors,
             })
