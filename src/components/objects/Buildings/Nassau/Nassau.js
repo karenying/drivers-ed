@@ -125,42 +125,53 @@ class Nassau extends Group {
 
         // main building
         let buildingGeo = new BoxGeometry(8, 2, 3);
-        let building = makeMesh(buildingGeo, sandstoneMat, 0, 0, 0);
         let building2Geo = new BoxGeometry(2, 2, 0.5);
         let building2 = makeMesh(building2Geo, sandstoneMat, 0, 0, -1.75);
+        buildingGeo.mergeMesh(building2);
 
         // roof
         let roofGeo = new BoxGeometry(8, 0.5, 3);
         makeRoof(roofGeo, 1, 1);
-        let roof = makeMesh(roofGeo, roofMat, 0, 1.25, 0);
         let roof2Geo = new BoxGeometry(2, 0.5, 0.5);
         makeTriangleRoof(roof2Geo, 1);
-        let roof2 = makeMesh(roof2Geo, roofMat, 0, 1.25, 0);
+        let roof2 = makeMesh(roof2Geo, roofMat, 0, 0, -1.75);
+        roofGeo.mergeMesh(roof2);
+        let roof = makeMesh(roofGeo, roofMat, 0, 1.25, 0);
+
         let roof2ColorGeo = new BoxGeometry(2, 0.5, 0.001);
         roof2ColorGeo.vertices[0].x -= 1;
         roof2ColorGeo.vertices[1].x -= 1;
         roof2ColorGeo.vertices[5].x += 1;
         roof2ColorGeo.vertices[4].x += 1;
-        let roof2Color = makeMesh(roof2ColorGeo, sandstoneMat, 0, 0, -0.25);
-        roof2.add(roof2Color);
-        building2.add(roof2);
-        building.add(roof, building2);
+        let roof2Color = makeMesh(roof2ColorGeo, sandstoneMat, 0, 1.25, -2);
+
+        buildingGeo.mergeMesh(roof2Color);
+        let building = makeMesh(buildingGeo, sandstoneMat, 0, 0, 0);
+        building.add(roof);
 
         // tower
         let towerGeo = new BoxGeometry(1.5, 1.5, 2);
         makeTriangleRoof(towerGeo, 0.3);
-        let tower = makeMesh(towerGeo, cementMat, 0, 1.25, 0);
+
         let shaftGeo = new CylinderGeometry(0.1, 0.1, 1.5, 5);
+        let shaft2 = makeMesh(shaftGeo, cementMat, -0.3, 0, 0);
+        let shaft3 = makeMesh(shaftGeo, cementMat, 0, 0, -0.3);
+        let shaft4 = makeMesh(shaftGeo, cementMat, 0, 0, 0.3);
+        shaftGeo.mergeMesh(shaft2);
+        shaftGeo.mergeMesh(shaft3);
+        shaftGeo.mergeMesh(shaft4);
         let shaft = makeMesh(shaftGeo, cementMat, 0.25, 1.25, 0);
-        let shaft2 = makeMesh(shaftGeo, cementMat, -0.25, 1.25, 0);
-        let shaft3 = makeMesh(shaftGeo, cementMat, 0, 1.25, -0.3);
-        let shaft4 = makeMesh(shaftGeo, cementMat, 0, 1.25, 0.3);
+        towerGeo.mergeMesh(shaft);
+
         let topBoxGeo = new BoxGeometry(0.75, 0.2, 1);
         let topBox = makeMesh(topBoxGeo, cementMat, 0, 2, 0);
+        towerGeo.mergeMesh(topBox);
+
+        let tower = makeMesh(towerGeo, cementMat, 0, 1.25, 0);
         let topGeo = new BoxGeometry(0.75, 0.75, 1);
         makeTriangleRoof(topGeo, 0.2);
         let top = makeMesh(topGeo, greenMat, 0, 2.45, 0);
-        tower.add(shaft, shaft2, shaft3, shaft4, topBox, top);
+        tower.add(top);
         building.add(tower);
 
         // door
