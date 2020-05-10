@@ -344,7 +344,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                   hit.play();
               }
               collisionObj.onCollision();
@@ -353,7 +353,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                   hit.play();
               }
               collisionObj.onCollision();
@@ -362,7 +362,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                   hit.play();
               }
               collisionObj.onCollision();
