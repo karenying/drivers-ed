@@ -1,16 +1,18 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
 
 function createWindow(x, y, z, materials) {
-    var windowGeometry = new BoxGeometry(x, y, z);
+    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
     var window = new Mesh(windowGeometry, materials.window);
 
-    var windowDividerGeometryVert = new BoxGeometry(x + 0.25, y + 0.1, 0.1);
+    var windowDividerGeometryVert = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x + 0.25, y + 0.1, 0.1));
     var windowDividerVert = new Mesh(
         windowDividerGeometryVert,
         materials.black
     );
 
-    var windowDividerGeometryHoz = new BoxGeometry(x + 0.25, 0.1, z + 0.1);
+    var windowDividerGeometryHoz = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x + 0.25, 0.1, z + 0.1));
     var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
 
     window.add(windowDividerVert);
@@ -20,7 +22,8 @@ function createWindow(x, y, z, materials) {
 }
 
 function createPillar(x, y, z, materials) {
-    var pillarGeometry = new BoxGeometry(x, y, z);
+    var pillarGeometry = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x, y, z));
     var pillar = new Mesh(pillarGeometry, materials.stone);
     return pillar;
 }
@@ -93,7 +96,8 @@ class Frist extends Group {
         window6.position.set(-11, 0, 15);
 
         // entrance building
-        var entranceBuildingGeometry = new BoxGeometry(20, 40, 20);
+        var entranceBuildingGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(20, 40, 20));
         var entranceBuilding = new Mesh(
             entranceBuildingGeometry,
             materials.brick
@@ -102,7 +106,8 @@ class Frist extends Group {
         entranceBuilding.position.set(-10, 5, 0);
         entranceBuilding.name = 'entrance building';
 
-        var entranceBuildingRoofGeometry = new BoxGeometry(20, 5, 5);
+        var entranceBuildingRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(20, 5, 5));
         var entranceBuildingRoof = new Mesh(
             entranceBuildingRoofGeometry,
             materials.brick
@@ -111,7 +116,8 @@ class Frist extends Group {
         entranceBuildingRoof.position.set(0, 20, 0);
         entranceBuildingRoof.name = 'entrance building roof';
 
-        var leftEntranceRoofGeometry = new BoxGeometry(25, 20, 5);
+        var leftEntranceRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(25, 20, 5));
         var leftEntranceRoof = new Mesh(
             leftEntranceRoofGeometry,
             materials.stone
@@ -121,7 +127,8 @@ class Frist extends Group {
         leftEntranceRoof.position.set(0, 20, -7);
         leftEntranceRoof.rotation.x = 56 * (Math.PI / 180);
 
-        var rightEntranceRoofGeometry = new BoxGeometry(25, 20, 5);
+        var rightEntranceRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(25, 20, 5));
         var rightEntranceRoof = new Mesh(
             rightEntranceRoofGeometry,
             materials.stone
@@ -131,7 +138,8 @@ class Frist extends Group {
         rightEntranceRoof.position.set(0, 20, 7);
         rightEntranceRoof.rotation.x = -56 * (Math.PI / 180);
 
-        var entranceBuildingStoneGeometry = new BoxGeometry(10, 30, 10);
+        var entranceBuildingStoneGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(10, 30, 10));
         var entranceBuildingStone = new Mesh(
             entranceBuildingStoneGeometry,
             materials.stone
@@ -140,7 +148,8 @@ class Frist extends Group {
         entranceBuildingStone.name = 'entrance building stone';
         entranceBuildingStone.position.set(-6, -5, 0);
 
-        var entranceBuildingDoorGeometry = new BoxGeometry(10, 10, 5);
+        var entranceBuildingDoorGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(10, 10, 5));
         var entranceBuildingDoor = new Mesh(
             entranceBuildingDoorGeometry,
             materials.door
@@ -155,13 +164,15 @@ class Frist extends Group {
         entranceBuildingWindow.position.set(-7, 0, 0);
 
         // left building
-        var leftBuildingGeometry = new BoxGeometry(70, 40, 20);
+        var leftBuildingGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(70, 40, 20));
         var leftBuilding = new Mesh(leftBuildingGeometry, materials.brick);
         mainBuilding.add(leftBuilding);
         leftBuilding.position.set(10, 5, -50);
         leftBuilding.name = 'left building';
 
-        var leftBuildingRoofGeometry = new BoxGeometry(70, 5, 5);
+        var leftBuildingRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(70, 5, 5));
         var leftBuildingRoof = new Mesh(
             leftBuildingRoofGeometry,
             materials.brick
@@ -170,7 +181,8 @@ class Frist extends Group {
         leftBuildingRoof.position.set(0, 20, 0);
         leftBuildingRoof.name = 'left building roof';
 
-        var leftBuildingLeftRoofGeometry = new BoxGeometry(75, 20, 5);
+        var leftBuildingLeftRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(75, 20, 5));
         var leftBuildingLeftRoof = new Mesh(
             leftBuildingLeftRoofGeometry,
             materials.stone
@@ -180,7 +192,8 @@ class Frist extends Group {
         leftBuildingLeftRoof.position.set(0, 20, -7);
         leftBuildingLeftRoof.rotation.x = 56 * (Math.PI / 180);
 
-        var leftBuildingRightRoofGeometry = new BoxGeometry(75, 20, 5);
+        var leftBuildingRightRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(75, 20, 5));
         var leftBuildingRightRoof = new Mesh(
             leftBuildingRightRoofGeometry,
             materials.stone
@@ -196,13 +209,15 @@ class Frist extends Group {
         leftWindow.position.set(-31, 0, 0);
 
         // right building
-        var rightBuildingGeometry = new BoxGeometry(70, 40, 20);
+        var rightBuildingGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(70, 40, 20));
         var rightBuilding = new Mesh(rightBuildingGeometry, materials.brick);
         mainBuilding.add(rightBuilding);
         rightBuilding.position.set(10, 5, 50);
         rightBuilding.name = 'right building';
 
-        var rightBuildingRoofGeometry = new BoxGeometry(70, 5, 5);
+        var rightBuildingRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(70, 5, 5));
         var rightBuildingRoof = new Mesh(
             rightBuildingRoofGeometry,
             materials.brick
@@ -211,7 +226,8 @@ class Frist extends Group {
         rightBuildingRoof.position.set(0, 20, 0);
         rightBuildingRoof.name = 'right building roof';
 
-        var rightBuildingLeftRoofGeometry = new BoxGeometry(75, 20, 5);
+        var rightBuildingLeftRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(75, 20, 5));
         var rightBuildingLeftRoof = new Mesh(
             rightBuildingLeftRoofGeometry,
             materials.stone
@@ -221,7 +237,8 @@ class Frist extends Group {
         rightBuildingLeftRoof.position.set(0, 20, -7);
         rightBuildingLeftRoof.rotation.x = 56 * (Math.PI / 180);
 
-        var rightBuildingRightRoofGeometry = new BoxGeometry(75, 20, 5);
+        var rightBuildingRightRoofGeometry = new BufferGeometry().fromGeometry(
+          new BoxGeometry(75, 20, 5));
         var rightBuildingRightRoof = new Mesh(
             rightBuildingRightRoofGeometry,
             materials.stone

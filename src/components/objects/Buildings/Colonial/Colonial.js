@@ -6,6 +6,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CylinderGeometry,
+    BufferGeometry
 } from 'three';
 
 var Colors = {
@@ -81,12 +82,12 @@ class Colonial extends Group {
     init() {
         // Colonial Club
         // base of building
-        let buildingGeo = new BoxGeometry(6, 1.7, 3);
+        let buildingGeo = new BufferGeometry().fromGeometry(new BoxGeometry(6, 1.7, 3));
         let building = makeMesh(buildingGeo, buildingMat, 0, 0, 0);
 
         // doors
-        let doorGeo = new PlaneGeometry(0.4, 0.7, 0.2);
-        let windowGeo = new PlaneGeometry(0.2, 0.3, 0.2);
+        let doorGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.4, 0.7, 0.2));
+        let windowGeo = new BufferGeometry().fromGeometry(new PlaneGeometry(0.2, 0.3, 0.2));
 
         let doors = makeMesh(doorGeo, doorMat, 0, -0.45, -1.6);
         let door2 = makeMesh(doorGeo, doorMat, 0.2, 0, 0.01);
@@ -113,17 +114,18 @@ class Colonial extends Group {
         // roof
         let roofGeo = new BoxGeometry(6, 1, 3);
         makeRoof(roofGeo, 1, 1);
+        roofGeo = new BufferGeometry().fromGeometry(roofGeo);
         let roof = makeMesh(roofGeo, roofMat, 0, 1.5, 0);
         roof.name = 'roof';
 
-        let awningGeo = new BoxGeometry(6, 0.2, 3);
+        let awningGeo = new BufferGeometry().fromGeometry(new BoxGeometry(6, 0.2, 3));
         let awningMat = new MeshToonMaterial({
             color: Colors.white,
             flatShading: true,
         });
         let awning = makeMesh(awningGeo, awningMat, 0, -0.55, 0);
 
-        let chimneyGeo = new CylinderGeometry(0.2, 0.2, 1.8);
+        let chimneyGeo = new BufferGeometry().fromGeometry(new CylinderGeometry(0.2, 0.2, 1.8));
         let chimney = makeMesh(chimneyGeo, buildingMat, -2, 0, 1);
 
         roof.add(awning, chimney);
@@ -133,13 +135,14 @@ class Colonial extends Group {
         roof2Geo.vertices[4].x += 1.5;
         roof2Geo.vertices[0].x -= 1.5;
         roof2Geo.vertices[1].x -= 1.5;
+        roof2Geo = new BufferGeometry().fromGeometry(roof2Geo);
         let roof2Mat = new MeshToonMaterial({
             color: Colors.white,
             flatShading: true,
         });
         let roof2 = makeMesh(roof2Geo, roof2Mat, 0, 1.3, -1.7);
 
-        let pillarGeo = new CylinderGeometry(0.1, 0.1, 1.7);
+        let pillarGeo = new BufferGeometry().fromGeometry(new CylinderGeometry(0.1, 0.1, 1.7));
         let pillarMat = new MeshToonMaterial({
             color: Colors.white,
             flatShading: true,

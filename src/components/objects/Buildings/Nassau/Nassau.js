@@ -6,6 +6,7 @@ import {
     BoxGeometry,
     DoubleSide,
     CylinderGeometry,
+    BufferGeometry
 } from 'three';
 
 var Colors = {
@@ -146,6 +147,7 @@ class Nassau extends Group {
         let roof2Color = makeMesh(roof2ColorGeo, sandstoneMat, 0, 1.25, -2);
 
         buildingGeo.mergeMesh(roof2Color);
+        buildingGeo = new BufferGeometry().fromGeometry(buildingGeo);
         let building = makeMesh(buildingGeo, sandstoneMat, 0, 0, 0);
         building.add(roof);
 
@@ -166,22 +168,27 @@ class Nassau extends Group {
         let topBoxGeo = new BoxGeometry(0.75, 0.2, 1);
         let topBox = makeMesh(topBoxGeo, cementMat, 0, 2, 0);
         towerGeo.mergeMesh(topBox);
+        towerGeo = new BufferGeometry().fromGeometry(towerGeo);
 
         let tower = makeMesh(towerGeo, cementMat, 0, 1.25, 0);
         let topGeo = new BoxGeometry(0.75, 0.75, 1);
         makeTriangleRoof(topGeo, 0.2);
+        topGeo = new BufferGeometry().fromGeometry(topGeo);
         let top = makeMesh(topGeo, greenMat, 0, 2.45, 0);
         tower.add(top);
         building.add(tower);
 
         // door
-        let doorGeo = new PlaneGeometry(0.5, 1, 0.01);
+        let doorGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.5, 1, 0.01));
         let door = makeMesh(doorGeo, blueMat, 0, -0.5, -2.01);
         building.add(door);
 
         // window
-        let windowGeo = new PlaneGeometry(0.2, 0.3, 0.01);
-        let windowPaneGeo = new PlaneGeometry(0.08, 0.1, 0.01);
+        let windowGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.2, 0.3, 0.01));
+        let windowPaneGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.08, 0.1, 0.01));
         let x = 3.75;
         for (let i = 0; i < 8; i++) {
             let topWindow = makeMesh(windowGeo, cementMat, x, 0.6, -1.51);
@@ -229,9 +236,11 @@ class Nassau extends Group {
             x += 0.35;
         }
 
-        let bigWindowGeo = new PlaneGeometry(0.5, 0.7, 0.01);
+        let bigWindowGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.5, 0.7, 0.01));
         let bigWindow = makeMesh(bigWindowGeo, cementMat, 0, 0.5, -2.01);
-        let bigPlaneGeo = new PlaneGeometry(0.2, 0.3, 0.01);
+        let bigPlaneGeo = new BufferGeometry().fromGeometry(
+          new PlaneGeometry(0.2, 0.3, 0.01));
         makeWindow(0.125, 0.175, bigPlaneGeo, windowMat, bigWindow);
         building.add(bigWindow);
         this.add(building);
