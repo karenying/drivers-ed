@@ -66,7 +66,7 @@ class Washington extends Scene {
 
         this.camera = camera;
         this.background = new Color(0x7ec0ee);
-        this.edge = 15;
+        this.edge = 7;
         this.collidableMeshList = []; // List of collidable meshes
         this.collidableCarList = []; // List of non-driver vehicles
 
