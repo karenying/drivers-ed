@@ -60,7 +60,7 @@ class Washington extends Scene {
 
         this.gameSpeed = 0;
         this.maxGameSpeed = 2.75; // 3
-        this.minGameSpeed = 0.75; // 1
+        this.minGameSpeed = 1; // 1
         this.accelerating = false;
         this.stopped = false;
 

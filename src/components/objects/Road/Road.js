@@ -55,7 +55,7 @@ class Road extends Group {
                 side: DoubleSide,
             })
         )
-        stripeMesh2.position.set(0, 0, -120)
+        stripeMesh2.position.set(0, 0, -195)
 
         this.add(
             stripeMesh1,
@@ -70,12 +70,12 @@ class Road extends Group {
         this.children[1].position.z += this.parent.gameSpeed;
         this.children[2].position.z += this.parent.gameSpeed;
 
-        if (this.children[1].position.z > cameraPosition.z + 120) {
-            this.children[1].position.z = -120;
+        if (this.children[1].position.z > cameraPosition.z) {
+            this.children[1].position.z -= 30;
         }
 
-        if (this.children[2].position.z > cameraPosition.z + 120) {
-            this.children[2].position.z = -120;
+        if (this.children[2].position.z > cameraPosition.z) {
+            this.children[2].position.z -= 30;
         }
     }
 }
