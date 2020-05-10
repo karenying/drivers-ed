@@ -95,14 +95,14 @@ class Bus extends Group {
       this.add(beamerOne, beamerTwo);
       
       this.bb = new THREE.Box3(
-        new THREE.Vector3(-4, -10, -15),
-        new THREE.Vector3(4, 10, 15)
+        new THREE.Vector3(-5, -10, -15),
+        new THREE.Vector3(5, 10, 15)
       );
       var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
       
       this.fbb = new THREE.Box3(
-        new THREE.Vector3(-4, -10, -15),
-        new THREE.Vector3(4, 10, 17)
+        new THREE.Vector3(-5, -10, -15),
+        new THREE.Vector3(5, 10, 17)
       );
       var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
       // this.add(fbbHelper);

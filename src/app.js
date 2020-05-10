@@ -345,7 +345,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                 let hitClone = hit.cloneNode();
                 hitClone.play();
                 hit.play();
@@ -356,7 +356,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                 let hitClone = hit.cloneNode();
                 hitClone.play();
                 hit.play();
@@ -367,7 +367,7 @@ const onAnimationFrameHandler = (timeStamp) => {
                   lives -= 1;
                   heartDiv.removeChild(heartDiv.lastChild);
               }
-              if (!gameOver) {
+              if (!gameOver && !scene.invincible) {
                 let hitClone = hit.cloneNode();
                 hitClone.play();
                 hit.play();
