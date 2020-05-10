@@ -141,6 +141,9 @@ function setupKeyControls() {
 
 setupKeyControls();
 
+let instructionsContainer = document.createElement('div');
+instructionsContainer.id = 'instructions-container';
+
 // Set up intro screen
 let beginContainer = document.createElement('div');
 beginContainer.id = 'begin-container';
@@ -160,11 +163,54 @@ beginContentText.appendChild(beginContentTitleText);
 
 let beginContentDescription = document.createElement('p');
 beginContentDescription.innerHTML =
-    "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?" +
-    '<br />' +
-    '<br />' +
-    "Use the arrow keys to drive. Avoid the fox and pedestrians. Collect coins. Hit 3 obstacles and you're kicked out of the class!";
+    "Princeton is offering a new course this fall, DRI 101 (Driver's Ed)! In this class, you are a driver driving down Washington Road. How long can you last?";
 beginContentText.appendChild(beginContentDescription);
+
+let instructionsButton = document.createElement('div');
+instructionsButton.id = 'instructions-button';
+instructionsButton.innerHTML = 'INSTRUCTIONS';
+beginContent.appendChild(instructionsButton);
+
+// Set up instructions popup
+
+let instructionsContent = document.createElement('div');
+instructionsContent.id = 'instructions-content';
+instructionsContainer.appendChild(instructionsContent);
+
+let instructionsContentText = document.createElement('div');
+instructionsContentText.id = 'instructions-text';
+instructionsContent.appendChild(instructionsContentText);
+
+let instructionsTitleText = document.createElement('h1');
+instructionsTitleText.innerText = 'INSTRUCTIONS';
+instructionsContentText.appendChild(instructionsTitleText);
+
+let instructionsContentDescription = document.createElement('p');
+instructionsContentDescription.innerHTML =
+    'Avoid the obstacles, collect coins, consume coffee for boosts.<br><br>' +
+    'SPACE: stop/start<br>' +
+    'LEFT: move left<br>' +
+    'RIGHT: move right<br>' +
+    'UP: speed up<br>' +
+    'P: pause';
+instructionsContentText.appendChild(instructionsContentDescription);
+
+let backButton = document.createElement('div');
+backButton.id = 'back-button';
+backButton.innerHTML = 'BACK';
+instructionsContent.appendChild(backButton);
+
+backButton.onclick = function () {
+    beginContainer.style.display = 'flex';
+    instructionsContainer.style.display = 'none';
+};
+
+document.body.appendChild(instructionsContainer);
+
+instructionsButton.onclick = function () {
+    beginContainer.style.display = 'none';
+    instructionsContainer.style.display = 'flex';
+};
 
 let beginContentButton = document.createElement('div');
 beginContentButton.id = 'begin-button';
@@ -362,7 +408,10 @@ const onAnimationFrameHandler = (timeStamp) => {
                     hit.play();
                 }
                 collisionObj.onCollision();
-            } else if (collisionObj.name === 'otherCar' || collisionObj.name == 'bus') {
+            } else if (
+                collisionObj.name === 'otherCar' ||
+                collisionObj.name == 'bus'
+            ) {
                 if (!(scene.invincible || collisionObj.collected)) {
                     lives -= 1;
                     heartDiv.removeChild(heartDiv.lastChild);

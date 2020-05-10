@@ -38,7 +38,8 @@
 #begin-container,
 #end-container,
 #countdown,
-#paused {
+#paused,
+#instructions-container {
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -54,13 +55,15 @@
 }
 
 #countdown,
-#paused {
+#paused,
+#instructions-container {
     display: none;
 }
 
 #begin-content,
 #end-content,
-#paused-content {
+#paused-content,
+#instructions-content {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -69,18 +72,11 @@
     padding: 30px;
 }
 
-#begin-content {
-    height: 380px;
-}
-
-#end-content {
-    height: 250px;
-}
-
 #begin-content h1,
 #end-content h1,
 #countdown h1,
-#paused-content h1 {
+#paused-content h1,
+#instructions-content h1 {
     color: white;
     padding: 0px;
     margin: 0px;
@@ -90,7 +86,8 @@
 
 #begin-content h1,
 #end-content h1,
-#paused-content h1 {
+#paused-content h1,
+#instructions-content h1 {
     font-size: 50px;
 }
 
@@ -100,7 +97,8 @@
 
 #begin-content p,
 #end-content p,
-#paused-content p{
+#paused-content p,
+#instructions-content p {
     font-family: 'Open Sans' !important;
     font-style: italic;
     color: white;
@@ -111,17 +109,41 @@
 }
 
 #begin-button,
-#end-button {
+#end-button,
+#instructions-button,
+#back-button {
     display: flex;
-    background-color: #31c110;
     height: 50px;
-    width: 150px;
+    width: 175px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     margin-top: 20px;
     color: white;
     font-size: 30px;
+}
+
+#begin-button,
+#end-button {
+    background-color: #31c110;
+}
+
+#instructions-button {
+    background-color: #ffcb15;
+}
+
+#instructions-button:hover {
+    background-color: #f9b100;
+    color: lightgray;
+}
+
+#back-button {
+    background-color: blue;
+}
+
+#back-button:hover {
+    background-color: darkblue;
+    color: lightgray;
 }
 
 #begin-button:hover,
