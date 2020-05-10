@@ -363,7 +363,7 @@ class Washington extends Scene {
         var bus = new Bus(this);
         bus.position.set(
           -1.5 + Math.random(),
-          0,
+          0.5,
           -(250 * Math.random())
         );
         bus.scale.set(0.18, 0.18, 0.18);
