@@ -55,7 +55,7 @@ class Grass extends Group {
           side: DoubleSide,
         });
         // Create a geometry with N segments.
-        const planeGeometry = new PlaneGeometry(250, 250, 250, 25);
+        const planeGeometry = new PlaneGeometry(350, 350, 350, 35);
         planeGeometry.vertices.map(function (vertex) {
           vertex.x += -.5 + Math.random() / 2;
           vertex.y += -.5 + Math.random() / 2;
@@ -79,7 +79,7 @@ class Grass extends Group {
         this.position.z += this.parent.gameSpeed;
 
         if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 270;
+            this.position.z -= 180;
         }
     }
 }

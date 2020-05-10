@@ -4,6 +4,8 @@ import {
     MeshStandardMaterial,
     Mesh,
     DoubleSide,
+    Geometry,
+    VertexColors
 } from 'three';
 
 class Road extends Group {
@@ -17,7 +19,7 @@ class Road extends Group {
         };
 
 
-        const planeGeometry = new PlaneGeometry(5, 100);
+        const planeGeometry = new PlaneGeometry(5, 350);
         const planeMaterial = new MeshStandardMaterial({
             color: 0x1f1f1f,
             side: DoubleSide,
@@ -27,29 +29,53 @@ class Road extends Group {
         plane.rotation.x = Math.PI / 2;
         this.add(plane);
 
-        let offset = 0;
-        for (let i = 0; i < 6; i++) {
-            const stripeGeometry = new PlaneGeometry(0.2, 3);
-            const stripeMaterial = new MeshStandardMaterial({
-                color: 0xfad201,
-                side: DoubleSide,
-            });
+        const geo = new Geometry();
 
-            let stripe = new Mesh(stripeGeometry, stripeMaterial);
-            stripe.rotation.x = Math.PI / 2;
-            stripe.position.set(0, 0.05, -30 + offset)
-            this.add(stripe);
+        let offset = 0;
+        for (let i = 0; i < 15; i++) {
+            const stripeGeometry = new PlaneGeometry(0.2, 3);
+            stripeGeometry.rotateX(Math.PI / 2);
+            stripeGeometry.translate(0, 0.05, 30 - offset);
+            geo.merge(stripeGeometry);
             offset += 15;
         }
+
+        const stripeMesh1 = new Mesh(
+            geo,
+            new  MeshStandardMaterial({
+                color: 0xfad201,
+                side: DoubleSide,
+            })
+        )
+
+        const stripeMesh2 = new Mesh(
+            geo,
+            new  MeshStandardMaterial({
+                color: 0xfad201,
+                side: DoubleSide,
+            })
+        )
+        stripeMesh2.position.set(0, 0, -120)
+
+        this.add(
+            stripeMesh1,
+            stripeMesh2
+        );
+
         parent.addToUpdateList(this);
     }
 
     update() {
         const { cameraPosition } = this.state;
-        this.position.z += this.parent.gameSpeed;
+        this.children[1].position.z += this.parent.gameSpeed;
+        this.children[2].position.z += this.parent.gameSpeed;
 
-        if (this.position.z > cameraPosition.z + 50) {
-            this.position.z -= 270;
+        if (this.children[1].position.z > cameraPosition.z + 120) {
+            this.children[1].position.z = -120;
+        }
+
+        if (this.children[2].position.z > cameraPosition.z + 120) {
+            this.children[2].position.z = -120;
         }
     }
 }
