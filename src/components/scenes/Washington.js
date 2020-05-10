@@ -122,7 +122,7 @@ class Washington extends Scene {
         abigail.state.sidewalk = true;
         abigail.position.set(
             4,
-            0.4,
+            1.4,
             -20
         );
         this.add(abigail);
@@ -133,7 +133,7 @@ class Washington extends Scene {
         dan.state.sidewalk = true;
         dan.position.set(
             -4,
-            0.4,
+            1.4,
             -80
         );
         this.add(dan);
@@ -212,7 +212,7 @@ class Washington extends Scene {
         let chad = new MalePedestrianShorts(this, 'chad', false);
         chad.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -(50 * Math.random() + 50)
         );
         this.add(chad);
@@ -222,7 +222,7 @@ class Washington extends Scene {
         let vanessa = new FemalePedestrianDress(this, 'vanessa', false);
         vanessa.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -(50 * Math.random() + 100)
             );
         this.collidableMeshList.push(vanessa);
@@ -232,7 +232,7 @@ class Washington extends Scene {
         let labib= new MalePedestrianJeans(this, 'labib', false);
         labib.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -(50 * Math.random() + 150)
             );
         this.collidableMeshList.push(labib);
@@ -242,7 +242,7 @@ class Washington extends Scene {
         let maria = new FemalePedestrianJeans(this, 'maria', false);
         maria.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -(100 * Math.random() + 100)
             );
         this.collidableMeshList.push(maria);
@@ -251,7 +251,7 @@ class Washington extends Scene {
         let max = new MalePedestrianJeans(this, 'max', false);
         max.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -(100 * Math.random() + 200)
             );
         this.collidableMeshList.push(max);
@@ -269,43 +269,43 @@ class Washington extends Scene {
         let tom = new MalePedestrianShorts(this, 'tom', true);
         tom.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let jeff = new MalePedestrianShorts(this, 'jeff', true);
         jeff.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let claire = new FemalePedestrianDress(this, 'claire', true);
         claire.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let tina = new FemalePedestrianDress(this, 'tina', true);
         tina.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
           );
         let matt = new MalePedestrianJeans(this, 'matt', true);
         matt.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let kaitlyn = new FemalePedestrianJeans(this, 'kaitlyn', true);
         kaitlyn.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         let brittney = new FemalePedestrianJeans(this, 'brittney', true);
         brittney.position.set(
             2 * Math.random() * this.edge - this.edge / 2,
-            0.5,
+            1.4,
             -1 * (crosswalkWidth * Math.random() + (Math.abs(crosswalk.position.z) - 0.5 * crosswalkWidth))
         );
         this.collidableMeshList.push(tom, jeff, claire, tina, matt, kaitlyn, brittney);
