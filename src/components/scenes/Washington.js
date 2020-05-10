@@ -69,7 +69,7 @@ class Washington extends Scene {
         // for night mode
         this.night = 0;
         this.timeElapsed = -1;
-        this.threshold = 5;
+        this.threshold = 10;
 
         // Add road
         const positions = [
@@ -352,7 +352,7 @@ class Washington extends Scene {
         otherCar2.rotation.set(0, Math.PI, 0);
         this.add(otherCar2);
         this.collidableCarList.push(otherCar2);
-        
+
         // var otherCar3 = new OtherCar(this, 0x000000);
         // otherCar3.position.set(
         //   -1.5 + Math.random(),
