@@ -79,11 +79,13 @@ class OtherCar extends Group {
         this.state = {
           lightsOn: false,
           threshold: 10,
-          bobbing: true,
-          idle: false
+          bobbing: true
         }
 
         this.bodyColor = bodyColor;
+        this.parent = parent;
+        this.speed = 0.5;
+        this.idle = false;
 
         var bb = new THREE.Box3(new THREE.Vector3(), new THREE.Vector3());
         this.bb = bb;
@@ -282,8 +284,18 @@ class OtherCar extends Group {
         }
 
         // visualize bounding box
+        this.bb = new THREE.Box3(
+          new THREE.Vector3(-1.5, -1, -2),
+          new THREE.Vector3(1.5, 3, 2)
+        );
         var bbHelper = new THREE.Box3Helper(this.bb, 0xffff00);
-        // this.add(bbHelper);
+
+        this.fbb = new THREE.Box3(
+          new THREE.Vector3(-1.5, -1, -4),
+          new THREE.Vector3(1.5, 3, 2)
+        );
+        var fbbHelper = new THREE.Box3Helper(this.fbb, 0xffff00);
+        // this.add(fbbHelper);
     }
 
     update(timeStamp) {
@@ -320,16 +332,21 @@ class OtherCar extends Group {
             this.children[7].rotation.z = Math.sin(timeStamp / 200);
         }
 
-        if (!idle) {
-          var newZ = this.position.z + (1 + Math.random()) * Math.max(this.parent.gameSpeed, 0.5);
-          if (newZ > this.parent.camera.position.z) {
-            newZ = -(this.parent.fog.far + 70 * Math.random());
-            while (newZ > this.parent.camera.position.z - 50) {
-              newZ = -(this.parent.fog.far + 70 * Math.random());
-            }
-          }
-          this.position.z = newZ;
+        if (this.idle) {
+          if (this.parent.stopped) var newZ = this.position.z;
+          else var newZ = this.position.z + this.parent.gameSpeed;
+        } else {
+          if (this.parent.stopped) var newZ = this.position.z + this.speed;
+          else var newZ = this.position.z + this.parent.gameSpeed + this.speed;
         }
+
+        if (newZ > this.parent.camera.position.z) {
+          newZ = -(this.parent.fog.far + 70 * Math.random());
+          while (newZ > this.parent.camera.position.z - 50) {
+            newZ = -(this.parent.fog.far + 70 * Math.random());
+          }
+        }
+        this.position.z = newZ;
 
         // Advance tween animations, if any exist
         TWEEN.update();

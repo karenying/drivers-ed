@@ -19,4 +19,5 @@ export * from './Sun';
 export * from './Moon';
 export * from './Cloud';
 export * from './Star';
+export * from './Bus';
 
