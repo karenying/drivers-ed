@@ -187,7 +187,7 @@ instructionsContentText.appendChild(instructionsTitleText);
 
 let instructionsContentDescription = document.createElement('p');
 instructionsContentDescription.innerHTML =
-    'Avoid the obstacles, collect coins, consume coffee for boosts.<br><br>' +
+    "Avoid the obstacles, collect coins, consume coffee for boosts. Hit 3 obstacles and you're kicked out of the class!<br><br>" +
     'SPACE: stop/start<br>' +
     'LEFT: move left<br>' +
     'RIGHT: move right<br>' +
