@@ -1,4 +1,10 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry} from "three";
+import { Group, 
+    BoxGeometry, 
+    MeshToonMaterial,
+    Mesh, 
+    VertexColors,
+    BufferGeometry,
+    Geometry} from "three";
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BufferGeometry().fromGeometry(
@@ -14,98 +20,112 @@ class OvalStatue extends Group {
         this.state = {
             cameraPosition: parent.camera.position
             // gameSpeed: parent.gameSpeed,
+        }
+
+        let colors = {
+            stone: 0x41929e,
+            blue: 0x41969e,
+            base: 0x2f3634,
         };
 
-        var materials = {
-            stone: new MeshToonMaterial({
-                color: 0x41929e,
-                flatShading: true
-            }),
-            blue: new MeshToonMaterial({
-                color: 0x41969e,
-                flatShading: true
-            }),
-            base: new MeshToonMaterial({
-                color: 0x2f3634,
-                flatShading: true
-            }),
-        };
+        const geo = new Geometry();
 
-        var top = createBox(8.5, 8, 8, materials.blue);
+        const top = new BoxGeometry(8.5, 8, 8);
+        top.faces.forEach(f => f.color.set(colors.blue));
+        geo.merge(top);
 
-        var topLeft = createBox(8, 8, 6, materials.stone);
-        top.add(topLeft);
-        topLeft.position.set(0, -0.5, -5)
+        const topLeft = new BoxGeometry(8, 8, 6);
+        const topRight = topLeft.clone();
+        topLeft.faces.forEach(f => f.color.set(colors.stone));
+        topLeft.translate(0, -0.5, -5);
+        geo.merge(topLeft);
+        topRight.faces.forEach(f => f.color.set(colors.stone));
+        topRight.translate(0, -0.5, 5);
+        geo.merge(topRight);
 
-        var topLeftCorner = createBox(7.5, 8, 6, materials.blue);
-        topLeft.add(topLeftCorner);
-        topLeftCorner.position.set(0, -0.5, -5)
+        const topLeftCorner = new BoxGeometry(7.5, 8, 6);
+        const topRightCorner = topLeftCorner.clone();
+        topLeftCorner.faces.forEach(f => f.color.set(colors.blue));
+        topLeftCorner.translate(0, -1, -10);
+        geo.merge(topLeftCorner);
+        topRightCorner.faces.forEach(f => f.color.set(colors.blue));
+        topRightCorner.translate(0, -1, 10);
+        geo.merge(topRightCorner);
 
-        var middleLeft = createBox(8.5, 10, 10, materials.stone);
-        topLeftCorner.add(middleLeft);
-        middleLeft.position.set(0, -7, -1)
+        const middleLeft = new BoxGeometry(8.5, 10, 10);
+        const middleRight = middleLeft.clone();
+        middleLeft.faces.forEach(f => f.color.set(colors.stone));
+        middleLeft.translate(0, -8, -11);
+        geo.merge(middleLeft);
+        middleRight.faces.forEach(f => f.color.set(colors.stone));
+        middleRight.translate(0, -8, 11);
+        geo.merge(middleRight);
 
-        var leftTip = createBox(8, 5, 5, materials.stone);
-        middleLeft.add(leftTip);
-        leftTip.position.set(0, -5, 5)
+        const leftTip = new BoxGeometry(8, 5, 5);
+        const rightTip = leftTip.clone();
+        leftTip.faces.forEach(f => f.color.set(colors.stone));
+        leftTip.translate(0, -13, -6);
+        geo.merge(leftTip);
+        rightTip.faces.forEach(f => f.color.set(colors.stone));
+        rightTip.translate(0, -13, 6);
+        geo.merge(rightTip);
 
-        var leftInnerTip = createBox(7.5, 3, 3, materials.blue);
-        leftTip.add(leftInnerTip);
-        leftInnerTip.position.set(0, 0, 3);
+        const leftInnerTip = new BoxGeometry(7.5, 3, 3);
+        const rightInnerTip = leftInnerTip.clone();
+        leftInnerTip.faces.forEach(f => f.color.set(colors.blue));
+        leftInnerTip.translate(0, -13, -3);
+        geo.merge(leftInnerTip);
+        rightInnerTip.faces.forEach(f => f.color.set(colors.blue));
+        rightInnerTip.translate(0, -13, 3);
+        geo.merge(rightInnerTip);
 
-        var leftInnerPoint = createBox(8, 1, 1, materials.stone);
-        leftInnerTip.add(leftInnerPoint);
-        leftInnerPoint.position.set(0, 0, 2);
+        const leftInnerPoint = new BoxGeometry(8, 1, 1);
+        const rightInnerPoint = leftInnerPoint.clone();
+        leftInnerPoint.faces.forEach(f => f.color.set(colors.stone));
+        leftInnerPoint.translate(0, -13, -1);
+        geo.merge(leftInnerPoint);
+        rightInnerPoint.faces.forEach(f => f.color.set(colors.stone));
+        rightInnerPoint.translate(0, -13, 1);
+        geo.merge(rightInnerPoint);
 
-        var bottomLeftCorner = createBox(9, 16, 8, materials.blue);
-        middleLeft.add(bottomLeftCorner);
-        bottomLeftCorner.position.set(0, -10, 0);
+        const bottomLeftCorner = new BoxGeometry(9, 16, 8);
+        const bottomRightCorner = bottomLeftCorner.clone();
+        bottomLeftCorner.faces.forEach(f => f.color.set(colors.blue));
+        bottomLeftCorner.translate(0, -18, -11);
+        geo.merge(bottomLeftCorner);
+        bottomRightCorner.faces.forEach(f => f.color.set(colors.blue));
+        bottomRightCorner.translate(0, -18, 11);
+        geo.merge(bottomRightCorner);
         
-        var bottomLeft = createBox(8, 10, 10, materials.stone);
-        bottomLeftCorner.add(bottomLeft);
-        bottomLeft.position.set(0, -11, 3);
+        const bottomLeft = new BoxGeometry(8, 10, 10);
+        const bottomRight = bottomLeft.clone();
+        bottomLeft.faces.forEach(f => f.color.set(colors.stone));
+        bottomLeft.translate(0, -29, -8);
+        geo.merge(bottomLeft);
+        bottomRight.faces.forEach(f => f.color.set(colors.stone));
+        bottomRight.translate(0, -29, 8);
+        geo.merge(bottomRight);
 
-        var bottom = createBox(8.5, 8, 12, materials.blue);
-        bottomLeft.add(bottom);
-        bottom.position.set(0, -1, 8);
+        const bottom = new BoxGeometry(8.5, 8, 12);
+        bottom.faces.forEach(f => f.color.set(colors.blue));
+        bottom.translate(0, -30, 0);
+        geo.merge(bottom);
 
-        var topRight = createBox(8, 8, 6, materials.stone);
-        top.add(topRight);
-        topRight.position.set(0, -0.5, 5)
+        const base = new BoxGeometry(20, 1, 40);
+        base.faces.forEach(f => f.color.set(colors.base));
+        base.translate(0, -34.5, 0);
+        geo.merge(base);
 
-        var topRightCorner = createBox(7.5, 8, 6, materials.blue);
-        topRight.add(topRightCorner);
-        topRightCorner.position.set(0, -0.5, 5)
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
 
-        var middleRight = createBox(8.5, 10, 10, materials.stone);
-        topRightCorner.add(middleRight);
-        middleRight.position.set(0, -7, 1)
+        this.add(mesh);
 
-        var rightTip = createBox(8, 5, 5, materials.stone);
-        middleRight.add(rightTip);
-        rightTip.position.set(0, -5, -5)
-
-        var rightInnerTip = createBox(7.5, 2, 2, materials.blue);
-        rightTip.add(rightInnerTip);
-        rightInnerTip.position.set(0, 0, -3);
-
-        var rightInnerPoint = createBox(8, 0.5, 0.5, materials.stone);
-        rightInnerTip.add(rightInnerPoint);
-        rightInnerPoint.position.set(0, 0, -1.25);
-
-        var bottomRightCorner = createBox(9, 16, 8, materials.blue);
-        middleRight.add(bottomRightCorner);
-        bottomRightCorner.position.set(0, -10, 0);
-        
-        var bottomRight = createBox(8, 10, 10, materials.stone);
-        bottomRightCorner.add(bottomRight);
-        bottomRight.position.set(0, -11, -3);
-
-        var base = createBox(20, 1, 40, materials.base);
-        bottom.add(base);
-        base.position.set(0, -4.5, 0)
-
-        this.add(top);
+        // this.add(top);
         parent.addToUpdateList(this);
         this.position.set(-13, 3.5, -150);
         this.rotation.y = Math.PI/2
