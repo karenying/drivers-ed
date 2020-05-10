@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh } from 'three';
+import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BoxGeometry(x, y, z);
@@ -7,16 +7,18 @@ function createBox(x, y, z, materials) {
 }
 
 function createWindow(x, y, z, materials) {
-    var windowGeometry = new BoxGeometry(x, y, z);
+    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
     var window = new Mesh(windowGeometry, materials.window);
 
-    var windowDividerGeometryVert = new BoxGeometry(x + 0.25, y + 0.1, 0.1);
+    var windowDividerGeometryVert = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x + 0.25, y + 0.1, 0.1));
     var windowDividerVert = new Mesh(
         windowDividerGeometryVert,
         materials.black
     );
 
-    var windowDividerGeometryHoz = new BoxGeometry(x + 0.25, 0.1, z + 0.1);
+    var windowDividerGeometryHoz = new BufferGeometry().fromGeometry(
+      new BoxGeometry(x + 0.25, 0.1, z + 0.1));
     var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
 
     window.add(windowDividerVert);

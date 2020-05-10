@@ -7,7 +7,8 @@ import { Group,
   MeshStandardMaterial,
   CircleGeometry,
   DoubleSide,
-  CylinderGeometry } from 'three';
+  CylinderGeometry,
+  BufferGeometry } from 'three';
 
 var Colors = {
   yellow: 0xf7ee6d,
@@ -31,7 +32,8 @@ class Coin extends Group {
   }
 
   init() {
-    let coinGeo = new CylinderGeometry(0.4, 0.4, 0.2, 18);
+    let coinGeo = new BufferGeometry().fromGeometry(
+      new CylinderGeometry(0.4, 0.4, 0.2, 18));
     coinGeo.rotateZ(Math.PI / 2);
     let coinMat = new MeshStandardMaterial ({
       color: Colors.darkyellow,
@@ -42,7 +44,8 @@ class Coin extends Group {
     coinMesh.receiveShadow = true;
     this.add(coinMesh);
 
-    let insetGeo = new CylinderGeometry(0.3, 0.3, 0.22, 18);
+    let insetGeo = new BufferGeometry().fromGeometry(
+      new CylinderGeometry(0.3, 0.3, 0.22, 18));
     insetGeo.rotateZ(Math.PI / 2);
     let insetMat = new MeshStandardMaterial ({
       color: Colors.yellow,
