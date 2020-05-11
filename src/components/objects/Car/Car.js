@@ -264,6 +264,7 @@ class Car extends Group {
         exhaust.castShadow = true;
         exhaust.receiveShadow = true;
         exhaust.position.set(-0.75, 0.75, 2.5);
+        this.exhaustSmoke = exhaust;
         this.add(exhaust);
         exhaust.name = "exhaust"
 
@@ -319,7 +320,7 @@ class Car extends Group {
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
-            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+            this.exhaustSmoke.rotation.z = Math.sin(timeStamp / 200);
         }
 
         let currTime = Date.now() / 1000;
@@ -369,7 +370,7 @@ class Car extends Group {
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth
             this.rotation.x = 0.03 * Math.sin(timeStamp / 200);
-            this.children[18].rotation.z = Math.sin(timeStamp / 200);
+            this.exhaustSmoke.z = Math.sin(timeStamp / 200);
         }
     }
 }
