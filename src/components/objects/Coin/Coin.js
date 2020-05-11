@@ -3,11 +3,10 @@ import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
 
 import { Group,
   Mesh,
-  MeshToonMaterial,
   MeshStandardMaterial,
-  CircleGeometry,
-  DoubleSide,
+  VertexColors,
   CylinderGeometry,
+  Geometry,
   BufferGeometry } from 'three';
 
 var Colors = {
@@ -32,27 +31,27 @@ class Coin extends Group {
   }
 
   init() {
-    let coinGeo = new BufferGeometry().fromGeometry(
-      new CylinderGeometry(0.4, 0.4, 0.2, 18));
-    coinGeo.rotateZ(Math.PI / 2);
-    let coinMat = new MeshStandardMaterial ({
-      color: Colors.darkyellow,
-      metalness: 0.4,
-    });
-    let coinMesh = new Mesh(coinGeo, coinMat);
-    coinMesh.castShadow = true;
-    coinMesh.receiveShadow = true;
-    this.add(coinMesh);
+    const geo = new Geometry();
 
-    let insetGeo = new BufferGeometry().fromGeometry(
-      new CylinderGeometry(0.3, 0.3, 0.22, 18));
+    let coinGeo = new CylinderGeometry(0.4, 0.4, 0.2, 18);
+    coinGeo.rotateZ(Math.PI / 2);
+    coinGeo.faces.forEach(f => f.color.set(Colors.darkyellow));
+    geo.merge(coinGeo);
+
+    let insetGeo = new CylinderGeometry(0.3, 0.3, 0.22, 18);
     insetGeo.rotateZ(Math.PI / 2);
-    let insetMat = new MeshStandardMaterial ({
-      color: Colors.yellow,
-      metalness: 0.4,
-    });
-    let insetMesh = new Mesh(insetGeo, insetMat);
-    this.add(insetMesh);
+    insetGeo.faces.forEach(f => f.color.set(Colors.yellow));
+    geo.merge(insetGeo);
+
+    const mesh = new Mesh(
+      new BufferGeometry().fromGeometry(geo),
+      new MeshStandardMaterial({
+          vertexColors: VertexColors,
+          metalness: 0.4,
+      })
+    )
+
+    this.add(mesh);
 
     // compute bounding box
     for (const mesh of this.children) {
