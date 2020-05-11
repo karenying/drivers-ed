@@ -72,6 +72,16 @@
                 background: #d9d9d9;
                 margin: 23px 0;
             }
+
+            .doubleImageContainer {
+              display: flex;
+              flex-direction: row;
+            }
+
+            .doubleImage {
+              width: 400px;
+            }
+
         </style>
     </head>
 
@@ -231,6 +241,18 @@
                     <h3> Implemented Features </h3>
                     <p>
                       <u> <strong> Meshes </strong> </u>
+                      <figure>
+                        <center>
+                          <div class = "doubleImageContainer">
+                            <img class = "doubleImage" src="./videos/nassau.png">
+                            <img class = "doubleImage" src="./videos/friend.png">
+                          </div>
+                          <figcaption>
+                            Examples of custom meshes created [Nassau Hall (L) and
+                            Friend Center (R)]
+                          </figcaption>
+                        </center>
+                      </figure>
                       <p>
                         All the meshes in the game are either created from merging
                         basic three.js meshes or downloaded from Google Poly.
@@ -275,6 +297,17 @@
                         generate but also because it detracted from the low-poly
                         aesthetic that we set for the other meshes.
                       </p>
+                      <figure>
+                        <center>
+                          <div class = "doubleImageContainer">
+                            <img class = "doubleImage" src="./videos/day.png">
+                            <img class = "doubleImage" src="./videos/night.png">
+                          </div>
+                          <figcaption>
+                            Changes from day (L) to night (R) sky scenery
+                          </figcaption>
+                        </center>
+                      </figure>
                       <p>
                         For the sky, to create a feeling of time and progression as the car keeps driving,
                         temporal features were added to the sky. The color of the sky changes from a light sky blue to a dark blue as the time of day progresses from day to night.
