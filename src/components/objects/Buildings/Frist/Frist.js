@@ -1,31 +1,24 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
 
-function createWindow(x, y, z, materials) {
-    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
-    var window = new Mesh(windowGeometry, materials.window);
+import { Group, VertexColors, BufferGeometry, BoxGeometry, MeshToonMaterial, Mesh, Geometry} from "three";
 
-    var windowDividerGeometryVert = new BufferGeometry().fromGeometry(
-      new BoxGeometry(x + 0.25, y + 0.1, 0.1));
-    var windowDividerVert = new Mesh(
-        windowDividerGeometryVert,
-        materials.black
-    );
+function createWindow(x, y, z, geo, windowGeometry, windowVertDividerGeometry, windowHozDividerGeometry) {
+    let window = windowGeometry.clone();
+    window.translate(x, y, z);
+    geo.merge(window);
 
-    var windowDividerGeometryHoz = new BufferGeometry().fromGeometry(
-      new BoxGeometry(x + 0.25, 0.1, z + 0.1));
-    var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
+    let windowDividerGeometryVert = windowVertDividerGeometry.clone();
+    windowDividerGeometryVert.translate(x, y, z);
+    geo.merge(windowDividerGeometryVert);
 
-    window.add(windowDividerVert);
-    window.add(windowDividerHoz);
-
-    return window;
+    let windowDividerGeometryHoz = windowHozDividerGeometry.clone();
+    windowDividerGeometryHoz.translate(x, y, z);
+    geo.merge(windowDividerGeometryHoz);
 }
 
-function createPillar(x, y, z, materials) {
-    var pillarGeometry = new BufferGeometry().fromGeometry(
-      new BoxGeometry(x, y, z));
-    var pillar = new Mesh(pillarGeometry, materials.stone);
-    return pillar;
+function createPillar(x, y, z, geo, pillarGeometry) {
+    let pillar = pillarGeometry.clone();
+    pillar.translate(x, y, z);
+    geo.merge(pillar);
 }
 
 class Frist extends Group {
@@ -37,260 +30,155 @@ class Frist extends Group {
             // gameSpeed: parent.gameSpeed,
         };
 
-        var materials = {
-            brick: new MeshToonMaterial({
-                color: 0x401704,
-                flatShading: true,
-            }),
-            stone: new MeshToonMaterial({
-                color: 0x5e5d5c,
-                flatShading: true,
-            }),
-            window: new MeshToonMaterial({
-                color: 0x9c9898,
-                flatShading: true,
-            }),
-            door: new MeshToonMaterial({
-                color: 0x4f2a04,
-                flatShading: true,
-            }),
-            black: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true,
-            }),
-        };
+        var colors = {
+          brick: 0x401704,
+          stone: 0x5e5d5c,
+          window: 0x9c9898,
+          door: 0x4f2a04,
+          black: 0x000000,
+      };
 
-        // main building
-        var mainBuildingGeometry = new BoxGeometry(30, 30, 80);
-        var mainBuilding = new Mesh(mainBuildingGeometry, materials.brick);
-        mainBuilding.name = 'main building';
+      const geo = new Geometry();
 
-        var window1 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window1);
-        window1.name = 'window 1';
-        window1.position.set(-11, 0, -35);
+      // main building
+      const mainBuilding = new BoxGeometry(30, 30, 80);
+      mainBuilding.faces.forEach(f => f.color.set(colors.brick));
+      geo.merge(mainBuilding);
 
-        var window2 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window2);
-        window2.name = 'window 2';
-        window2.position.set(-11, 0, -25);
+      const windowGeometry1 = new BoxGeometry(10, 10, 5);
+      windowGeometry1.faces.forEach(f => f.color.set(colors.window));
+      const windowVertDividerGeometry1 = new BoxGeometry(10.25, 10.1, 0.1);
+      windowVertDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
+      const windowHozDividerGeometry1 = new BoxGeometry(10.25, 0.1, 5.1);
+      windowHozDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
 
-        var window3 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window3);
-        window3.name = 'window 3';
-        window3.position.set(-11, 0, -15);
+      createWindow(-10.25, 0, -35, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
+      createWindow(-10.25, 0, -25, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
+      createWindow(-10.25, 0, -15, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
+      createWindow(-10.25, 0, 35, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
+      createWindow(-10.25, 0, 25, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
+      createWindow(-10.25, 0, 15, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1);
 
-        var window4 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window4);
-        window4.name = 'window 4';
-        window4.position.set(-11, 0, 35);
+      // entrance building
+      const entranceBuildingGeometry = new BoxGeometry(20, 40, 20);
+      entranceBuildingGeometry.faces.forEach(f => f.color.set(colors.brick));
+      entranceBuildingGeometry.translate(-10, 5, 0);
+      geo.merge(entranceBuildingGeometry)
 
-        var window5 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window5);
-        window5.name = 'window 5';
-        window5.position.set(-11, 0, 25);
+      const entranceBuildingRoofGeometry = new BoxGeometry(20, 5, 5);
+      entranceBuildingRoofGeometry.faces.forEach(f => f.color.set(colors.brick));
+      entranceBuildingRoofGeometry.translate(-10, 25, 0);
+      geo.merge(entranceBuildingRoofGeometry)
 
-        var window6 = createWindow(10, 10, 5, materials);
-        mainBuilding.add(window6);
-        window6.name = 'window 6';
-        window6.position.set(-11, 0, 15);
+      const leftEntranceRoofGeometry = new BoxGeometry(25, 20, 5);
+      const rightEntranceRoofGeometry = leftEntranceRoofGeometry.clone();
+      leftEntranceRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      leftEntranceRoofGeometry.rotateX(56 * (Math.PI/180));
+      leftEntranceRoofGeometry.translate(-10, 25, -7);
+      geo.merge(leftEntranceRoofGeometry);
+      rightEntranceRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      rightEntranceRoofGeometry.rotateX(-56 * (Math.PI/180));
+      rightEntranceRoofGeometry.translate(-10, 25, 7);
+      geo.merge(rightEntranceRoofGeometry);
 
-        // entrance building
-        var entranceBuildingGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(20, 40, 20));
-        var entranceBuilding = new Mesh(
-            entranceBuildingGeometry,
-            materials.brick
-        );
-        mainBuilding.add(entranceBuilding);
-        entranceBuilding.position.set(-10, 5, 0);
-        entranceBuilding.name = 'entrance building';
+      const entranceBuildingStoneGeometry = new BoxGeometry(10, 30, 10);
+      entranceBuildingStoneGeometry.faces.forEach(f => f.color.set(colors.stone));
+      entranceBuildingStoneGeometry.translate(-16, 0, 0);
+      geo.merge(entranceBuildingStoneGeometry);
 
-        var entranceBuildingRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(20, 5, 5));
-        var entranceBuildingRoof = new Mesh(
-            entranceBuildingRoofGeometry,
-            materials.brick
-        );
-        entranceBuilding.add(entranceBuildingRoof);
-        entranceBuildingRoof.position.set(0, 20, 0);
-        entranceBuildingRoof.name = 'entrance building roof';
+      const entranceBuildingDoorGeometry = new BoxGeometry(10, 10, 5);
+      entranceBuildingDoorGeometry.faces.forEach(f => f.color.set(colors.door));
+      entranceBuildingDoorGeometry.translate(-17, -10, 0);
+      geo.merge(entranceBuildingDoorGeometry);
 
-        var leftEntranceRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(25, 20, 5));
-        var leftEntranceRoof = new Mesh(
-            leftEntranceRoofGeometry,
-            materials.stone
-        );
-        entranceBuilding.add(leftEntranceRoof);
-        leftEntranceRoof.name = 'left entrance roof';
-        leftEntranceRoof.position.set(0, 20, -7);
-        leftEntranceRoof.rotation.x = 56 * (Math.PI / 180);
+      const windowGeometry2 = new BoxGeometry(10, 10, 8);
+      windowGeometry2.faces.forEach(f => f.color.set(colors.window));
+      const windowVertDividerGeometry2 = new BoxGeometry(10.25, 10.1, 0.1);
+      windowVertDividerGeometry2.faces.forEach(f => f.color.set(colors.black));
+      const windowHozDividerGeometry2 = new BoxGeometry(10.25, 0.1, 8.1);
+      windowHozDividerGeometry2.faces.forEach(f => f.color.set(colors.black));
+      createWindow(-16.25, 5, 0, geo, windowGeometry2, windowVertDividerGeometry2, windowHozDividerGeometry2);
 
-        var rightEntranceRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(25, 20, 5));
-        var rightEntranceRoof = new Mesh(
-            rightEntranceRoofGeometry,
-            materials.stone
-        );
-        entranceBuilding.add(rightEntranceRoof);
-        rightEntranceRoof.name = 'right entrance roof';
-        rightEntranceRoof.position.set(0, 20, 7);
-        rightEntranceRoof.rotation.x = -56 * (Math.PI / 180);
+      // left building & right building
+      const leftBuildingGeometry = new BoxGeometry(70, 40, 20);
+      const rightBuildingGeometry = leftBuildingGeometry.clone();
+      leftBuildingGeometry.faces.forEach(f => f.color.set(colors.brick));
+      leftBuildingGeometry.translate(10, 5, -50);
+      geo.merge(leftBuildingGeometry)
+      rightBuildingGeometry.faces.forEach(f => f.color.set(colors.brick));
+      rightBuildingGeometry.translate(10, 5, 50);
+      geo.merge(rightBuildingGeometry)
 
-        var entranceBuildingStoneGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(10, 30, 10));
-        var entranceBuildingStone = new Mesh(
-            entranceBuildingStoneGeometry,
-            materials.stone
-        );
-        entranceBuilding.add(entranceBuildingStone);
-        entranceBuildingStone.name = 'entrance building stone';
-        entranceBuildingStone.position.set(-6, -5, 0);
+      const leftBuildingRoofGeometry = new BoxGeometry(70, 5, 5);
+      const rightBuildingRoofGeometry = leftBuildingRoofGeometry.clone();
+      leftBuildingRoofGeometry.faces.forEach(f => f.color.set(colors.brick));
+      leftBuildingRoofGeometry.translate(10, 25, -50);
+      geo.merge(leftBuildingRoofGeometry)
+      rightBuildingRoofGeometry.faces.forEach(f => f.color.set(colors.brick));
+      rightBuildingRoofGeometry.translate(10, 25, 50);
+      geo.merge(rightBuildingRoofGeometry)
 
-        var entranceBuildingDoorGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(10, 10, 5));
-        var entranceBuildingDoor = new Mesh(
-            entranceBuildingDoorGeometry,
-            materials.door
-        );
-        entranceBuilding.add(entranceBuildingDoor);
-        entranceBuilding.name = 'entrance building door';
-        entranceBuildingDoor.position.set(-7, -15, 0);
+      const leftBuildingLeftRoofGeometry = new BoxGeometry(75, 20, 5);
+      const leftBuildingRightRoofGeometry = leftBuildingLeftRoofGeometry.clone();
+      const rightBuildingLeftRoofGeometry = leftBuildingLeftRoofGeometry.clone();
+      const rightBuildingRightRoofGeometry = leftBuildingLeftRoofGeometry.clone();
 
-        var entranceBuildingWindow = createWindow(10, 10, 8, materials);
-        entranceBuildingWindow.name = 'entrance building window';
-        entranceBuilding.add(entranceBuildingWindow);
-        entranceBuildingWindow.position.set(-7, 0, 0);
+      leftBuildingLeftRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      leftBuildingLeftRoofGeometry.rotateX(56 * (Math.PI/180));
+      leftBuildingLeftRoofGeometry.translate(10, 25, -57);
+      geo.merge(leftBuildingLeftRoofGeometry);
+      leftBuildingRightRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      leftBuildingRightRoofGeometry.rotateX(-56 * (Math.PI/180));
+      leftBuildingRightRoofGeometry.translate(10, 25, -43);
+      geo.merge(leftBuildingRightRoofGeometry);
 
-        // left building
-        var leftBuildingGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(70, 40, 20));
-        var leftBuilding = new Mesh(leftBuildingGeometry, materials.brick);
-        mainBuilding.add(leftBuilding);
-        leftBuilding.position.set(10, 5, -50);
-        leftBuilding.name = 'left building';
+      rightBuildingLeftRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      rightBuildingLeftRoofGeometry.rotateX(56 * (Math.PI/180));
+      rightBuildingLeftRoofGeometry.translate(10, 25, 43);
+      geo.merge(rightBuildingLeftRoofGeometry);
+      rightBuildingRightRoofGeometry.faces.forEach(f => f.color.set(colors.stone));
+      rightBuildingRightRoofGeometry.rotateX(-56 * (Math.PI/180));
+      rightBuildingRightRoofGeometry.translate(10, 25, 57);
+      geo.merge(rightBuildingRightRoofGeometry);
 
-        var leftBuildingRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(70, 5, 5));
-        var leftBuildingRoof = new Mesh(
-            leftBuildingRoofGeometry,
-            materials.brick
-        );
-        leftBuilding.add(leftBuildingRoof);
-        leftBuildingRoof.position.set(0, 20, 0);
-        leftBuildingRoof.name = 'left building roof';
+      const windowGeometry3 = new BoxGeometry(10, 10, 10);
+      windowGeometry3.faces.forEach(f => f.color.set(colors.window));
+      const windowVertDividerGeometry3 = new BoxGeometry(10.25, 10.1, 0.1);
+      windowVertDividerGeometry3.faces.forEach(f => f.color.set(colors.black));
+      const windowHozDividerGeometry3 = new BoxGeometry(10.25, 0.1, 10.1);
+      windowHozDividerGeometry3.faces.forEach(f => f.color.set(colors.black));
+      createWindow(-20.25, 5, -50, geo, windowGeometry3, windowVertDividerGeometry3, windowHozDividerGeometry3);
+      createWindow(-20.25, 5, 50, geo, windowGeometry3, windowVertDividerGeometry3, windowHozDividerGeometry3);
 
-        var leftBuildingLeftRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(75, 20, 5));
-        var leftBuildingLeftRoof = new Mesh(
-            leftBuildingLeftRoofGeometry,
-            materials.stone
-        );
-        leftBuilding.add(leftBuildingLeftRoof);
-        leftBuildingLeftRoof.name = 'left building left roof';
-        leftBuildingLeftRoof.position.set(0, 20, -7);
-        leftBuildingLeftRoof.rotation.x = 56 * (Math.PI / 180);
+      // pillars
+      const mainPillar = new BoxGeometry(2, 2, 100);
+      mainPillar.faces.forEach(f => f.color.set(colors.stone));
+      mainPillar.translate(-40, 0, 0);
+      geo.merge(mainPillar);
 
-        var leftBuildingRightRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(75, 20, 5));
-        var leftBuildingRightRoof = new Mesh(
-            leftBuildingRightRoofGeometry,
-            materials.stone
-        );
-        leftBuilding.add(leftBuildingRightRoof);
-        leftBuildingRightRoof.name = 'left building right roof';
-        leftBuildingRightRoof.position.set(0, 20, 7);
-        leftBuildingRightRoof.rotation.x = -56 * (Math.PI / 180);
+      const widePillar = new BoxGeometry(2, 15, 10);
+      widePillar.faces.forEach(f => f.color.set(colors.stone));
 
-        var leftWindow = createWindow(10, 10, 10, materials);
-        leftBuilding.add(leftWindow);
-        leftWindow.name = 'left building window';
-        leftWindow.position.set(-31, 0, 0);
+      const thinPillar = new BoxGeometry(2, 15, 5);
+      thinPillar.faces.forEach(f => f.color.set(colors.stone));
+      
+      createPillar(-40, -8, -45, geo, widePillar);
+      createPillar(-40, -8, -33, geo, thinPillar);
+      createPillar(-40, -8, -22, geo, thinPillar);
+      createPillar(-40, -8, -10, geo, widePillar);
+      createPillar(-40, -8, 45, geo, widePillar);
+      createPillar(-40, -8, 33, geo, thinPillar);
+      createPillar(-40, -8, 22, geo, thinPillar);
+      createPillar(-40, -8, 10, geo, widePillar);
 
-        // right building
-        var rightBuildingGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(70, 40, 20));
-        var rightBuilding = new Mesh(rightBuildingGeometry, materials.brick);
-        mainBuilding.add(rightBuilding);
-        rightBuilding.position.set(10, 5, 50);
-        rightBuilding.name = 'right building';
+      const mesh = new Mesh(
+          new BufferGeometry().fromGeometry(geo),
+          new MeshToonMaterial({
+              vertexColors: VertexColors,
+          })
+      )
 
-        var rightBuildingRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(70, 5, 5));
-        var rightBuildingRoof = new Mesh(
-            rightBuildingRoofGeometry,
-            materials.brick
-        );
-        rightBuilding.add(rightBuildingRoof);
-        rightBuildingRoof.position.set(0, 20, 0);
-        rightBuildingRoof.name = 'right building roof';
-
-        var rightBuildingLeftRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(75, 20, 5));
-        var rightBuildingLeftRoof = new Mesh(
-            rightBuildingLeftRoofGeometry,
-            materials.stone
-        );
-        rightBuilding.add(rightBuildingLeftRoof);
-        rightBuildingLeftRoof.name = 'right building left roof';
-        rightBuildingLeftRoof.position.set(0, 20, -7);
-        rightBuildingLeftRoof.rotation.x = 56 * (Math.PI / 180);
-
-        var rightBuildingRightRoofGeometry = new BufferGeometry().fromGeometry(
-          new BoxGeometry(75, 20, 5));
-        var rightBuildingRightRoof = new Mesh(
-            rightBuildingRightRoofGeometry,
-            materials.stone
-        );
-        rightBuilding.add(rightBuildingRightRoof);
-        rightBuildingRightRoof.name = 'right building right roof';
-        rightBuildingRightRoof.position.set(0, 20, 7);
-        rightBuildingRightRoof.rotation.x = -56 * (Math.PI / 180);
-
-        var rightWindow = createWindow(10, 10, 10, materials);
-        rightBuilding.add(rightWindow);
-        rightWindow.name = 'right building window';
-        rightWindow.position.set(-31, 0, 0);
-
-        // pillars
-        var mainPillar = createPillar(2, 2, 100, materials);
-        mainBuilding.add(mainPillar);
-        mainPillar.position.set(-40, 0, 0);
-
-        var pillar1 = createPillar(2, 15, 10, materials);
-        mainPillar.add(pillar1);
-        pillar1.position.set(0, -8, -45);
-
-        var pillar2 = createPillar(2, 15, 5, materials);
-        mainPillar.add(pillar2);
-        pillar2.position.set(0, -8, -33);
-
-        var pillar3 = createPillar(2, 15, 5, materials);
-        mainPillar.add(pillar3);
-        pillar3.position.set(0, -8, -22);
-
-        var pillar4 = createPillar(2, 15, 10, materials);
-        mainPillar.add(pillar4);
-        pillar4.position.set(0, -8, -10);
-
-        var pillar5 = createPillar(2, 15, 10, materials);
-        mainPillar.add(pillar5);
-        pillar5.position.set(0, -8, 45);
-
-        var pillar6 = createPillar(2, 15, 5, materials);
-        mainPillar.add(pillar6);
-        pillar6.position.set(0, -8, 33);
-
-        var pillar7 = createPillar(2, 15, 5, materials);
-        mainPillar.add(pillar7);
-        pillar7.position.set(0, -8, 22);
-
-        var pillar8 = createPillar(2, 15, 10, materials);
-        mainPillar.add(pillar8);
-        pillar8.position.set(0, -8, 10);
-
-        this.add(mainBuilding);
+      this.add(mesh);
 
         this.scale.set(0.2, 0.2, 0.2);
         this.position.set(-17, 3, -35);

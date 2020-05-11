@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
+import { Group, VertexColors, BufferGeometry, BoxGeometry, MeshToonMaterial, Mesh, Geometry} from "three";
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BoxGeometry(x, y, z);
@@ -6,25 +6,21 @@ function createBox(x, y, z, materials) {
     return box;
 }
 
-function createWindow(x, y, z, materials) {
-    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
-    var window = new Mesh(windowGeometry, materials.window);
+function createWindow(x, y, z, geo, windowGeometry, windowVertDividerGeometry, windowHozDividerGeometry, r) {
+    let window = windowGeometry.clone();
+    window.rotateY(r);
+    window.translate(x, y, z);
+    geo.merge(window);
 
-    var windowDividerGeometryVert = new BufferGeometry().fromGeometry(
-      new BoxGeometry(x + 0.25, y + 0.1, 0.1));
-    var windowDividerVert = new Mesh(
-        windowDividerGeometryVert,
-        materials.black
-    );
+    let windowDividerGeometryVert = windowVertDividerGeometry.clone();
+    windowDividerGeometryVert.rotateY(r);
+    windowDividerGeometryVert.translate(x, y, z);
+    geo.merge(windowDividerGeometryVert);
 
-    var windowDividerGeometryHoz = new BufferGeometry().fromGeometry(
-      new BoxGeometry(x + 0.25, 0.1, z + 0.1));
-    var windowDividerHoz = new Mesh(windowDividerGeometryHoz, materials.black);
-
-    window.add(windowDividerVert);
-    window.add(windowDividerHoz);
-
-    return window;
+    let windowDividerGeometryHoz = windowHozDividerGeometry.clone();
+    windowDividerGeometryHoz.rotateY(r);
+    windowDividerGeometryHoz.translate(x, y, z);
+    geo.merge(windowDividerGeometryHoz);
 }
 
 class Firestone extends Group {
@@ -36,124 +32,147 @@ class Firestone extends Group {
             // gameSpeed: parent.gameSpeed,
         };
 
-        var materials = {
-            stone: new MeshToonMaterial({
-                color: 0x5e5e5e,
-                flatShading: true,
-            }),
-            window: new MeshToonMaterial({
-                color: 0xadadad,
-                flatShading: true,
-            }),
-            gray: new MeshToonMaterial({
-                color: 0x474747,
-                flatShading: true,
-            }),
-            door: new MeshToonMaterial({
-                color: 0x333333,
-                flatShading: true,
-            }),
-            black: new MeshToonMaterial({
-                color: 0x000000,
-                flatShading: true,
-            }),
+        var colors = {
+            stone: 0x5e5e5e,
+            window: 0xadadad,
+            gray: 0x474747,
+            door: 0x333333,
+            black: 0x000000,
         };
 
-        // main building
-        var mainBuilding = createBox(30, 15, 70, materials.gray);
-        mainBuilding.name = 'main building';
+        const geo = new Geometry();
 
-        var offset = 1;
+        // main building
+        const mainBuilding = new BoxGeometry(30, 15, 70);
+        mainBuilding.faces.forEach(f => f.color.set(colors.gray));
+        geo.merge(mainBuilding);
+
+        const windowGeometry1 = new BoxGeometry(4, 8, 5);
+        windowGeometry1.faces.forEach(f => f.color.set(colors.window));
+        const windowVertDividerGeometry1 = new BoxGeometry(4.25, 8.1, 0.1);
+        windowVertDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
+        const windowHozDividerGeometry1 = new BoxGeometry(4.25, 0.1, 5.1);
+        windowHozDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
+
+        let offset = 1;
         for (var i = 0; i < 7; i++) {
-            var window = createWindow(4, 8, 3, materials);
-            mainBuilding.add(window);
-            window.position.set(-13.5, 0, -30 + offset);
+            createWindow(-13.5, 0, -30 + offset, geo, windowGeometry1, windowVertDividerGeometry1, windowHozDividerGeometry1, 0);
             offset += 6;
         }
 
-        var sideWindow1 = createWindow(4, 10, 8, materials);
-        mainBuilding.add(sideWindow1);
-        sideWindow1.position.set(0, 0, -33.5);
-        sideWindow1.rotation.y = Math.PI / 2;
+        const sideWindow1 = new BoxGeometry(4, 10, 8);
+        sideWindow1.faces.forEach(f => f.color.set(colors.window));
+        const sideWindowVertDividerGeometry1 = new BoxGeometry(4.25, 10.1, 0.1);
+        sideWindowVertDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
+        const sideWindowHozDividerGeometry1 = new BoxGeometry(4.25, 0.1, 8.1);
+        sideWindowHozDividerGeometry1.faces.forEach(f => f.color.set(colors.black));
+
+        createWindow(0, 0, -33.5, geo, sideWindow1, sideWindowVertDividerGeometry1, sideWindowHozDividerGeometry1, Math.PI/2);
 
         // lobby building 1
-        var lobbyBuilding1 = createBox(20, 20, 20, materials.gray);
-        mainBuilding.add(lobbyBuilding1);
-        lobbyBuilding1.position.set(-10, 2.5, 20);
+        const lobbyBuilding1 = new BoxGeometry(20, 20, 20);
+        lobbyBuilding1.faces.forEach(f => f.color.set(colors.gray));
+        lobbyBuilding1.translate(-10, 2.5, 20);
+        geo.merge(lobbyBuilding1);
 
-        var offset = 1;
+        const windowGeometry2 = new BoxGeometry(4, 2, 2);
+        windowGeometry2.faces.forEach(f => f.color.set(colors.window));
+        const windowVertDividerGeometry2 = new BoxGeometry(4.25, 2.1, 0.1);
+        windowVertDividerGeometry2.faces.forEach(f => f.color.set(colors.black));
+        const windowHozDividerGeometry2 = new BoxGeometry(4.25, 0.1, 2.1);
+        windowHozDividerGeometry2.faces.forEach(f => f.color.set(colors.black));
+
+        offset = 1;
         for (var i = 0; i < 3; i++) {
-            var window = createWindow(4, 2, 2, materials);
-            lobbyBuilding1.add(window);
-            window.position.set(-8.5, 5 - offset, -5);
+            createWindow(-18.5, 7.5 - offset, 15, geo, windowGeometry2, windowVertDividerGeometry2, windowHozDividerGeometry2, 0);
             offset += 3;
         }
 
         // lobby building 2
-        var lobbyBuilding2 = createBox(70, 30, 20, materials.stone);
-        mainBuilding.add(lobbyBuilding2);
-        lobbyBuilding2.position.set(13, 7.5, 30);
+        const lobbyBuilding2 = new BoxGeometry(70, 30, 20);
+        lobbyBuilding2.faces.forEach(f => f.color.set(colors.stone));
+        lobbyBuilding2.translate(13, 7.5, 30);
+        geo.merge(lobbyBuilding2)
 
-        var offset = 1;
+        const windowGeometry3 = new BoxGeometry(4, 10, 2);
+        windowGeometry3.faces.forEach(f => f.color.set(colors.window));
+        const windowVertDividerGeometry3 = new BoxGeometry(4.25, 10.1, 0.1);
+        windowVertDividerGeometry3.faces.forEach(f => f.color.set(colors.black));
+        const windowHozDividerGeometry3 = new BoxGeometry(4.25, 0.1, 2.1);
+        windowHozDividerGeometry3.faces.forEach(f => f.color.set(colors.black));
+
+        offset = 1;
         for (var i = 0; i < 4; i++) {
-            var window = createWindow(4, 10, 2, materials);
-            lobbyBuilding2.add(window);
-            window.position.set(-33.5, 5, -7 + offset);
+            createWindow(-20.5, 12.5, 23 + offset, geo, windowGeometry3, windowVertDividerGeometry3, windowHozDividerGeometry3, 0);
             offset += 3;
         }
 
         // entrance
-        var entrance = createBox(10, 10, 20, materials.stone);
-        mainBuilding.add(entrance);
-        entrance.position.set(-25, -2.5, 38);
+        const entrance = new BoxGeometry(10, 10, 20);
+        entrance.faces.forEach(f => f.color.set(colors.stone));
+        entrance.translate(-25, -2.5, 38);
+        geo.merge(entrance)
 
-        var door1 = createBox(3, 7, 6, materials.door);
-        entrance.add(door1);
-        door1.position.set(-4, -1.5, 5);
-
-        var door2 = createBox(3, 7, 6, materials.door);
-        entrance.add(door2);
-        door2.position.set(-4, -1.5, -5);
+        const door1 = new BoxGeometry(3, 7, 6);
+        const door2 = door1.clone();
+        door1.faces.forEach(f => f.color.set(colors.door));
+        door1.translate(-29, -4, 43);
+        geo.merge(door1)
+        door2.faces.forEach(f => f.color.set(colors.door));
+        door2.translate(-29, -4, 33);
+        geo.merge(door2)
 
         // tower
-        var tower = createBox(15, 50, 15, materials.gray);
-        mainBuilding.add(tower);
-        tower.position.set(-15, 17.5, 45);
+        const tower = new BoxGeometry(15, 50, 15);
+        tower.faces.forEach(f => f.color.set(colors.gray));
+        tower.translate(-15, 17.5, 45)
+        geo.merge(tower)
 
-        var towerTip1 = createBox(2, 4, 2, materials.stone);
-        tower.add(towerTip1);
-        towerTip1.position.set(-7, 26, -7);
+        const towerTip1 = new BoxGeometry(2, 4, 2);
+        const towerTip2 = towerTip1.clone();
+        const towerTip3 = towerTip1.clone();
+        const towerTip4 = towerTip1.clone();
+        towerTip1.faces.forEach(f => f.color.set(colors.stone));
+        towerTip1.translate(-22, 43.5, 38);
+        geo.merge(towerTip1)
+        towerTip2.faces.forEach(f => f.color.set(colors.stone));
+        towerTip2.translate(-8, 43.5, 53);
+        geo.merge(towerTip2)
+        towerTip3.faces.forEach(f => f.color.set(colors.stone));
+        towerTip3.translate(-22, 43.5, 53);
+        geo.merge(towerTip3)
+        towerTip4.faces.forEach(f => f.color.set(colors.stone));
+        towerTip4.translate(-8, 43.5, 38);
+        geo.merge(towerTip4)
 
-        var towerTip2 = createBox(2, 4, 2, materials.stone);
-        tower.add(towerTip2);
-        towerTip2.position.set(7, 26, 7);
+        const windowGeometry4 = new BoxGeometry(4, 5, 5);
+        windowGeometry4.faces.forEach(f => f.color.set(colors.window));
+        const windowVertDividerGeometry4 = new BoxGeometry(4.25, 5.1, 0.1);
+        windowVertDividerGeometry4.faces.forEach(f => f.color.set(colors.black));
+        const windowHozDividerGeometry4 = new BoxGeometry(4.25, 0.1, 5.1);
+        windowHozDividerGeometry4.faces.forEach(f => f.color.set(colors.black));
 
-        var towerTip3 = createBox(2, 4, 2, materials.stone);
-        tower.add(towerTip3);
-        towerTip3.position.set(-7, 26, 7);
+        createWindow(-21, 22.5, 45, geo, windowGeometry4, windowVertDividerGeometry4, windowHozDividerGeometry4, 0);
+        createWindow(-21, 12.5, 45, geo, windowGeometry4, windowVertDividerGeometry4, windowHozDividerGeometry4, 0);
 
-        var towerTip4 = createBox(2, 4, 2, materials.stone);
-        tower.add(towerTip4);
-        towerTip4.position.set(7, 26, -7);
+        const windowGeometry5 = new BoxGeometry(4, 10, 4);
+        windowGeometry5.faces.forEach(f => f.color.set(colors.window));
+        const windowVertDividerGeometry5 = new BoxGeometry(4.25, 10.1, 0.1);
+        windowVertDividerGeometry5.faces.forEach(f => f.color.set(colors.black));
+        const windowHozDividerGeometry5 = new BoxGeometry(4.25, 0.1, 4.1);
+        windowHozDividerGeometry5.faces.forEach(f => f.color.set(colors.black));
 
-        var towerWindow1 = createWindow(4, 10, 4, materials);
-        tower.add(towerWindow1);
-        towerWindow1.position.set(-6, 15, 0);
+        createWindow(-21, 32.5, 45, geo, windowGeometry5, windowVertDividerGeometry5, windowHozDividerGeometry5, 0);
+        createWindow(-15, 32.5, 39, geo, windowGeometry5, windowVertDividerGeometry5, windowHozDividerGeometry5, Math.PI/2);
 
-        var towerWindow2 = createWindow(4, 5, 5, materials);
-        tower.add(towerWindow2);
-        towerWindow2.position.set(-6, 5, 0);
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
 
-        var towerWindow3 = createWindow(4, 5, 5, materials);
-        tower.add(towerWindow3);
-        towerWindow3.position.set(-6, -5, 0);
-
-        var towerWindow4 = createWindow(4, 10, 4, materials);
-        tower.add(towerWindow4);
-        towerWindow4.position.set(0, 15, -6);
-        towerWindow4.rotation.y = Math.PI / 2;
-
-        this.add(mainBuilding);
+        this.add(mesh);
 
         this.scale.set(0.25, 0.25, 0.25);
         this.position.set(-17, 2, 12);

@@ -1,53 +1,48 @@
-import { Group, BoxGeometry, MeshToonMaterial, Mesh, BufferGeometry } from 'three';
+import { Group, BufferGeometry, BoxGeometry, Geometry, VertexColors, MeshToonMaterial, Mesh} from "three";
 
-function createBox(x, y, z, materials) {
-    var boxGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
-    var box = new Mesh(boxGeometry, materials);
-    return box;
+function createWindowRow(windowGeometry, geo, offset, x, y, z, r) {
+    let window1 = windowGeometry.clone();
+    window1.translate(x - 1.5, y + 18 - offset, z - 8);
+    window1.rotateY(r);
+    geo.merge(window1);
+
+    let window2 = windowGeometry.clone()
+    window2.translate(x - 1.5, y + 18 - offset, z);
+    window2.rotateY(r);
+    geo.merge(window2);
+
+    let window3 = windowGeometry.clone()
+    window3.translate(x - 1.5, y + 18 - offset, z + 8);
+    window3.rotateY(r);
+    geo.merge(window3);
 }
 
-function createWindowRow(windowGeometry, materials, face, offset) {
-    // var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
-    var window1 = new Mesh(windowGeometry, materials.window);
-    window1.position.set(-1.5, 18 - offset, -8);
-    face.add(window1);
+function createFace(x, y, z, geo, leftLeg, bottomWindow, topWindow, windowGeometry, r) {        
+    const leftL = leftLeg.clone()
+    leftL.translate(x - 0.5, y - 40.5, z - 11);
+    leftL.rotateY(r);
+    geo.merge(leftL);
 
-    var window2 = new Mesh(windowGeometry, materials.window);
-    window2.position.set(-1.5, 18 - offset, 0);
-    face.add(window2);
+    const rightL = leftLeg.clone();
+    rightL.translate(x - 0.5, y - 40.5, z + 11);
+    rightL.rotateY(r);
+    geo.merge(rightL);
 
-    var window3 = new Mesh(windowGeometry, materials.window);
-    window3.position.set(-1.5, 18 - offset, 8);
-    face.add(window3);
-}
+    const bottomW = bottomWindow.clone()
+    bottomW.translate(x + 1, y - 40, z);
+    bottomW.rotateY(r);
+    geo.merge(bottomW);
 
-function createFace(materials) {
-    var face = createBox(5, 70, 25, materials.stone);
-
-    var leftLeg = createBox(3, 15, 3, materials.stone);
-    face.add(leftLeg);
-    leftLeg.position.set(-0.5, -40.5, -11);
-
-    var rightLeg = createBox(3, 15, 3, materials.stone);
-    face.add(rightLeg);
-    rightLeg.position.set(-0.5, -40.5, 11);
-
-    var bottomWindow = createBox(3, 4, 15, materials.window);
-    face.add(bottomWindow);
-    bottomWindow.position.set(1, -40, 0);
-
-    var topWindows = createBox(3, 4, 20, materials.window);
-    face.add(topWindows);
-    topWindows.position.set(-1.5, 25, 0);
+    const topW = topWindow.clone()
+    topW.translate(x - 1.5, y + 25, z);
+    topW.rotateY(r);
+    geo.merge(topW);
 
     var offset = 0;
-    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(3, 4, 5));
     for (var i = 0; i < 9; i++) {
-        createWindowRow(windowGeometry, materials, face, offset);
+        createWindowRow(windowGeometry, geo, offset, x, y, z, r);
         offset += 6;
     }
-
-    return face;
 }
 
 class Fine extends Group {
@@ -59,45 +54,61 @@ class Fine extends Group {
             // gameSpeed: parent.gameSpeed,
         };
 
-        var materials = {
-            stone: new MeshToonMaterial({
-                color: 0x63502c,
-                flatShading: true,
-            }),
-            window: new MeshToonMaterial({
-                color: 0x406e66,
-                flatShading: true,
-            }),
-            main: new MeshToonMaterial({
-                color: 0x695735,
-                flatShading: true,
-            }),
+        let colors = {
+            stone: 0x63502c,
+            window: 0x406e66,
+            main: 0x695735,
         };
 
+        const geo = new Geometry();
+
         // main building
-        var mainBuilding = createBox(30, 80, 30, materials.main);
-        mainBuilding.name = 'main building';
+        const mainBuilding = new BoxGeometry(30, 80, 30);
+        mainBuilding.faces.forEach(f => f.color.set(colors.main));
+        geo.merge(mainBuilding);
 
-        var face1 = createFace(materials);
-        face1.position.set(-16, 8, 0);
-        mainBuilding.add(face1);
+        const face = new BoxGeometry(5, 70, 25);
+        face.faces.forEach(f => f.color.set(colors.stone));
+        const leftLeg = new BoxGeometry(3, 15, 3);
+        leftLeg.faces.forEach(f => f.color.set(colors.stone));
+        const bottomWindow = new BoxGeometry(3, 4, 15);
+        bottomWindow.faces.forEach(f => f.color.set(colors.window));
+        const topWindow = new BoxGeometry(3, 4, 20);
+        topWindow.faces.forEach(f => f.color.set(colors.window));
+        const windowGeometry = new BoxGeometry(3, 4, 5);
+        windowGeometry.faces.forEach(f => f.color.set(colors.window));
 
-        var face2 = createFace(materials);
-        face2.rotation.y = Math.PI / 2;
-        mainBuilding.add(face2);
-        face2.position.set(0, 8, 16);
+        let face1 = face.clone();
+        face1.translate(-16, 8, 0);
+        geo.merge(face1);
+        createFace(-16, 8, 0, geo, leftLeg, bottomWindow, topWindow, windowGeometry, 0);
 
-        var face3 = createFace(materials);
-        face3.rotation.y = -(Math.PI / 2);
-        mainBuilding.add(face3);
-        face3.position.set(0, 8, -16);
+        let face2 = face.clone();
+        face2.rotateY(Math.PI/2);
+        face2.translate(0, 8, 16);
+        geo.merge(face2);
+        createFace(-16, 8, 0, geo, leftLeg, bottomWindow, topWindow, windowGeometry, Math.PI/2);
 
-        var face4 = createFace(materials);
-        face4.rotation.y = Math.PI;
-        mainBuilding.add(face4);
-        face4.position.set(16, 8, 0);
+        let face3 = face.clone();
+        face3.rotateY(-Math.PI/2);
+        face3.translate(0, 8, -16);
+        geo.merge(face3);
+        createFace(-16, 8, 0, geo, leftLeg, bottomWindow, topWindow, windowGeometry, -Math.PI/2);
 
-        this.add(mainBuilding);
+        let face4 = face.clone();
+        face3.rotateY(-Math.PI);
+        face4.translate(16, 8, 0);
+        geo.merge(face4);
+        createFace(-16, 8, 0, geo, leftLeg, bottomWindow, topWindow, windowGeometry, -Math.PI);
+
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+
+        this.add(mesh);
 
         this.scale.set(0.15, 0.15, 0.15);
         this.position.set(12, 6, 15);
