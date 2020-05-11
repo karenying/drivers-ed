@@ -10,7 +10,6 @@ import { WebGLRenderer, PerspectiveCamera, Vector3, Fog, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Washington } from 'scenes';
 import './app.css';
-import link from './writeup.html';
 import dingLink from './assets/ding.wav';
 import loseLink from './assets/lose.wav';
 import hitLink from './assets/hit.wav';
@@ -106,7 +105,7 @@ function setupKeyControls() {
                     break;
                 // up
                 case 38:
-                    scene.accelerating = true;
+                    if (!scene.stopped) scene.accelerating = true;
                     break;
                 // space bar (stop)
                 case 32:
@@ -232,7 +231,7 @@ document.body.appendChild(writeupContainer);
 let writeupLink = document.createElement('a');
 writeupLink.innerHTML = 'Writeup';
 writeupContainer.append(writeupLink);
-writeupLink.href = link;
+writeupLink.href = 'https://karenying.com/drivers-ed-writeup/';
 
 // Begin game
 beginContentButton.onclick = function () {
