@@ -612,6 +612,22 @@
                     </p>
                     <p>
                       <u> <strong> Optimization </strong> </u>
+                      <p>
+                        We wanted to optimize the game so that we could minimize lag.
+                        We started by merging our meshes together. Since we created our own meshes,
+                        they had a lot of children parts that were not merged together.
+                        To reduce the number of geometries that had to be rendered,
+                        we merged them together. While this helped somewhat, we still had
+                        room to improve. Next, we reduced the number of grass, sidewalk,
+                        and road planes. We initially had more than one to create the
+                        moving effect. However, we decided to cut back on this and
+                        mimic the effect by moving the stripes on the plane instead.
+                        Finally, we originally had 12 street lights in the scene, each
+                        with their own point light. Since additional lights slowed down
+                        our game, we reduced it down to 6 lights, which improved our
+                        runtime. While we believe the game can continue to be optimized,
+                        we believe the steps we took greatly improved the speed of the game.
+                      </p>
                     </p>
                     <hr />
                     <h2>Results</h2>
