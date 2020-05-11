@@ -1,17 +1,5 @@
 import { Group, VertexColors, BufferGeometry, BoxGeometry, MeshToonMaterial, Mesh, Geometry} from "three";
 
-function createPillar(x, y, z, materials) {
-    var pillarGeometry = new BoxGeometry(x, y, z);
-    var pillar = new Mesh(pillarGeometry, materials.pillar);
-    return pillar;
-}
-
-function createBox(x, y, z, materials) {
-    var boxGeometry = new BoxGeometry(x, y, z);
-    var box = new Mesh(boxGeometry, materials.stone);
-    return box;
-}
-
 class WoodyWoo extends Group {
     constructor() {
         super();
