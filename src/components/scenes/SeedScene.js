@@ -227,7 +227,7 @@ class SeedScene extends Scene {
         var ovalStatue = new OvalStatue();
         ovalStatue.position.set(0, 19, 0);
 
-        this.add(woodyWoo, lights);
+        this.add(friend, lights);
         // this.add(masha, 
         //         chad, 
         //         labib, 

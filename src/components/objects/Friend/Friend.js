@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh} from "three";
+import { Group, BoxGeometry, Geometry, BufferGeometry, VertexColors, MeshToonMaterial, Mesh} from "three";
 
 function createBox(x, y, z, materials) {
     var boxGeometry = new BoxGeometry(x, y, z);
@@ -10,86 +10,100 @@ class Friend extends Group {
     constructor() {
         super();
 
-        var materials = {
-            stone: new MeshLambertMaterial({
-                color: 0xbdb9aa,
-                flatShading: true
-            }),
-            window: new MeshLambertMaterial({
-                color: 0x445b5c,
-                flatShading: true
-            }),
-            gray: new MeshLambertMaterial({
-                color: 0x494d4d,
-                flatShading: true
-            })
+        let colors = {
+            stone: 0xbdb9aa,
+            window: 0x445b5c,
+            gray: 0xe8e3d1,
         };
 
+        const geo = new Geometry();
+
         // main building
-        var mainBuilding = createBox(45, 15, 80, materials.stone);
-        mainBuilding.name = "main building"
+        const mainBuilding = new BoxGeometry(45, 15, 80);
+        mainBuilding.faces.forEach(f => f.color.set(colors.stone));
+        geo.merge(mainBuilding);
 
         // main building overhead
-        var mainBuildingOverhead = createBox(10, 5, 80, materials.stone);
-        mainBuilding.add(mainBuildingOverhead);
-        mainBuildingOverhead.position.set(-23, 5, 0);
+        const mainBuildingOverhead = new BoxGeometry(10, 5, 80);
+        mainBuildingOverhead.faces.forEach(f => f.color.set(colors.stone));
+        mainBuildingOverhead.translate(-23, 5, 0);
+        geo.merge(mainBuildingOverhead)
 
         // upper building
-        var upperBuilding = createBox(50, 20, 70, materials.window);
-        mainBuilding.add(upperBuilding);
-        upperBuilding.position.set(-2.5, 17.5, 5);
+        const upperBuilding = new BoxGeometry(50, 20, 70);
+        upperBuilding.faces.forEach(f => f.color.set(colors.window));
+        upperBuilding.translate(-2.5, 17.5, 5);
+        geo.merge(upperBuilding)
 
-        var offset = 0;
+        let offset = 0;
+        let line1 = new BoxGeometry(50.5, 0.5, 70.5);
+        line1.faces.forEach(f => f.color.set(colors.gray));
         for (var i = 0; i < 7; i++) {
-            var line = createBox(50.5, 0.5, 70.5);
-            upperBuilding.add(line);
-            line.position.set(0, -10 + offset, 0)
+            let line = line1.clone();
+            line.translate(-2.5, 7.5 + offset, 5)
+            geo.merge(line)
             offset += 3;
         }
 
-        var offset = 0;
+        offset = 0;
+        let line2 = new BoxGeometry(50.5, 19.5, 0.5);
+        line2.faces.forEach(f => f.color.set(colors.gray));
         for (var i = 0; i < 11; i++) {
-            var line = createBox(50.5, 19.5, 0.5);
-            upperBuilding.add(line);
-            line.position.set(0, 0, -30 + offset)
+            let line = line2.clone();
+            line.translate(-2.5, 17.5, -25 + offset)
+            geo.merge(line)
             offset += 6;
         }
 
-        var offset = 0;
+        offset = 0;
+        let line3 = new BoxGeometry(0.5, 19.5, 70.5);
+        line3.faces.forEach(f => f.color.set(colors.gray));
         for (var i = 0; i < 6; i++) {
-            var line = createBox(0.5, 19.5, 70.5);
-            upperBuilding.add(line);
-            line.position.set(-17 + offset, 0, 0)
+            let line = line3.clone();
+            line.translate(-19.5 + offset, 17.5, 5)
+            geo.merge(line)
             offset += 7;
         }
 
         // entrance
-        var entrance = createBox(10, 10, 30, materials.window);
-        mainBuilding.add(entrance);
-        entrance.position.set(-21, -2.5, -10);
+        const entrance = new BoxGeometry(10, 10, 30);
+        entrance.faces.forEach(f => f.color.set(colors.window));
+        entrance.translate(-21, -2.5, -10);
+        geo.merge(entrance);
 
-        var offset = 0;
+        offset = 0;
+        let line4 = new BoxGeometry(5, 10.5, 0.5);
         for (var i = 0; i < 5; i++) {
-            var line = createBox(5, 10.5, 0.5);
-            entrance.add(line);
-            line.position.set(-3, 0.25, -10 + offset)
+            let line = line4.clone();
+            line.translate(-24, -2.25, -20 + offset);
+            geo.merge(line);
             offset += 5;
         }
 
         // entrance side windows
-        var entranceWindows = createBox(10, 4, 25, materials.window);
-        mainBuildingOverhead.add(entranceWindows);
-        entranceWindows.position.set(0.25, -4, 25);
+        const entranceWindows = new BoxGeometry(10, 4, 25);
+        entranceWindows.faces.forEach(f => f.color.set(colors.window));
+        entranceWindows.translate(-22.75, 1, 25);
+        geo.merge(entranceWindows);
 
-        var offset = 0;
+        offset = 0;
+        let line5 = new BoxGeometry(5, 4, 0.5);
+        line5.faces.forEach(f => f.color.set(colors.gray));
         for (var i = 0; i < 5; i++) {
-            var line = createBox(5, 4, 0.5);
-            entranceWindows.add(line);
-            line.position.set(-3, -0.5, -10 + offset)
+            let line = line5.clone();
+            line.translate(-25.75, 0.5, 15 + offset)
+            geo.merge(line)
             offset += 5;
         }
 
-        this.add(mainBuilding);
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+
+        this.add(mesh);
     }
 }
 
