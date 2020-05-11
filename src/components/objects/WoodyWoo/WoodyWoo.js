@@ -1,4 +1,4 @@
-import { Group, BoxGeometry, MeshLambertMaterial, Mesh} from "three";
+import { Group, VertexColors, BufferGeometry, BoxGeometry, MeshToonMaterial, Mesh, Geometry} from "three";
 
 function createPillar(x, y, z, materials) {
     var pillarGeometry = new BoxGeometry(x, y, z);
@@ -12,109 +12,116 @@ function createBox(x, y, z, materials) {
     return box;
 }
 
-class Frist extends Group {
+class WoodyWoo extends Group {
     constructor() {
         super();
 
-        var materials = {
-            stone: new MeshLambertMaterial({
-                color: 0xbdb9aa,
-                flatShading: true
-            }),
-            pillar: new MeshLambertMaterial({
-                color: 0x9c988c,
-                flatShading: true
-            })
-        };
+        let colors = {
+            stone: 0xbdb9aa,
+            pillar: 0x9c988c,
+        }
+
+        const geo = new Geometry();
 
         // main building
-        var mainBuilding = createBox(50, 30, 80, materials);
-        mainBuilding.name = "main building"
+        const mainBuilding = new BoxGeometry(50, 30, 80);
+        mainBuilding.faces.forEach(f => f.color.set(colors.stone));
+        geo.merge(mainBuilding);
 
-        var roofTop = createBox(60, 2, 90, materials);
-        mainBuilding.add(roofTop);
-        roofTop.name = "roof top"
-        roofTop.position.set(0, 15, 0)
+        const roofTop = new BoxGeometry(60, 2, 90);
+        const roofBottom = roofTop.clone();
+        roofTop.faces.forEach(f => f.color.set(colors.stone));
+        roofTop.translate(0, 15, 0);
+        geo.merge(roofTop);
+        roofBottom.faces.forEach(f => f.color.set(colors.stone));
+        roofBottom.translate(0, 5, 0)
+        geo.merge(roofBottom);
 
         // front top pillars
-        var offset = 0;
+        let smallPillar = new BoxGeometry(1, 8, 1);
+        smallPillar.faces.forEach(f => f.color.set(colors.pillar));
+        let offset = 0;
         for (var i = 0; i < 44; i++) {
-            var pillar = createPillar(1, 8, 1, materials);
-            roofTop.add(pillar);
-            pillar.position.set(-28, -5, -43 + offset);
+            let pillar = smallPillar.clone();
+            pillar.translate(-28, 10, -43 + offset);
+            geo.merge(pillar);
             offset += 2;
         }
 
         // back top pillars
-        var offset = 0;
+        offset = 0;
         for (var i = 0; i < 44; i++) {
-            var pillar = createPillar(1, 8, 1, materials);
-            roofTop.add(pillar);
-            pillar.position.set(28, -5, -43 + offset);
+            let pillar = smallPillar.clone();
+            pillar.translate(28, 10, -43 + offset);
+            geo.merge(pillar);
             offset += 2;
         }
 
         // left top pillars
-        var offset = 2;
+        offset = 2;
         for (var i = 0; i < 27; i++) {
-            var pillar = createPillar(1, 8, 1, materials);
-            roofTop.add(pillar);
-            pillar.position.set(28 - offset, -5, -43);
+            let pillar = smallPillar.clone();
+            pillar.translate(28 - offset, 10, -43);
+            geo.merge(pillar);
             offset += 2;
-        }
+        }       
 
         // right top pillars
-        var offset = 2;
+        offset = 2;
         for (var i = 0; i < 27; i++) {
-            var pillar = createPillar(1, 8, 1, materials);
-            roofTop.add(pillar);
-            pillar.position.set(28 - offset, -5, 43);
+            let pillar = smallPillar.clone();
+            pillar.translate(28 - offset, 10, 43);
+            geo.merge(pillar);
             offset += 2;
-        }
-
-        var roofBottom = createBox(60, 2, 90, materials);
-        mainBuilding.add(roofBottom);
-        roofBottom.name = "roof bottom"
-        roofBottom.position.set(0, 5, 0)
+        }  
 
         // front bottom pillars
-        var offset = 0;
+        let bigPillar = new BoxGeometry(2, 19, 2);
+        bigPillar.faces.forEach(f => f.color.set(colors.pillar));
+        offset = 0;
         for (var i = 0; i < 18; i++) {
-            var pillar = createPillar(2, 19, 2, materials);
-            roofBottom.add(pillar);
-            pillar.position.set(-28, -10, -43 + offset);
+            let pillar = bigPillar.clone();
+            pillar.translate(-28, -5, -43 + offset);
+            geo.merge(pillar);
             offset += 5.05;
         }
 
         // back bottom pillars
-        var offset = 0;
+        offset = 0;
         for (var i = 0; i < 18; i++) {
-            var pillar = createPillar(2, 19, 2, materials);
-            roofBottom.add(pillar);
-            pillar.position.set(28, -10, -43 + offset);
+            let pillar = bigPillar.clone();
+            pillar.translate(28, -5, -43 + offset);
+            geo.merge(pillar);
             offset += 5.05;
         }
 
         // left bottom pillars
-        var offset = 5.05;
+        offset = 5.05;
         for (var i = 0; i < 10; i++) {
-            var pillar = createPillar(2, 19, 2, materials);
-            roofBottom.add(pillar);
-            pillar.position.set(28 - offset, -10, -43);
+            let pillar = bigPillar.clone();
+            pillar.translate(28 - offset, -5, -43);
+            geo.merge(pillar);
             offset += 5.05;
-        }
+        }        
 
         // right bottom pillars
-        var offset = 5.05;
+        offset = 5.05;
         for (var i = 0; i < 10; i++) {
-            var pillar = createPillar(2, 19, 2, materials);
-            roofBottom.add(pillar);
-            pillar.position.set(28 - offset, -10, 43);
+            let pillar = bigPillar.clone();
+            pillar.translate(28 - offset, -5, 43);
+            geo.merge(pillar);
             offset += 5.05;
-        }
+        }  
 
-        this.add(mainBuilding);
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new MeshToonMaterial({
+                vertexColors: VertexColors,
+            })
+        )
+
+        this.add(mesh);
     }
 }
 
-export default Frist;
+export default WoodyWoo;
