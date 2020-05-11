@@ -322,7 +322,6 @@ class Washington extends Scene {
             -(300 * Math.random() + 300)
         );
         this.add(coffee);
-
         this.collidableMeshList.push(coffee);
 
         // Add other cars
