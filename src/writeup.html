@@ -54,6 +54,13 @@
                 color: white;
             }
 
+            .container figcaption {
+                font-size: 12px;
+                font-family: 'Open Sans', sans-serif;
+                color: white;
+                font-weight: bold;
+            }
+
             .content {
                 width: 900px;
                 margin: 50px;
@@ -87,8 +94,8 @@
                       crossing animals, and other cars— all while trying to collect coins.
                       The goal of the game: get as many coins as possible without getting
                       kicked out of the class. Driver’s Education uses graphic concepts,
-                      such as polygonal meshes, light rendering, and collision modelling, t
-                      o create an enjoyable and aesthetically-pleasing game for players.
+                      such as polygonal meshes, light rendering, and collision modelling,
+                      to create an enjoyable and aesthetically-pleasing game for players.
 
                     </p>
                     <hr />
@@ -173,7 +180,8 @@
                       skill feels obtainable, which ensures players always come back to play.
                     </p>
                     <p> <h3> Approach </h3> </p>
-                      <li> <strong> <u> User Experience: </u> </strong> Considering how infinite-runner games
+                      <li>
+                        <strong> <u> User Experience: </u> </strong> Considering how infinite-runner games
                         like Temple Run and Crossy Road have proved to be widely successful,
                         we decided to take a similar approach. The controls and goal of the game
                         are simple and there are enough obstacles on the road to create a right
@@ -184,7 +192,8 @@
                         of obstacles and rewards would give players a satisfying thrill and desire
                         to keep playing to top their personal scores.
                       </li>
-                      <li> <strong> <u> High-Level Game Design:</u> </strong> We wanted to keep the
+                      <li>
+                        <strong> <u> High-Level Game Design:</u> </strong> We wanted to keep the
                         objective and controls of Driver’s Ed rather simple so players would
                         have little difficulty learning the game. Because of this, we first
                         created the game basics of just controlling a car with a small number
@@ -195,26 +204,377 @@
                         adding more elaborate features to maintain user engagement and
                         ensure the right amount of difficulty.
                       </li>
-                      <li> <strong> <u> Low-Level Game Design: </u></strong> Driver’s Ed was created
+                      <li>
+                        <strong> <u> Low-Level Game Design: </u></strong> Driver’s Ed was created
                         primarily using JavaScript and the three.js library.
                         We chose to use three.js because it is well-documented and because
                         all of us have experience with it from the assignments.
                         All of the user interfaces, such as the pop-up begin instructions
                         and score/lives board, were created using HTML and CSS.
-
                       </li>
                     <hr />
                     <h2>Methodology</h2>
+                    <figure>
+                      <center>
+                        <img src="./videos/normal_gameplay.gif">
+                        <figcaption> Example of normal gameplay </figcaption>
+                      </center>
+                    </figure>
+                    <figure>
+                      <center>
+                        <img src="./videos/endgame.gif">
+                        <figcaption>
+                          End of game screen featuring a "Play Again" button
+                        </figcaption>
+                      </center>
+                    </figure>
+                    <h3> Implemented Features </h3>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                      <u> <strong> Meshes </strong> </u>
+                      <p>
+                        All the meshes in the game are either created from merging
+                        basic three.js meshes or downloaded from Google Poly.
+                        While we definitely could have taken the easier route
+                        and only used existing meshes from Google Poly
+                        and other libraries, which would have resulted in a much
+                        more generic scene/game premise, we decided to make a lot of
+                        our own because we wanted Driver’s Ed to be Princeton themed.
+                        This meant that all of the buildings, such as Firestone Library
+                        and Fine Hall, had to be modelled by ourselves since they
+                        simply didn’t exist elsewhere. Generally, these buildings
+                        were created by merging three.js meshes like planes and boxes.
+                        We used MeshToonMaterial() to evoke the cartoon-esque feel t
+                        hat we wanted for our scenery. For the less Princeton specific meshes,
+                        such as the sun and moon, we decided to primarily rely on
+                        Google Poly since a lot of the available meshes matched
+                        our low-poly aesthetic.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Scenery </strong> </u>
+                      <p>
+                        The basic game scene consists of a road/ground, with
+                        sidewalks and buildings on both sides, and a sky.
+                      </p>
+                      <p>
+                        For the road / ground, we added a fog at the end of the
+                        road to create the endless feeling and conceal upcoming
+                        obstacles and scenery ahead. For a more seamless and
+                        natural looking fog, the color of the fog was made the
+                        same color as the sky.
+                      </p>
+                      <p>
+                        The grass was created using a rotated green plane. In order
+                        to create a more textured look, we randomly manipulated the
+                        coordinates of the vertices so the terrain appeared to have
+                        changes in height as we drove through the scene.
+                        Other options that we considered for the grass including
+                        modelling stacked voxels, modelling after terrain in Minecraft.
+                        We decided against using this technique because it not only
+                        slowed down our game given the number of voxels we had to
+                        generate but also because it detracted from the low-poly
+                        aesthetic that we set for the other meshes.
+                      </p>
+                      <p>
+                        For the sky, to create a feeling of time and progression as the car keeps driving,
+                        temporal features were added to the sky. The color of the sky changes from a light sky blue to a dark blue as the time of day progresses from day to night.
+                        The exact process for this will be covered in the Night Mode section.
+                      </p>
+                      <p>
+                        Furthemore, a sun and moon mesh cycle continuously in a semi-circular motion
+                        across the sky as the times of day progress. When it is dawn and day time,
+                        the sun gradually rises from the east and sets in the west. As the sun sets in
+                        the west during dusk, the moon begins rising from the east and gradually continues
+                        across the sky throughout night time before setting in the west at dawn.
+                      </p>
+                      <p>
+                        While the sun and moon cycle continuously, clouds and stars also
+                        fade in and out during the appropriate time of day. When it is dawn and day time,
+                        cloud meshes from Google Poly fade in and gradually move horizontally
+                        across the screen as the sun also moves from east to west.
+                        When it is dusk and night time, the clouds and sun disappear while the
+                        moon moves from east to west and stars, modeled using three.js
+                        sphere meshes, gradually fade in.
+                      </p>
+                    </p>
+                    <p>
+                      <u><strong> Game Items </strong></u>
+                      <p>
+                        There were three types of game items: obstacles, coins, and boosts.
+                        Each item had a different effect on the player when collided with.
+                      </p>
+                      <figure>
+                        <center>
+                          <img src="./videos/crosswalk.gif">
+                          <figcaption>
+                            Example of a cluster of students-- one of the
+                            obstacles in the game
+                          </figcaption>
+                        </center>
+                      </figure>
+                      <figure>
+                        <center>
+                          <img src="./videos/otherCar_logic.gif">
+                          <figcaption>
+                            Example of another car coming down the road
+                          </figcaption>
+                        </center>
+                      </figure>
+                      <p>
+                        Initially, we only planned to have two types of obstacles:
+                        pedestrians and foxes. However, during the creation process,
+                        we decided to create more obstacles to make the game more
+                        challenging and vary the scenery. In addition to individual
+                        pedestrians and foxes, we included cars that come down the
+                        left side of the road and crosswalks that have clusters
+                        of pedestrians crossing. The intention is for the car to
+                        weave around or stop for obstacles. However, if they do hit
+                        an obstacle, they lose a life. Once they lose 3 lives, the game
+                        ends.
+                      </p>
+                      <p>
+                        Coins are the main incentive feature in our game. They are
+                        randomly placed along the road. The player is supposed to weave
+                        around obstacles to collect as many coins as possible.
+                      </p>
+                      <figure>
+                        <center>
+                          <img src="./videos/invincibility.gif">
+                          <figcaption>
+                            Example of the invincibility boost feature, which
+                            allows the car to proceed without collisions for a limited
+                            time period
+                          </figcaption>
+                        </center>
+                      </figure>
+                      <p>
+                        For boosts, we have the coffee cup mesh. When the car collects
+                        the coffee cup, they become invincible for a limited time. When
+                        the car gets an invincibility boost, the appearance changes from
+                        the normal red to a holographic texture. During this period, the
+                        car will not lose lives when it collides with objects in the scene.
+                        We measured the time elapsed since collecting item, and after, the
+                        time elapsed crosses a threshold, the holographic texture flickers and
+                        the car reverts to its normal appearance.
+                    <p>
+                      <u><strong> Car Movement </strong></u>
+                      <p>
+                        The car movement is bound to keys. We added keydown and keyup event listeners to
+                        register the key presses. The key functionalities are as follows:
+                      </p>
+                      <p>
+                        1. Right arrow: move right
+                        <li>
+                          Keydown: If in bounds, move car’s position and tilt the car right. Don’t bob
+                        </li>
+                        <li>
+                          Keyup: Remove tilt and add bob
+                        </li>
+                      </p>
+                      <p>
+                        2. Left arrow: move left
+                        <li>
+                          Keydown: If in bounds, move car’s position and tilt the car left. Don’t bob
+                        </li>
+                        <li>
+                          Keyup: Remove tilt and add bob
+                        </li>
+                      </p>
+                      <p>
+                        3. Up arrow: accelerate
+                        <li>
+                          Keydown: set scene.accelerating as true
+                        </li>
+                        <li>
+                          Keyup: set scene.accelerating as false
+                        </li>
+                      </p>
+                      <p>
+                        4. Space bar: if moving, stop; if stopped, move
+                        <li>
+                          Keydown: set scene.stopped appropriately
+                        </li>
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Gamespeed </strong> </u>
+                      <figure>
+                        <center>
+                          <img src="./videos/acceleration.gif">
+                          <figcaption>
+                            Example of acceleration and increased gameSpeed
+                            after up arrow key event
+                          </figcaption>
+                        </center>
+                      </figure>
+                      <p>
+                        Everything moves with respect to the driver, so all the objects
+                        in the scene are moving towards the camera (in the positive z-direction)
+                        when the player is in motion, and they stop or slow down to their
+                        intrinsic speed when the player stops. This speed is controlled
+                        by a gameSpeed variable native to the scene. In the default state
+                        (no auxiliary game conditions imposed), the update loop of every object
+                        increments the position of that object by gameSpeed in the z-direction.
+                      </p>
+                      <p>
+                        The gameSpeed can change based on key input. If the up arrow is
+                        pressed, we simulate constant acceleration by increasing the
+                        game speed for the duration of the key press. The speed increases
+                        until the up key is released (at which point the game speed slowly
+                        decreases to its default value) or until the game speed reaches its maximum.
+                        If the spacebar is pressed, the driver halts to a stop (quick deceleration),
+                        and if the spacebar is pressed again the driver gradually accelerates back
+                        to the default game speed.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Collisions</strong> </u>
+                      <p>
+                        Collisions can occur between the driver and any other gameplay object,
+                        or between any other car and any other gameplay object. To model collisions,
+                        we assign each object a bounding box and add all collidable objects to the
+                        list collidableMeshList in the scene. At each frame update, we check if
+                        there are any collisions between the driver and another collidable mesh
+                        by computing the intersection of the driver’s bounding box with the other
+                        object’s bounding box. If the two intersect, then a collision is detected.
+                        This is done by using the THREE.js Box3 object methods. If a collision
+                        occurs, we call the collision function of the gameplay object to reset
+                        its position, and then subtract a life, toggle invincibility, etc.
+                        To increase efficiency, we also only check for collisions between
+                        the driver and another object if the other object has a z-position close
+                        enough to the z-position of the driver, which is fixed.
+                      </p>
+                      <p>
+                        For the other vehicles in the game, we anticipate and avoid
+                        potential collisions. This is done by detecting possible
+                        collisions in the same way as described previously, but we use a
+                        different bounding box for these vehicles which extends slightly
+                        in front of the vehicle. This allows the vehicle to detect a collision
+                        before the vehicle’s mesh physically intersects with the other object’s mesh.
+                        While such a collision exists, the vehicle stops (in the reference frame of the car),
+                        and when the two bounding boxes no longer intersect, the vehicle resumes driving.
+                      </p>
+                      <p>
+                        Each object has an onCollision() function. When an object is hit
+                        by the driver, this function is called (provided it has not been called
+                        already in this collision). The exact actions in the function vary for
+                        different objects, but each object jumps up and down, and then quickly resets
+                        to a position beyond the fog so that it eventually reappears. Game actions
+                        (such as scoring, losing lives, gaining special boosts) are controlled in
+                        the frame update loop of app.js.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Night Mode</strong> </u>
+                      <p>
+                        There are four stages of day that we modelled: day, dusk, night, and dawn.
+                        The goal is to emulate the lightening and darkening stages in an actual day.
+                        During the day stage, we have the background set to #7ec0ee and the ambient and
+                        hemisphere light intensity set to 1.2 and 1.5, respectively. Similarly, during the
+                        night stage we have the background set to #11223d and the ambient and hemisphere to
+                        0.5 and 0.5. During dusk and dawn, we are changing the sky color and light intensity
+                        between the day and night values using linear interpolation.
+                      </p>
+                      <p>
+                        We also included streetlights and headlights for the car that are activated.
+                        The bulbs of the streetlights are modelled as PointLights that sit inside an opaque sphere.
+                        Halfway through the dusk stage, the intensity of the lights begins to increase to represent
+                        the lights coming on at night. The color of the bulb also changes from white to yellow as
+                        another means of representing the light growing stronger. The headlights are modelled as SpotLights.
+                        To emulate the conical shape of light from headlights, the angle was restricted to 0.1.
+                        Unlike the streetlights which gradually come on, the headlights only turn on during
+                        the night stage. We chose to do this because this more closely mirrors how headlights
+                        are used in real life, and the aesthetic effect of the sudden switch provides a salient
+                        contrast to the dark background.
+                      </p>
+                      <p>
+                        We transition from one stage to another by measuring the time elapsed.
+                        When the player hits the begin button, we take the start time and for each
+                        timestep after we find the current time. If the time elapsed is greater
+                        than our threshold, which is set to 10, we transition from one stage to another
+                        and we recalculate the start time at the beginning of the new stage. When the
+                        player pauses the game, we adjust the start time so that the time elapsed does
+                        not change.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Sounds </strong> </u>
+                      <p>
+                        We implemented sounds in 6 scenarios:
+                      </p>
+                      <p>
+                        <li> Counting down after clicking “Begin” in the intro screen </li>
+                        <li> Hitting coins </li>
+                        <li> Hitting pedestrians or foxes </li>
+                        <li> Invincibility after hitting the coffee item </li>
+                        <li> Losing invincibility after the item wears off </li>
+                        <li> Game over </li>
+                      </p>
+                      <p>
+                        For each of the scenarios, we looked for 8-bit sounds online
+                        and downloaded them in .wav files. Then we created HTML Audio
+                        objects with the .wav files, calling play()when they were needed.
+                        Hitting coins and objects was a special case. It’s possible to hit
+                        multiple coins or objects in a row. We ran into the problem where
+                        if you hit a second coin before the first coin’s ding finished playing,
+                        the second coin’s ding would not play. To get around this,
+                        instead of directly calling play()on the Audio object, we
+                        loaded the object right after initializing. Then for
+                        coins and objects, we created a clone of the loaded Audio object
+                        and called play() on the clone instead.
+                      </p>
+                    </p>
+                    <h3> Challenges </h3>
+                    <p>
+                      <u> <strong> Collisions </strong> </u>
+                      <p>
+                        One challenge in modeling collisions was enabling the other vehicles
+                        in the scene to drive in a “smart” way, avoiding all the obstacles
+                        that the player can crash into. The hardest part of this task was
+                        making sure that the cars piled up like typical traffic when one car
+                        stopped, rather than having them pass through each other.
+                        The collision detection did not give us direct control over
+                        which car in a collision was the car in front and which one was
+                        the car behind, so we had to carefully work through case-by-case
+                        logic for these instances and check what order our objects were
+                        in on the z-axis.
+                      </p>
+                      <p>
+                        Another challenge when working with collisions was preventing
+                        double scoring. That is, after a coin is hit, it jumps up to
+                        indicate that it was collected. However, sometimes the coin would
+                        register a second collision when it came back down, giving the player
+                        an additional point. This occurred with pedestrians as well, and the
+                        player would lose two lives instead of one for hitting a single
+                        pedestrian. We worked around this by resetting the collision
+                        state of the object only after the animation tween was completed,
+                        and applying a long enough delay to those tweens so that the
+                        reset occurred only once the collided object was in a position
+                        far away from the driver.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Night Mode </strong> </u>
+                      <p>
+                        One challenge in creating night mode was creating a smooth
+                        transition from day to night and night to day. Originally,
+                        we only had two modes, day and night, and tried transitioning
+                        from the light sky blue to the dark blue manually with hardcoded
+                        offset values and intermediate gradient sky colors. This was
+                        unsuccessful because the outcome transition was choppy and not
+                        visually appealing. We overcame this by adding two additional modes,
+                        dawn and dusk, and setting thresholds/time limits spent in each mode.
+                        Using the time limit thresholds, we also kept track of the elapsed time
+                        from the start of the mode and used the ratio between the two times to
+                        linearly interpolate between the sky colors we desired. With this method,
+                        we ended up with a much smoother transition and had more control over
+                        the time spent in each mode. A similar approach with interpolation was
+                        also applied to the dimming of the lamp post lighting for its smooth
+                        transition into night mode.
+                      </p>
+                    </p>
+                    <p>
+                      <u> <strong> Optimization </strong> </u>
                     </p>
                     <hr />
                     <h2>Results</h2>
@@ -244,7 +604,7 @@
                       feedback we received was related to additional features,
                       such as a background song or including an incentive for faster
                       speed. Also, there were comments about lag time for different
-                      computers, leading us to do more optimizations on our game.  
+                      computers, leading us to do more optimizations on our game.
                     </p>
                     <p>
                       Overall, the results were positive and indicated that the we had fulfilled the goals we set out to accomplish (i.e. making a fun game and reminding people of Princeton).
