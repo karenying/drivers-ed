@@ -35,7 +35,20 @@
                 font-size: 50px;
             }
 
+            .container h3 {
+              color: white;
+              font-family: 'Open Sans', sans-serif;
+              font-size: 18px;
+              font-style: italic;
+            }
+
             .container p {
+                font-size: 15px;
+                font-family: 'Open Sans', sans-serif;
+                color: white;
+            }
+
+            .container li {
                 font-size: 15px;
                 font-family: 'Open Sans', sans-serif;
                 color: white;
@@ -63,30 +76,133 @@
                     <hr />
                 </div>
                 <div>
+                    <h2>Abstract</h2>
                     <p style="font-style: italic;">
-                        Abstract...Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor
-                        in reprehenderit in voluptate velit esse cillum dolore
-                        eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia
-                        deserunt mollit anim id est laborum.
+                      This fall semester, Princeton University is offering a new class
+                      DRI 101: Driver’s Education. Our game, Driver’s Education,
+                      is an infinite-runner game in which a player controls a car driving down
+                      Washington Road. Each player is given three lives (or three chances in the class),
+                      and every time they hit an obstacle they lose a life.
+                      The player uses the arrow keys to dodge the obstacles— pedestrians,
+                      crossing animals, and other cars— all while trying to collect coins.
+                      The goal of the game: get as many coins as possible without getting
+                      kicked out of the class. Driver’s Education uses graphic concepts,
+                      such as polygonal meshes, light rendering, and collision modelling, t
+                      o create an enjoyable and aesthetically-pleasing game for players.
+
                     </p>
                     <hr />
                     <h2>Introduction</h2>
+                    <p> <h3> Goals </h3> </p>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                      Driver’s Education is an infinite-runner style game.
+                      The player controls a car that is driving down a rendered
+                      cartoon-version of Washington Road complete with all the iconic
+                      buildings on Princeton’s campus. In making this game, we wanted
+                      to pay homage to infinite-runner games that we played when we
+                      were young, like Temple Run and Crossy Road. To do so, we
+                      created obstacles in the path of our driver, like pedestrians
+                      and animals, that the player needs to weave around as well as
+                      coins and boost items to collect. Beyond video games, we were
+                      also inspired by content covered in the second-half of the course.
+                      We wanted to invoke different lighting effects through our changing
+                      day scenery and model cartoon-esque collisions between objects.
+                      Our final product is a reflection of both our fond memories of
+                      video games from our childhood and appreciation for the
+                      computer graphics knowledge we have learned this semester.
                     </p>
+                    <p>
+                      The purpose of this game, like most video games, is to serve
+                      as a relaxing activity for the player and be a fun distraction.
+                      We thought that designing games like Driver’s Education is
+                      especially given the circumstances we are in. Having video games
+                      can make being quarantined more enjoyable and pass the time quicker.
+                      More importantly, like many Princeton students, we the creators miss
+                      being on the University’s campus and enjoying the spring semester.
+                      That is why we chose to recreate Princeton scenery and niche inside
+                      campus jokes as a means to have a bit of campus with us even though
+                      we are away from it. For example, we made roadside objects
+                      modeled after Princeton buildings, such as the Friend Center,
+                      Fine Hall, and Frist. In our obstacles, we included the campus
+                      fox— a running gag amongst students. Overall, we wanted to
+                      create a light-hearted activity that sparks a bit of joy for
+                      Princeton students during a difficult time.
+                    </p>
+                    <p> <h3> Previous Work </h3> </p>
+                    <p>
+                      For Driver’s Ed, we were inspired by industrial examples, Temple Run and Crossy Road,
+                      and open-source examples, Aviator and Boxy Run:
+                      <li>
+                         In <strong>Temple Run</strong>, the player controls an explorer who is
+                        being chased by demonic monkeys. The point of the game is
+                        to run for as long as possible while avoiding obstacles and
+                        collecting coins for boosts and points.
+                      </li>
+                      <li>
+                        In <strong>Crossy Road</strong>, the player controls a character who
+                        must cross a series of endless roads and highways.
+                        Similar to Temple Run, the point is to get as far as
+                        possible without dying from obstacles or staying idle for too long.
+                      </li>
+                      <li>
+                        In <strong>Aviator</strong>, the player controls an infinitely flying plane
+                        and must fly for as long of a distance as possible.
+                        While doing so, the player must avoid red shapes to
+                        conserve energy and collect blue shapes to proceed to the next level.
+                      </li>
+                      <li>
+                        In <strong>Boxy Run</strong>, which was inspired by Temple Run, the player
+                        controls a running man and tries to get as far as possible
+                        while avoiding tree obstacles.
+                      </li>
+                    </p>
+                    <p>
+                      Despite the varying premises of each example, all four games share
+                      the same style where the character must stay alive as long as possible
+                      while navigating through an endless path filled with obstacles and rewards.
+                      We feel that this infinite-runner style approach is very successful,
+                      as it provides the perfect balance between stress and reward. Specifically,
+                      it keeps players on edge, curious about what is about to come next, and
+                      provides instant gratification for successfully avoiding the upcoming obstacle
+                      or collecting the reward. It also allows players to get into a “zone,”
+                      a sort of relaxing, yet thrilling, flow from overcoming the dynamic challenges.
+                      Above all, these games are simple to play, with controls and goals that are
+                      easy to understand, but challenging enough to prevent players from mastering t
+                      he entire game. Here, the only competitor is the player and their previous high score.
+                      There’s a certain level of personal skill required and the development of this
+                      skill feels obtainable, which ensures players always come back to play.
+                    </p>
+                    <p> <h3> Approach </h3> </p>
+                      <li> <strong> <u> User Experience: </u> </strong> Considering how infinite-runner games
+                        like Temple Run and Crossy Road have proved to be widely successful,
+                        we decided to take a similar approach. The controls and goal of the game
+                        are simple and there are enough obstacles on the road to create a right
+                        amount of challenge. Other than to dodge obstacles, there’s also an
+                        incentive for the player to move around to collect coins for a high score
+                        and the occasional invincibility item to help them last longer.
+                        Collectively, we feel that this infinite-runner style with the right amount
+                        of obstacles and rewards would give players a satisfying thrill and desire
+                        to keep playing to top their personal scores.
+                      </li>
+                      <li> <strong> <u> High-Level Game Design:</u> </strong> We wanted to keep the
+                        objective and controls of Driver’s Ed rather simple so players would
+                        have little difficulty learning the game. Because of this, we first
+                        created the game basics of just controlling a car with a small number
+                        of obstacles and coins on the road before moving forward to add more
+                        scenery, complex obstacles/prizes, acceleration/deceleration features a
+                        nd temporal changes. This proved to be an effective and efficient process,
+                        as we ensured we had the rudimentary base of the game down before
+                        adding more elaborate features to maintain user engagement and
+                        ensure the right amount of difficulty.
+                      </li>
+                      <li> <strong> <u> Low-Level Game Design: </u></strong> Driver’s Ed was created
+                        primarily using JavaScript and the three.js library.
+                        We chose to use three.js because it is well-documented and because
+                        all of us have experience with it from the assignments.
+                        All of the user interfaces, such as the pop-up begin instructions
+                        and score/lives board, were created using HTML and CSS.
+
+                      </li>
                     <hr />
                     <h2>Methodology</h2>
                     <p>
@@ -129,15 +245,28 @@
                     <hr />
                     <h2>Conclusion</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                        non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                      We implemented all of our target goals and several of our stretch goals,
+                      including a few that we added along the way. Some of our target goals
+                      included achieving a consistent low poly aesthetic, modeling many of the recognizable
+                      buildings on Princeton’s campus, and implementing all the basic features
+                      of an infinite runner game. We also fulfilled our main stretch goal of
+                      adding in a night mode. Seeing the game grow from a few disjoint meshes
+                      and moving cubes to a scene of the campus we left behind this semester
+                      was a great experience, and we are very happy with our final result.
+                    </p>
+                    <p>
+                      Given more time, we would like to augment the scene with more
+                      “Princeton” and maybe even include small Princeton-related easter eggs.
+                      Additional challenges could also be added to the game, such as an
+                      increasing number of obstacles or a gradually increasing game speed.
+                      A great way to expand the scope of the game would be to keep track of
+                      high scores with a backend. Certain things could also be improved,
+                      such as the collision model for vehicles. There could also be more
+                      modularity introduced into the code, to avoid repeated variables and
+                      initializations. For example, a more global framework for detecting
+                      collisions should be written so that similar object-specific collision
+                      behaviors do not need to be repeatedly coded for each object.
+
                     </p>
                     <hr />
                     <h2>Contributions</h2>
