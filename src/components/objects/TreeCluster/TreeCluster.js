@@ -30,9 +30,9 @@ class TreeCluster extends Group {
         let xOffset = 0;
         for (let i = 0; i < 6; i++) {
             let r = Math.floor(Math.random() * 3);
-            if (r == 0) this.createTree1(geo, 12 + xOffset, 1.75, -170 + zOffset);
-            else if (r == 1) this.createTree2(geo, 12 + xOffset, 1.75, -170 + zOffset);
-            else this.createTree3(geo, 12 + xOffset, 1.75, -170 + zOffset);
+            if (r == 0) this.createTree1(geo, xOffset, 0, zOffset);
+            else if (r == 1) this.createTree2(geo, xOffset, 0, zOffset);
+            else this.createTree3(geo, xOffset, 0,  zOffset);
             xOffset += 3;
         }
         zOffset += 4;

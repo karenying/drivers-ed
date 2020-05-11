@@ -130,8 +130,18 @@ class Washington extends Scene {
         }
 
         // add some random trees
-        const treeCluster = new TreeCluster(this);
-        this.add(treeCluster);
+        for (let i = 0; i < 3; i++) {
+            const rightTree = new Tree(this);
+            const leftTree = new Tree(this);
+            rightTree.state.type = Math.floor(Math.random() * 3);
+            leftTree.state.type = Math.floor(Math.random() * 3);
+            rightTree.create();
+            leftTree.create();
+            rightTree.position.set(7, 1.75, treePositions[i]);
+            leftTree.position.set(-7, 1.75, treePositions[i] - 30);
+            this.add(rightTree);
+            this.add(leftTree);
+        }
 
         // Add right buildings
         let fine = new Fine(this);
@@ -142,20 +152,9 @@ class Washington extends Scene {
         this.add(fine, woodywoo, friend, cap, colonial);
 
         // add some areas of trees
-        let zOffset = 0;
-        for (let r = 0; r < 6; r++) {
-            let xOffset = 0;
-            for (let i = 0; i < 6; i++) {
-                const tree = new Tree(this);
-                tree.state.type = Math.floor(Math.random() * 3);
-                tree.state.offset = 200;
-                tree.create();
-                tree.position.set(12 + xOffset, 1.75, -170 + zOffset);
-                xOffset += 3;
-                this.add(tree);
-            }
-            zOffset += 4;
-        }
+        const treeCluster = new TreeCluster(this);
+        treeCluster.position.set(12, 1.75, -170);
+        this.add(treeCluster)
 
         // Add left buildings
         let firestone = new Firestone(this);
