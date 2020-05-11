@@ -6,8 +6,8 @@ function createBox(x, y, z, materials) {
     return box;
 }
 
-function createWindowRow(x, y, z, materials, face, offset) {
-    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
+function createWindowRow(windowGeometry, materials, face, offset) {
+    // var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(x, y, z));
     var window1 = new Mesh(windowGeometry, materials.window);
     window1.position.set(-1.5, 18 - offset, -8);
     face.add(window1);
@@ -41,8 +41,9 @@ function createFace(materials) {
     topWindows.position.set(-1.5, 25, 0);
 
     var offset = 0;
+    var windowGeometry = new BufferGeometry().fromGeometry(new BoxGeometry(3, 4, 5));
     for (var i = 0; i < 9; i++) {
-        createWindowRow(3, 4, 5, materials, face, offset);
+        createWindowRow(windowGeometry, materials, face, offset);
         offset += 6;
     }
 
