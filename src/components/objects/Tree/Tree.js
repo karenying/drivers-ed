@@ -15,19 +15,6 @@ var Colors = {
   brown:0x4a2a0a,
 };
 
-function createCylinder(x, y, z, s, color, dx, dy, dz) {
-  let geo = new BufferGeometry().fromGeometry(new CylinderGeometry(x, y, z, s));
-  let mat = new MeshToonMaterial({
-    color: color,
-    flatShading: true,
-  });
-  let mesh = new Mesh(geo, mat);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.position.set(dx, dy, dz);
-  return mesh;
-}
-
 class Tree extends Group {
   constructor(parent) {
     super(parent);

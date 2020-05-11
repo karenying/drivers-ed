@@ -6,6 +6,7 @@ export * from './Fox';
 export * from './Lamppost';
 export * from './Coin';
 export * from './Tree';
+export * from './TreeCluster';
 export * from './MalePedestrianShorts';
 export * from './MalePedestrianJeans';
 export * from './FemalePedestrianDress';

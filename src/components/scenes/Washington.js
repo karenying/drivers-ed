@@ -29,7 +29,8 @@ import {
     Moon,
     Cloud,
     Star,
-    Bus
+    Bus,
+    TreeCluster
 } from 'objects';
 import { BasicLights } from 'lights';
 import * as THREE from 'three';
@@ -77,12 +78,6 @@ class Washington extends Scene {
         this.timeElapsed = -1;
         this.threshold = 10;
 
-        // Add road
-        const positions = [
-            0,
-            -90,
-        ];
-
         // lampPositions
         const lampPositions = [
             0,
@@ -92,12 +87,9 @@ class Washington extends Scene {
 
         // treePositions
         const treePositions = [
-            10,
-            -40,
-            -90,
-            -140,
-            -190,
-            -240,
+            -30,
+            -150,
+            -250
         ];
 
         const road = new Road(this);
@@ -138,18 +130,8 @@ class Washington extends Scene {
         }
 
         // add some random trees
-        for (let i = 0; i < 6; i++) {
-            const rightTree = new Tree(this);
-            const leftTree = new Tree(this);
-            rightTree.state.type = Math.floor(Math.random() * 3);
-            leftTree.state.type = Math.floor(Math.random() * 3);
-            rightTree.create();
-            leftTree.create();
-            rightTree.position.set(7, 1.75, treePositions[i]);
-            leftTree.position.set(-7, 1.75, treePositions[i] + 20);
-            this.add(rightTree);
-            this.add(leftTree);
-        }
+        const treeCluster = new TreeCluster(this);
+        this.add(treeCluster);
 
         // Add right buildings
         let fine = new Fine(this);
