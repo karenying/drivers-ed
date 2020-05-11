@@ -1,10 +1,11 @@
 import {
     Group,
     PlaneGeometry,
-    MeshStandardMaterial,
+    MeshBasicMaterial,
     Mesh,
     DoubleSide,
-    BufferGeometry
+    BufferGeometry,
+    Geometry
 } from 'three';
 
 class Crosswalk extends Group {
@@ -17,48 +18,55 @@ class Crosswalk extends Group {
             pause: false,
         };
 
-        const stripeMaterial = new MeshStandardMaterial({
-            color: 0xe0e0e0,
-            side: DoubleSide,
-        });
+        const geo = new Geometry();
 
         // center crosswalk stripe to cover yellow road stripe
-        const stripeGeometry = new BufferGeometry().fromGeometry(
-          new PlaneGeometry(0.3, 8));
-        let centerStripe = new Mesh(stripeGeometry, stripeMaterial);
-        centerStripe.rotation.x = Math.PI / 2;
-        this.add(centerStripe);
+        const stripeGeometry = new PlaneGeometry(0.3, 8);
+        stripeGeometry.rotateX(Math.PI / 2);
+
+        let centerStripe = stripeGeometry.clone();
+        geo.merge(centerStripe);
 
         // right of center crosswalk stripe
         let offset = 0.55;
         for (let i = 0; i < 4; i++) {
-            let stripe = new Mesh(stripeGeometry, stripeMaterial);
-            stripe.position.set(0 + offset, 0, 0)
-            centerStripe.add(stripe);
+            let stripe = stripeGeometry.clone();
+            stripe.translate(0 + offset, 0, 0);
+            geo.merge(stripe);
             offset += 0.55;
         }
         
         // left of center crosswalk stripe
         offset = 0.55;
         for (let i = 0; i < 4; i++) {
-            let stripe = new Mesh(stripeGeometry, stripeMaterial);
-            stripe.position.set(0 - offset, 0, 0)
-            centerStripe.add(stripe);
+            let stripe = stripeGeometry.clone();
+            stripe.translate(0 - offset, 0, 0);
+            geo.merge(stripe)
             offset += 0.55;
         }
 
         // horizontal stripes
-        const hozStripeGeometry = new BufferGeometry().fromGeometry(
-          new PlaneGeometry(0.5, 5));
-        let hoz1 = new Mesh(hozStripeGeometry, stripeMaterial);
-        centerStripe.add(hoz1);
-        hoz1.position.set(0, -4, 0.001);
-        hoz1.rotation.z = Math.PI/2;
+        const hozStripeGeometry = new PlaneGeometry(0.5, 5);
+        const hozStripeGeometry2 = hozStripeGeometry.clone();
+        hozStripeGeometry.rotateZ(Math.PI/2);
+        hozStripeGeometry.rotateX(Math.PI/2);
+        hozStripeGeometry.translate(0, 0.001, 4);
+        geo.merge(hozStripeGeometry);
+        hozStripeGeometry2.rotateZ(Math.PI/2);
+        hozStripeGeometry2.rotateX(Math.PI/2);
+        hozStripeGeometry2.translate(0, 0.001, -4);
 
-        let hoz2 = new Mesh(hozStripeGeometry, stripeMaterial);
-        centerStripe.add(hoz2);
-        hoz2.position.set(0, 4, 0.001);
-        hoz2.rotation.z = Math.PI/2;
+        geo.merge(hozStripeGeometry2);
+
+        const mesh = new Mesh(
+            new BufferGeometry().fromGeometry(geo),
+            new  MeshBasicMaterial({
+                color: 0xe0e0e0,
+                side: DoubleSide,
+            })
+        )
+
+        this.add(mesh);
 
         parent.addToUpdateList(this);
     }
