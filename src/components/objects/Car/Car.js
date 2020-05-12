@@ -281,7 +281,7 @@ class Car extends Group {
         beamerTwo.angle = 0.1;
         beamerTwo.distance = 80;
         beamerTwo.name = "beamer2";
-        // beamerOne.target.position.set(1, 1, -5);
+        beamerOne.target.position.set(1, 1, -5);
         this.add(beamerOne, beamerTwo);
 
         // compute bounding box

@@ -62,19 +62,19 @@ class Bus extends Group {
     init() {
 
       // create night mode headlights
-      let beamerOne = new SpotLight(0xffffff, 0);
-      beamerOne.position.set(5, 1, 12);
-      beamerOne.angle = 0.5;
-      beamerOne.distance = 30;
-      beamerOne.name = "beamer1";
-      let beamerTwo= new SpotLight(0xffffff, 0);
-      beamerTwo.position.set(-5, 1, 12);
-      beamerTwo.angle = 0.5;
-      beamerTwo.distance = 30;
-      beamerTwo.name = "beamer2";
-      beamerOne.target = this.lightTarget;
-      beamerTwo.target = this.lightTarget;
-      this.add(beamerOne, beamerTwo);
+      // let beamerOne = new SpotLight(0xffffff, 0);
+      // beamerOne.position.set(5, 1, 12);
+      // beamerOne.angle = 0.5;
+      // beamerOne.distance = 30;
+      // beamerOne.name = "beamer1";
+      // let beamerTwo= new SpotLight(0xffffff, 0);
+      // beamerTwo.position.set(-5, 1, 12);
+      // beamerTwo.angle = 0.5;
+      // beamerTwo.distance = 30;
+      // beamerTwo.name = "beamer2";
+      // beamerOne.target = this.lightTarget;
+      // beamerTwo.target = this.lightTarget;
+      // this.add(beamerOne, beamerTwo);
 
       this.bb = new THREE.Box3(
         new THREE.Vector3(-5, -10, -15),
@@ -94,29 +94,29 @@ class Bus extends Group {
         const { lightsOn, idle } = this.state;
 
         // turns lights on
-        if (!lightsOn && this.parent.night == 2) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 1;
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 1;
-          this.state.lightsOn = true;
-        }
-
-        // turns lights off
-        if (lightsOn && this.parent.night != 2) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 0;
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 0;
-          this.state.lightsOn = false;
-        }
-
-        if (lightsOn) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.target.updateMatrixWorld();
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.target.updateMatrixWorld();
-        }
+        // if (!lightsOn && this.parent.night == 2) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.intensity = 1;
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.intensity = 1;
+        //   this.state.lightsOn = true;
+        // }
+        //
+        // // turns lights off
+        // if (lightsOn && this.parent.night != 2) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.intensity = 0;
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.intensity = 0;
+        //   this.state.lightsOn = false;
+        // }
+        //
+        // if (lightsOn) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.target.updateMatrixWorld();
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.target.updateMatrixWorld();
+        // }
 
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth

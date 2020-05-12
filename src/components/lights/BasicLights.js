@@ -17,9 +17,9 @@ class BasicLights extends Group {
         hemiChange: 0.002,
       }
 
-      const ambi = new AmbientLight(0x404040, 1.2);
+      // const ambi = new AmbientLight(0x404040, 1.2);
       const hemi = new HemisphereLight(0xffffe0, 0x080820, 1.5);
-      this.add(ambi, hemi);
+      this.add(hemi);
 
       // night mode values
       parent.addToUpdateList(this);
@@ -31,17 +31,17 @@ class BasicLights extends Group {
 
   update(timeStamp) {
     if (this.parent.night == 1) {
-      let newAmbi = this.interpolate(ambiDay, ambiNight, this.parent.timeElapsed/this.parent.threshold);
+      // let newAmbi = this.interpolate(ambiDay, ambiNight, this.parent.timeElapsed/this.parent.threshold);
       let newHemi = this.interpolate(ambiDay, hemiNight, this.parent.timeElapsed/this.parent.threshold);
 
-      this.children[0].intensity = newAmbi;
-      this.children[1].intensity = newHemi;
+      // this.children[0].intensity = newAmbi;
+      this.children[0].intensity = newHemi;
     } else if (this.parent.night == 3) {
-      let newAmbi = this.interpolate(ambiNight, ambiDay, this.parent.timeElapsed/this.parent.threshold);
+      // let newAmbi = this.interpolate(ambiNight, ambiDay, this.parent.timeElapsed/this.parent.threshold);
       let newHemi = this.interpolate(ambiNight, hemiDay, this.parent.timeElapsed/this.parent.threshold);
 
-      this.children[0].intensity = newAmbi;
-      this.children[1].intensity = newHemi;
+      // this.children[0].intensity = newAmbi;
+      this.children[0].intensity = newHemi;
     }
   }
 }

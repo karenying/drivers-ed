@@ -262,19 +262,19 @@ class OtherCar extends Group {
         this.scale.set(0.4, 0.4, 0.4);
         this.position.set(0, 0, 21);
         // create night mode headlights
-        let beamerOne = new SpotLight(0xffffff, 0);
-        beamerOne.position.set(1, 1, 1);
-        beamerOne.angle = 0.15;
-        beamerOne.distance = 30;
-        beamerOne.name = "beamer1";
-        let beamerTwo= new SpotLight(0xffffff, 0);
-        beamerTwo.position.set(-1, 1, 1);
-        beamerTwo.angle = 0.15;
-        beamerTwo.distance = 30;
-        beamerTwo.name = "beamer2";
-        beamerOne.target = this.lightTarget;
-        beamerTwo.target = this.lightTarget;
-        this.add(beamerOne, beamerTwo);
+        // let beamerOne = new SpotLight(0xffffff, 0);
+        // beamerOne.position.set(1, 1, 1);
+        // beamerOne.angle = 0.15;
+        // beamerOne.distance = 30;
+        // beamerOne.name = "beamer1";
+        // let beamerTwo= new SpotLight(0xffffff, 0);
+        // beamerTwo.position.set(-1, 1, 1);
+        // beamerTwo.angle = 0.15;
+        // beamerTwo.distance = 30;
+        // beamerTwo.name = "beamer2";
+        // beamerOne.target = this.lightTarget;
+        // beamerTwo.target = this.lightTarget;
+        // this.add(beamerOne, beamerTwo);
 
         // compute bounding box
         for (const mesh of this.children) {
@@ -302,29 +302,29 @@ class OtherCar extends Group {
         const { lightsOn, idle } = this.state;
 
         // turns lights on
-        if (!lightsOn && this.parent.night == 2) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 1;
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 1;
-          this.state.lightsOn = true;
-        }
-
-        // turns lights off
-        if (lightsOn && this.parent.night != 2) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.intensity = 0;
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.intensity = 0;
-          this.state.lightsOn = false;
-        }
-
-        if (lightsOn) {
-          let beamer = this.getObjectByName("beamer1", true);
-          beamer.target.updateMatrixWorld();
-          beamer = this.getObjectByName("beamer2", true);
-          beamer.target.updateMatrixWorld();
-        }
+        // if (!lightsOn && this.parent.night == 2) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.intensity = 1;
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.intensity = 1;
+        //   this.state.lightsOn = true;
+        // }
+        //
+        // // turns lights off
+        // if (lightsOn && this.parent.night != 2) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.intensity = 0;
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.intensity = 0;
+        //   this.state.lightsOn = false;
+        // }
+        //
+        // if (lightsOn) {
+        //   let beamer = this.getObjectByName("beamer1", true);
+        //   beamer.target.updateMatrixWorld();
+        //   beamer = this.getObjectByName("beamer2", true);
+        //   beamer.target.updateMatrixWorld();
+        // }
 
         if (this.state.bobbing) {
             // Bob car and exhaust back and forth
