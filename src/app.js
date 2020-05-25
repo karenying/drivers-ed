@@ -231,7 +231,7 @@ document.body.appendChild(writeupContainer);
 let writeupLink = document.createElement('a');
 writeupLink.innerHTML = 'Writeup';
 writeupContainer.append(writeupLink);
-writeupLink.href = 'https://karenying.com/drivers-ed-writeup/';
+writeupLink.href = 'https://karenying.github.io/drivers-ed-writeup/';
 
 // Begin game
 beginContentButton.onclick = function () {
